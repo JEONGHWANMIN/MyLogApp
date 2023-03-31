@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import TestButton from '@/components/TestButton';
+import styled from 'styled-components/native';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,8 +18,17 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <TestButton />
+      <StyledBox>
+        <StyledText>Hello</StyledText>
+      </StyledBox>
     </SafeAreaView>
   );
 }
 
 export default App;
+
+const StyledBox = styled.View``;
+
+const StyledText = styled.Text`
+  color: 'red';
+`;

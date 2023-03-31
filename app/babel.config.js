@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
     [
       'module-resolver',
+      'babel-plugin-styled-components',
       {
         root: ['./src'],
         extensions: [
