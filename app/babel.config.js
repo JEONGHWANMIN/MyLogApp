@@ -23,6 +23,7 @@ module.exports = {
           '@hooks': './src/hooks',
           '@screen': './src/scenes',
           '@utils': './src/utils',
+          '@navigation': './src/navigation',
         },
       },
     ],
