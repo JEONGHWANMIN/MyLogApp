@@ -9,7 +9,8 @@
       "@hooks/*": ["hooks/*"],
       "@screens/*": ["screens/*"],
       "@utils/*": ["utils/*"],
-      "@navigation/*": ["navigation/*"]
+      "@navigation/*": ["navigation/*"],
+      "@styles/*": ["styles/*"]
     }
   },
   "exclude": [
