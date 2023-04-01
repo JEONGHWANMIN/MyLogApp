@@ -10,7 +10,7 @@ const AuthStack = createNativeStackNavigator<AuthListParams>();
 const AuthNavigation = () => {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen name="초기렌더링" component={Auth} />
+      <AuthStack.Screen name="MyLog" component={Auth} />
       <AuthStack.Screen name="로그인" component={SignIn} />
       <AuthStack.Screen name="회원가입" component={SignUp} />
     </AuthStack.Navigator>
