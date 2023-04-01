@@ -1,12 +1,20 @@
+import {theme} from '@/styles/theme';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Auth = () => {
   return (
     <View>
-      <Text>초기 인증 화면</Text>
+      <Text style={styles.text}>초기 인증 화면</Text>
     </View>
   );
 };
 
 export default Auth;
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: theme.typography.family.medium,
+    fontWeight: theme.typography.weight.extraBold,
+  },
+});

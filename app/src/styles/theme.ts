@@ -43,10 +43,16 @@ interface MyTheme {
       body9: 8;
     };
     weight: {
-      regular: '100';
-      medium: '100';
-      bold: '100';
-      extraBold: '100';
+      regular: '200';
+      medium: '400';
+      bold: '700';
+      extraBold: '900';
+    };
+    family: {
+      regular: 'Pretendard-Regular';
+      medium: 'Pretendard-Medium';
+      semiBold: 'Pretendard-SemiBold';
+      bold: 'Pretendard-Bold';
     };
   };
 }
@@ -92,10 +98,16 @@ const theme: MyTheme = {
       body9: 8,
     },
     weight: {
-      regular: '100',
-      medium: '100',
-      bold: '100',
-      extraBold: '100',
+      regular: '200',
+      medium: '400',
+      bold: '700',
+      extraBold: '900',
+    },
+    family: {
+      regular: 'Pretendard-Regular',
+      medium: 'Pretendard-Medium',
+      bold: 'Pretendard-Bold',
+      semiBold: 'Pretendard-SemiBold',
     },
   },
 } as const;
