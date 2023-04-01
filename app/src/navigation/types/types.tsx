@@ -5,10 +5,16 @@ interface RootListParams extends ParamListBase {
   AuthNavigation: undefined;
 }
 
-interface AuthListParams {
+interface AuthListParams extends ParamListBase {
   Auth: undefined;
   SignUp: undefined;
   SignIn: undefined;
 }
 
-export type {RootListParams, AuthListParams};
+interface BottomTabParams extends ParamListBase {
+  Home: undefined;
+  Diary: undefined;
+  Setting: undefined;
+}
+
+export type {RootListParams, AuthListParams, BottomTabParams};

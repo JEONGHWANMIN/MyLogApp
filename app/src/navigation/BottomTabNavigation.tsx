@@ -1,11 +1,19 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import Diary from '@/screens/BottomTab/Diary';
+import Home from '@/screens/BottomTab/Home';
+import Setting from '@/screens/BottomTab/Setting';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BottomTabParams} from './types/types';
+
+const BottomTab = createBottomTabNavigator<BottomTabParams>();
 
 const BottomTabNavigation = () => {
   return (
-    <View>
-      <Text>바텀 탭 네비게이션</Text>
-    </View>
+    <BottomTab.Navigator>
+      <BottomTab.Screen name="Home" component={Home} />
+      <BottomTab.Screen name="Diary" component={Diary} />
+      <BottomTab.Screen name="Setting" component={Setting} />
+    </BottomTab.Navigator>
   );
 };
 
