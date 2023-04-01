@@ -1,15 +1,19 @@
 import React from 'react';
-import RootNavigation from '@/navigation/RootNavigation';
+import {Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
+import RootNavigation from '@/navigation/RootNavigation';
+import {theme} from '@/styles/theme';
 
-function App(): JSX.Element {
+const App = () => {
   return (
     <>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </PaperProvider>
     </>
   );
-}
+};
 
 export default App;
