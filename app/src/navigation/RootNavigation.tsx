@@ -1,18 +1,26 @@
 import React, {useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Auth from '@/screen/Auth';
-import Home from '@/screen/Home';
+import {RootListParams} from './types/types';
+import BottomTabNavigation from './BottomTabNavigation';
+import AuthNavigation from './AuthNavigation';
 
-const RootStack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator<RootListParams>();
 
 const RootNavigation = () => {
-  const [auth] = useState(false);
+  const [isLogin] = useState(false);
+
   return (
-    <RootStack.Navigator>
-      {auth ? (
-        <RootStack.Screen name="bottomTab" component={Home} />
+    <RootStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      {isLogin ? (
+        <RootStack.Screen
+          name="BottomTabNavigation"
+          component={BottomTabNavigation}
+        />
       ) : (
-        <RootStack.Screen name="인증" component={Auth} />
+        <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
       )}
     </RootStack.Navigator>
   );
