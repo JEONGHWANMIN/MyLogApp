@@ -4,7 +4,7 @@ import {Text, View} from 'react-native';
 const SignUp = () => {
   return (
     <View>
-      <Text>로그인</Text>
+      <Text>회원가입</Text>
     </View>
   );
 };
