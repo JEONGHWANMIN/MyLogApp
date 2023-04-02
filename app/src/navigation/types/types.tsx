@@ -1,20 +1,31 @@
-import {ParamListBase} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-interface RootListParams extends ParamListBase {
+interface RootListParamsList {
   BottomTabNavigation: undefined;
   AuthNavigation: undefined;
 }
 
-interface AuthListParams extends ParamListBase {
+interface AuthListParamsList {
   Auth: undefined;
   SignUp: undefined;
   SignIn: undefined;
 }
 
-interface BottomTabParams extends ParamListBase {
+interface BottomTabParamsList {
   Home: undefined;
   Diary: undefined;
   Setting: undefined;
 }
 
-export type {RootListParams, AuthListParams, BottomTabParams};
+type AuthParamListProps = NativeStackNavigationProp<{
+  Auth: undefined;
+  SignUp: undefined;
+  SignIn: undefined;
+}>;
+
+export type {
+  RootListParamsList,
+  AuthListParamsList,
+  BottomTabParamsList,
+  AuthParamListProps,
+};
