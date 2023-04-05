@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootListParams} from './types/types';
 import BottomTabNavigation from './BottomTabNavigation';
 import AuthNavigation from './AuthNavigation';
 
-const RootStack = createNativeStackNavigator<RootListParams>();
+const RootStack = createNativeStackNavigator();
 
 const RootNavigation = () => {
   const [isLogin] = useState(false);

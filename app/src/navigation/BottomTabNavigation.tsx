@@ -3,9 +3,8 @@ import Diary from '@/screens/BottomTab/Diary';
 import Home from '@/screens/BottomTab/Home';
 import Setting from '@/screens/BottomTab/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BottomTabParams} from './types/types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParams>();
+const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {
   return (
