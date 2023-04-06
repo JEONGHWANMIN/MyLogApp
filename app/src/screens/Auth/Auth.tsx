@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {theme} from '@/styles/theme';
-import CoreButton from '@/components/@core/CoreButton';
+import CoreButton from '@/components/core/CoreButton';
 import {AuthParamListProps} from '@/navigation/types/types';
 
 const Auth = () => {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     padding: 28,
     flex: 1,
     justifyContent: 'space-between',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: theme.typography.size.H3,
