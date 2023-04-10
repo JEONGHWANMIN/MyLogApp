@@ -53,6 +53,7 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MaterialCommunityIcons.ttf</string>
 		<string>Pretendard-Black.ttf</string>
 		<string>Pretendard-Bold.ttf</string>
 		<string>Pretendard-ExtraBold.ttf</string>
