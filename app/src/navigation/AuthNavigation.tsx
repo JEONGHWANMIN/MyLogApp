@@ -31,7 +31,7 @@ const AuthNavigation = () => {
           headerTitle: '로그인',
           headerLeft: () => (
             <IconButton
-              icon="chevron-left"
+              icon="keyboard-backspace"
               size={27}
               onPress={() => navigation.goBack()}
             />
@@ -45,7 +45,7 @@ const AuthNavigation = () => {
           headerTitle: '회원가입',
           headerLeft: () => (
             <IconButton
-              icon="chevron-left"
+              icon="keyboard-backspace"
               size={27}
               onPress={() => navigation.goBack()}
             />
