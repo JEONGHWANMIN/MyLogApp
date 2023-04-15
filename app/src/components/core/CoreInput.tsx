@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 import {theme} from '@/styles/theme';
-import {StyleSheet} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {Props} from 'react-native-paper/lib/typescript/src/components/TextInput/TextInput';
 
-const CoreInput = ({...props}: Props) => {
+interface CoreInputProps extends Props {
+  sx?: StyleProp<TextStyle>;
+}
+
+const CoreInput = ({sx, ...props}: CoreInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <TextInput
       {...props}
-      style={[styles.container, isFocused && styles.focus]}
+      style={[styles.container, isFocused && styles.focus, sx]}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
     />
@@ -22,7 +26,6 @@ const styles = StyleSheet.create({
   container: {
     borderColor: theme.colors.gray[200],
     borderWidth: 1,
-    flex: 1,
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
     borderTopStartRadius: 10,
