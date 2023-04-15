@@ -1,12 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
 import {theme} from '@/styles/theme';
 import {Button} from 'react-native-paper';
 import {Props} from 'react-native-paper/lib/typescript/src/components/Button/Button';
 
-interface ButtonProps extends Props {}
+interface ButtonProps extends Props {
+  sx?: StyleProp<TextStyle>;
+}
 
-const CoreButton = ({children, mode, ...props}: ButtonProps) => {
+const CoreButton = ({children, mode, sx, ...props}: ButtonProps) => {
   return (
     <Button
       style={[
@@ -14,7 +16,11 @@ const CoreButton = ({children, mode, ...props}: ButtonProps) => {
         styles.container,
       ]}
       {...props}>
-      <Text style={mode === 'contained' ? styles.fillText : styles.outlineText}>
+      <Text
+        style={[
+          mode === 'contained' ? styles.fillText : styles.outlineText,
+          sx,
+        ]}>
         {children}
       </Text>
     </Button>
@@ -35,11 +41,9 @@ const styles = StyleSheet.create({
   fillText: {
     color: 'white',
     fontFamily: theme.typography.family.medium,
-    fontSize: theme.typography.size.H6,
   },
   outlineText: {
     color: theme.colors.point.sageGreen,
     fontFamily: theme.typography.family.medium,
-    fontSize: theme.typography.size.H6,
   },
 });
