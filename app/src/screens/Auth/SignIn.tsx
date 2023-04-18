@@ -1,18 +1,45 @@
-import CoreButton from '@/components/core/CoreButton';
-import {theme} from '@/styles/theme';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import CoreButton from '@/components/core/CoreButton';
+import CoreInput from '@/components/core/CoreInput';
+import {theme} from '@/styles/theme';
+import {useNavigation} from '@react-navigation/native';
+import {AuthParamListProps} from '@/navigation/types/types';
 
 const SignIn = () => {
+  const navigation = useNavigation<AuthParamListProps>();
+  const handleCloseKeyboard = () => {
+    Keyboard.dismiss();
+  };
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>PenPle</Text>
+    <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.title}>PenPle</Text>
+          <View style={styles.inputContainer}>
+            <CoreInput placeholder="이메일" />
+            <CoreInput placeholder="패스워드" secureTextEntry />
+            <View style={styles.registeredUserContainer}>
+              <Text style={styles.registeredUserText}>회원이 아니신가요 ?</Text>
+              <Text
+                style={styles.loginLink}
+                onPress={() => navigation.push('SignUp')}>
+                회원가입
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <CoreButton mode="contained">로그인</CoreButton>
+        </View>
       </View>
-      <View>
-        <CoreButton mode="contained">로그인</CoreButton>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -26,24 +53,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
+    marginTop: 100,
     fontSize: theme.typography.size.H3,
-    color: theme.colors.gray[900],
-  },
-  subTitle: {
-    fontSize: theme.typography.size.H6,
-    color: theme.colors.gray[600],
-    fontFamily: theme.typography.family.medium,
-  },
-  pointColor: {
     color: theme.colors.point.sageGreen,
+    textAlign: 'center',
   },
-  bottomContainer: {
+  inputContainer: {
+    marginTop: 20,
+    gap: 10,
+  },
+  registeredUserContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: 5,
-    marginBottom: 20,
   },
-  buttonText: {
-    fontSize: theme.typography.size.H6,
-    color: theme.colors.point.sageGreen,
-    fontFamily: theme.typography.family.medium,
+  registeredUserText: {
+    fontSize: theme.typography.size.body3,
+  },
+  loginLink: {
+    fontSize: theme.typography.size.body3,
+    fontWeight: theme.typography.weight.bold,
   },
 });
