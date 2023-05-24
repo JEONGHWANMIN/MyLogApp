@@ -1,18 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { ConfigsModule } from './configs/configs.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [
-    JwtModule.register({
-      secret: 'yourSecretKey', // JWT 시크릿 키 설정
-      signOptions: { expiresIn: '1h' }, // 토큰 만료 시간 설정
-    }),
-    AuthModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ConfigsModule, PrismaModule, UsersModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
