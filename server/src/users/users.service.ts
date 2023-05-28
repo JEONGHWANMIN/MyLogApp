@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import {
   ConflictException,
   ForbiddenException,
@@ -6,7 +7,6 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 
 const saltRounds = 10;
 
