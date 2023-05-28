@@ -9,9 +9,10 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { UsersService } from './users.service';
-import { AccessTokenGuard } from '../common/guards/accessToken.guard';
 import { Request } from 'express';
-import { RefreshTokenGuard } from '../common/guards/refreshToken.guard';
+import { GetTokenUser } from 'src/common/decorator/user.decorator';
+import { AccessTokenGuard, RefreshTokenGuard } from 'src/common/guards';
+import { AccessTokenPayload } from './types/TokenPayload.type';
 
 @Injectable()
 @Controller('users')
@@ -30,8 +31,8 @@ export class UsersController {
 
   @UseGuards(AccessTokenGuard)
   @Get('/logout')
-  logout(@Req() req: Request) {
-    return this.usersService.logout(req.user['userId']);
+  logout(@GetTokenUser() user: AccessTokenPayload) {
+    return this.usersService.logout(user.userId);
   }
 
   @UseGuards(RefreshTokenGuard)
