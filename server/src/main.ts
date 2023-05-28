@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 const validationOptions: ValidationPipeOptions = {
   whitelist: true,
   forbidNonWhitelisted: true,
+  transform: true,
 };
 
 async function bootstrap() {
