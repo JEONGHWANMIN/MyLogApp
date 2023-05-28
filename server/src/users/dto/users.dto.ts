@@ -14,7 +14,7 @@ export class CreateUserDto {
   password: string;
 }
 
-export class LoginDto {
+export class LoginUserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
