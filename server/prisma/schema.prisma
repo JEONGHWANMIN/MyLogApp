@@ -12,10 +12,11 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  nickname  String   @unique
   email     String   @unique
+  nickname  String   
   password  String
   createdAt DateTime @default(now())
+  refreshToken String?
   diarys   Diary[]
 }
 
