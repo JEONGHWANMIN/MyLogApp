@@ -13,6 +13,9 @@ lerna-debug.log*
 
 ./prisma/dev.db
 dev.db
+migrations*
+dev.db*
+
 
 # OS
 .DS_Store
