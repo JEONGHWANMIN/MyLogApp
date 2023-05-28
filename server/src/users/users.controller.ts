@@ -4,15 +4,16 @@ import {
   Get,
   Injectable,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { UsersService } from './users.service';
-import { Request } from 'express';
 import { GetTokenUser } from 'src/common/decorator/user.decorator';
 import { AccessTokenGuard, RefreshTokenGuard } from 'src/common/guards';
-import { AccessTokenPayload } from './types/TokenPayload.type';
+import {
+  AccessTokenPayload,
+  RefreshTokenPayload,
+} from './types/TokenPayload.type';
 
 @Injectable()
 @Controller('users')
@@ -35,11 +36,15 @@ export class UsersController {
     return this.usersService.logout(user.userId);
   }
 
+  /**
+   * TODO: 회원 탈퇴 기능 만들어야 한다.
+   */
+
   @UseGuards(RefreshTokenGuard)
   @Get('/refresh')
-  refreshTokens(@Req() req: Request) {
-    const userId = req.user['userId'];
-    const refreshToken = req.user['refreshToken'];
+  refreshTokens(@GetTokenUser() user: RefreshTokenPayload) {
+    const userId = user.userId;
+    const refreshToken = user.refreshToken;
     return this.usersService.refreshTokens(userId, refreshToken);
   }
 }
