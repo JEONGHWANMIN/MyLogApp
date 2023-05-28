@@ -11,20 +11,37 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  nickname  String   
-  password  String
-  createdAt DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  nickname     String
+  password     String
+  createdAt    DateTime @default(now())
   refreshToken String?
-  diarys   Diary[]
+  diaries      Diary[]
 }
 
 model Diary {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   title     String
   content   String
-  createdAt DateTime @default(now())
+  createdAt DateTime   @default(now())
+  weather   String?
+  mood      String?
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+  DiaryTag  DiaryTag[]
+}
+
+model DiaryTag {
+  id      Int    @id @default(autoincrement())
+  diary   Diary? @relation(fields: [diaryId], references: [id])
+  tag     Tag?   @relation(fields: [tagId], references: [id])
+  diaryId Int?
+  tagId   Int?
+}
+
+model Tag {
+  id        Int        @id @default(autoincrement())
+  title     String     @unique
+  diaryTags DiaryTag[]
 }
