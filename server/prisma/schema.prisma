@@ -21,27 +21,29 @@ model User {
 }
 
 model Diary {
-  id        Int        @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   title     String
   content   String
-  createdAt DateTime   @default(now())
+  createdAt DateTime    @default(now())
   weather   String?
   mood      String?
   userId    Int
-  user      User       @relation(fields: [userId], references: [id])
-  DiaryTag  DiaryTag[]
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags      DiaryTags[]
 }
 
-model DiaryTag {
+model DiaryTags {
   id      Int    @id @default(autoincrement())
   diary   Diary? @relation(fields: [diaryId], references: [id])
   tag     Tag?   @relation(fields: [tagId], references: [id])
   diaryId Int?
   tagId   Int?
+
+  @@unique([tagId, diaryId])
 }
 
 model Tag {
-  id        Int        @id @default(autoincrement())
-  title     String     @unique
-  diaryTags DiaryTag[]
+  id        Int         @id @default(autoincrement())
+  title     String      @unique
+  diaryTags DiaryTags[]
 }
