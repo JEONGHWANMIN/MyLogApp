@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Injectable,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -31,10 +33,10 @@ export class DiaryController {
   @Get('/:id')
   async getDiaryById(
     @GetTokenUser() user: AccessTokenPayload,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) diaryId: number,
   ) {
     const userId = user.userId;
-    return await this.diaryService.getDiaryById(userId, id);
+    return await this.diaryService.getDiaryById(userId, diaryId);
   }
 
   @UseGuards(AccessTokenGuard)
@@ -47,7 +49,22 @@ export class DiaryController {
     return await this.diaryService.createDiary(userId, createDiaryDto);
   }
 
-  // TODO: 다이어리 수정하기
+  @UseGuards(AccessTokenGuard)
+  @Patch('/:id')
+  async updateDiary(
+    @GetTokenUser() user: AccessTokenPayload,
+    @Param('id', ParseIntPipe) diaryId,
+    @Body() updateDiaryDto: CreateDiaryDto,
+  ) {
+    return this.diaryService.updateDiary(user.userId, diaryId, updateDiaryDto);
+  }
 
-  // TODO: 다이어리 삭제하기
+  @UseGuards(AccessTokenGuard)
+  @Delete('/:id')
+  async deleteDiary(
+    @Param('id', ParseIntPipe) diaryId: number,
+    @GetTokenUser() user: AccessTokenPayload,
+  ) {
+    return await this.diaryService.deleteDiary(user.userId, diaryId);
+  }
 }
