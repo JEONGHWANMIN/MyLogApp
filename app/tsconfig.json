@@ -10,7 +10,8 @@
       "@screens/*": ["screens/*"],
       "@utils/*": ["utils/*"],
       "@navigation/*": ["navigation/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@api/*": ["api/*"]
     }
   },
   "exclude": [

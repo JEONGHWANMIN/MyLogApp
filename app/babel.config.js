@@ -30,6 +30,7 @@ module.exports = {
           '@utils': './src/utils',
           '@navigation': './src/navigation',
           '@styles': './src/styles',
+          '@api': './src/api',
         },
       },
     ],
