@@ -92,6 +92,22 @@ export class UsersService {
     return await bcrypt.compare(password, hashedPassword);
   }
 
+  async checkDuplicateEmail(email: string) {
+    const user = await this.findByEmail(email);
+
+    if (user) {
+      return {
+        message: '이미 사용중인 이메일 입니다.',
+        isDuplicate: true,
+      };
+    }
+
+    return {
+      message: '사용 가능한 이메일 입니다.',
+      isDuplicate: false,
+    };
+  }
+
   async getTokens(userId: number, email: string, nickname: string) {
     const payload = {
       userId,

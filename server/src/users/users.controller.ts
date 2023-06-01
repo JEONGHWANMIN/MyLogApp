@@ -4,6 +4,7 @@ import {
   Get,
   Injectable,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from './dto';
@@ -34,6 +35,11 @@ export class UsersController {
   @Get('/logout')
   logout(@GetTokenUser() user: AccessTokenPayload) {
     return this.usersService.logout(user.userId);
+  }
+
+  @Get('/check')
+  findEmail(@Query('email') email: string) {
+    return this.usersService.checkDuplicateEmail(email);
   }
 
   /**
