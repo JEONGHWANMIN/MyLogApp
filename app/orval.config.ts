@@ -1,5 +1,7 @@
-module.exports = {
-  'penple-file': {
+import {defineConfig} from 'orval';
+
+export default defineConfig({
+  penple: {
     input: '../server/openapi.json',
     output: {
       mode: 'tags-split',
@@ -7,5 +9,8 @@ module.exports = {
       schemas: 'src/model',
       client: 'react-query',
     },
+    hooks: {
+      afterAllFilesWrite: 'prettier --write',
+    },
   },
-};
+});
