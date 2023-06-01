@@ -10,6 +10,7 @@ const validationOptions: ValidationPipeOptions = {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe(validationOptions));
   await app.listen(8080);
 }
