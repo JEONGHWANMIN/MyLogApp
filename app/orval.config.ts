@@ -5,8 +5,8 @@ export default defineConfig({
     input: '../server/openapi.json',
     output: {
       mode: 'tags-split',
-      target: 'src/petstore.ts',
-      schemas: 'src/model',
+      target: 'src/orval/target',
+      schemas: 'src/orval/model',
       client: 'react-query',
     },
     hooks: {
