@@ -1,0 +1,121 @@
+{
+  "info": {
+    "title": "Tspec API",
+    "version": "0.0.1"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/books/{id}": {
+      "get": {
+        "operationId": "BookApiSpec_get_/books/{id}",
+        "tags": ["도서"],
+        "summary": "단일 도서 조회",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/signup": {
+      "post": {
+        "operationId": "SignUpApiSpec_post_/users/signup",
+        "tags": ["유저"],
+        "summary": "유저 회원 가입",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "nickname": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": ["email", "nickname", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "enum": ["사용자 생성에 성공했습니다."]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "description": "도서 정보",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "도서 ID",
+            "type": "number"
+          },
+          "title": {
+            "description": "도서명",
+            "example": "상수리 나무 아래",
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": ["id", "tags", "title"]
+      },
+      "Tag": {
+        "description": "태그 정보",
+        "enum": ["로맨스", "판타지"],
+        "type": "string"
+      }
+    }
+  }
+}
