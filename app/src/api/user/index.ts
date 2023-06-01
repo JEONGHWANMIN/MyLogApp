@@ -1,4 +1,4 @@
-import {customAxiosInstance} from '..';
+import {customAxiosInstance} from '../index';
 import {SignUpForm} from './type/users.type';
 
 export const signupApi = async (signUpForm: SignUpForm) => {
