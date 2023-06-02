@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Injectable,
   Post,
@@ -31,20 +32,22 @@ export class UsersController {
     return this.usersService.login(loginUserDto);
   }
 
-  @UseGuards(AccessTokenGuard)
-  @Get('/logout')
-  logout(@GetTokenUser() user: AccessTokenPayload) {
-    return this.usersService.logout(user.userId);
-  }
-
   @Get('/check')
   findEmail(@Query('email') email: string) {
     return this.usersService.checkDuplicateEmail(email);
   }
 
-  /**
-   * TODO: 회원 탈퇴 기능 만들어야 한다.
-   */
+  @UseGuards(AccessTokenGuard)
+  @Get('/')
+  logout(@GetTokenUser() user: AccessTokenPayload) {
+    return this.usersService.logout(user.userId);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Delete('/')
+  deleteUser(@GetTokenUser() user: AccessTokenPayload) {
+    return this.usersService.delete(user.userId);
+  }
 
   @UseGuards(RefreshTokenGuard)
   @Get('/refresh')

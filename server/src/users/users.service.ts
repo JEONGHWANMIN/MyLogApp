@@ -78,6 +78,18 @@ export class UsersService {
     };
   }
 
+  async delete(userId: number) {
+    await this.prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    return {
+      message: '유저 삭제에 성공했습니다.',
+    };
+  }
+
   async findByEmail(email: string) {
     return await this.prisma.user.findUnique({ where: { email } });
   }
