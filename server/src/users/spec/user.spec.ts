@@ -1,4 +1,6 @@
 import { Tspec } from 'tspec';
+import { LoginUserDto } from '../dto';
+import { CreateUserDto } from '../dto';
 
 export type UsersApiSpec = Tspec.DefineApiSpec<{
   basePath: 'users';
@@ -7,30 +9,49 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
     '/signup': {
       post: {
         summary: '유저 회원가입';
-        body: {
-          email: string;
-          nickname: string;
-          password: string;
-        };
+        body: CreateUserDto;
         responses: {
-          200: {
+          201: {
             message: string;
           };
         };
       };
     };
-    '/login': {
+    '/signin': {
       post: {
         summary: '유저 로그인';
-        body: {
+        body: LoginUserDto;
+        responses: {
+          201: {
+            message: string;
+            accessToken: string;
+            refreshToken: string;
+          };
+        };
+      };
+    };
+    '/check': {
+      post: {
+        summary: '이메일 중복체크';
+        query: {
           email: string;
-          password: string;
         };
         responses: {
           200: {
             message: string;
-            accessToken: string;
-            refreshToken: string;
+            isDuplicate: boolean;
+          };
+        };
+      };
+    };
+    '/': {
+      get: {
+        security: 'bearerAuth';
+        summary: '유저 로그아웃';
+        responses: {
+          200: {
+            message: string;
+            isDuplicate: boolean;
           };
         };
       };

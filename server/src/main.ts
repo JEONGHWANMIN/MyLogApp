@@ -9,7 +9,17 @@ const validationOptions: ValidationPipeOptions = {
   transform: true,
 };
 
-const tespecConfigOptions: Tspec.GenerateParams = {};
+const tespecConfigOptions: Tspec.GenerateParams = {
+  openapi: {
+    securityDefinitions: {
+      jwt: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+};
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
