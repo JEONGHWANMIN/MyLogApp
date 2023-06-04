@@ -1,6 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class LocalStorage {
+  private static instance: LocalStorage | null = null;
+
+  private constructor() {
+    // Private constructor to prevent instantiation outside the class
+  }
+
+  static getInstance(): LocalStorage {
+    if (!LocalStorage.instance) {
+      LocalStorage.instance = new LocalStorage();
+    }
+    return LocalStorage.instance;
+  }
+
   async storeData(key: string, value: string) {
     try {
       await AsyncStorage.setItem(key, value);
