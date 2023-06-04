@@ -55,6 +55,26 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
           };
         };
       };
+      delete: {
+        summary: '유저 회원탈퇴';
+        responses: {
+          204: {
+            message: string;
+          };
+        };
+      };
+    };
+    '/renew': {
+      get: {
+        summary: '토큰 갱신';
+        responses: {
+          200: {
+            message: string;
+            accessToken: string;
+            refreshToken: string;
+          };
+        };
+      };
     };
   };
 }>;
