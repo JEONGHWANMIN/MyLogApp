@@ -5,9 +5,9 @@
   },
   "openapi": "3.0.3",
   "paths": {
-    "diary/": {
+    "/diary": {
       "get": {
-        "operationId": "DiaryApiSpec_get_/",
+        "operationId": "DiaryApiSpec_get_/diary",
         "tags": [
           "diary"
         ],
@@ -128,7 +128,7 @@
         }
       },
       "post": {
-        "operationId": "DiaryApiSpec_post_/",
+        "operationId": "DiaryApiSpec_post_/diary",
         "tags": [
           "diary"
         ],
@@ -192,9 +192,9 @@
         }
       }
     },
-    "diary/{id}": {
+    "/diary/{id}": {
       "delete": {
-        "operationId": "DiaryApiSpec_delete_/{id}",
+        "operationId": "DiaryApiSpec_delete_/diary/{id}",
         "tags": [
           "diary"
         ],
@@ -232,7 +232,7 @@
         }
       },
       "get": {
-        "operationId": "DiaryApiSpec_get_/{id}",
+        "operationId": "DiaryApiSpec_get_/diary/{id}",
         "tags": [
           "diary"
         ],
@@ -315,7 +315,7 @@
         }
       },
       "patch": {
-        "operationId": "DiaryApiSpec_patch_/{id}",
+        "operationId": "DiaryApiSpec_patch_/diary/{id}",
         "tags": [
           "diary"
         ],
@@ -388,78 +388,9 @@
         }
       }
     },
-    "users/": {
-      "delete": {
-        "operationId": "UsersApiSpec_delete_/",
-        "tags": [
-          "users"
-        ],
-        "summary": "유저 회원탈퇴",
-        "parameters": [],
-        "responses": {
-          "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "additionalProperties": false,
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "UsersApiSpec_get_/",
-        "tags": [
-          "users"
-        ],
-        "summary": "유저 로그아웃",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "isDuplicate": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false,
-                  "required": [
-                    "isDuplicate",
-                    "message"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "users/signup": {
+    "/users/signup": {
       "post": {
-        "operationId": "UsersApiSpec_post_/signup",
+        "operationId": "UsersApiSpec_post_/users/signup",
         "tags": [
           "users"
         ],
@@ -515,9 +446,9 @@
         }
       }
     },
-    "users/signin": {
+    "/users/signin": {
       "post": {
-        "operationId": "UsersApiSpec_post_/signin",
+        "operationId": "UsersApiSpec_post_/users/signin",
         "tags": [
           "users"
         ],
@@ -577,9 +508,9 @@
         }
       }
     },
-    "users/check": {
-      "post": {
-        "operationId": "UsersApiSpec_post_/check",
+    "/users/check": {
+      "get": {
+        "operationId": "UsersApiSpec_get_/users/check",
         "tags": [
           "users"
         ],
@@ -621,9 +552,78 @@
         }
       }
     },
-    "users/renew": {
+    "/users": {
+      "delete": {
+        "operationId": "UsersApiSpec_delete_/users",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 회원탈퇴",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
-        "operationId": "UsersApiSpec_get_/renew",
+        "operationId": "UsersApiSpec_get_/users",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 로그아웃",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "isDuplicate": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "isDuplicate",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/renew": {
+      "get": {
+        "operationId": "UsersApiSpec_get_/users/renew",
         "tags": [
           "users"
         ],
