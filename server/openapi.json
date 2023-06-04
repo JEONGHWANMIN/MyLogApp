@@ -5,11 +5,200 @@
   },
   "openapi": "3.0.3",
   "paths": {
-    "/books/{id}": {
+    "diary/": {
       "get": {
-        "operationId": "BookApiSpec_get_/books/{id}",
-        "tags": ["도서"],
-        "summary": "단일 도서 조회",
+        "operationId": "DiaryApiSpec_get_/",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 리스트 조회",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "number"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "totalPage": {
+                          "type": "number"
+                        },
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "description": "Model Diary",
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "content": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "weather": {
+                                "type": "string"
+                              },
+                              "mood": {
+                                "type": "string"
+                              },
+                              "userId": {
+                                "type": "number"
+                              }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                              "content",
+                              "createdAt",
+                              "id",
+                              "mood",
+                              "title",
+                              "userId",
+                              "weather"
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "hasNextPage",
+                        "hasPreviousPage",
+                        "items",
+                        "page",
+                        "size",
+                        "totalCount",
+                        "totalPage"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "DiaryApiSpec_post_/",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 쓰기",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "weather": {
+                    "type": "string"
+                  },
+                  "mood": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "content",
+                  "title"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "diary/:id": {
+      "delete": {
+        "operationId": "DiaryApiSpec_delete_/:id",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 삭제",
         "parameters": [
           {
             "name": "id",
@@ -26,7 +215,172 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "DiaryApiSpec_get_/:id",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 조회",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "weather": {
+                          "type": "string"
+                        },
+                        "mood": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "number"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "content",
+                        "createdAt",
+                        "id",
+                        "mood",
+                        "tags",
+                        "title",
+                        "userId",
+                        "weather"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "DiaryApiSpec_patch_/:id",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 수정",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "weather": {
+                    "type": "string"
+                  },
+                  "mood": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "content",
+                  "title"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -34,11 +388,82 @@
         }
       }
     },
-    "/users/signup": {
+    "users/": {
+      "delete": {
+        "operationId": "UsersApiSpec_delete_/",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 회원탈퇴",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "UsersApiSpec_get_/",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 로그아웃",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "isDuplicate": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "isDuplicate",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "users/signup": {
       "post": {
-        "operationId": "SignUpApiSpec_post_/users/signup",
-        "tags": ["유저"],
-        "summary": "유저 회원 가입",
+        "operationId": "UsersApiSpec_post_/signup",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 회원가입",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -58,11 +483,117 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["email", "nickname", "password"]
+                "required": [
+                  "email",
+                  "nickname",
+                  "password"
+                ]
               }
             }
           }
         },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "users/signin": {
+      "post": {
+        "operationId": "UsersApiSpec_post_/signin",
+        "tags": [
+          "users"
+        ],
+        "summary": "유저 로그인",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "accessToken": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "accessToken",
+                    "message",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "users/check": {
+      "post": {
+        "operationId": "UsersApiSpec_post_/check",
+        "tags": [
+          "users"
+        ],
+        "summary": "이메일 중복체크",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -72,12 +603,56 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string",
-                      "enum": ["사용자 생성에 성공했습니다."]
+                      "type": "string"
+                    },
+                    "isDuplicate": {
+                      "type": "boolean"
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "isDuplicate",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "users/renew": {
+      "get": {
+        "operationId": "UsersApiSpec_get_/renew",
+        "tags": [
+          "users"
+        ],
+        "summary": "토큰 갱신",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "accessToken": {
+                      "type": "string"
+                    },
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "accessToken",
+                    "message",
+                    "refreshToken"
+                  ]
                 }
               }
             }
@@ -88,33 +663,69 @@
   },
   "components": {
     "schemas": {
-      "Book": {
-        "description": "도서 정보",
+      "CreateDiaryDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "description": "도서 ID",
-            "type": "number"
-          },
           "title": {
-            "description": "도서명",
-            "example": "상수리 나무 아래",
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "weather": {
+            "type": "string"
+          },
+          "mood": {
             "type": "string"
           },
           "tags": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Tag"
+              "type": "string"
             }
           }
         },
         "additionalProperties": false,
-        "required": ["id", "tags", "title"]
+        "required": [
+          "content",
+          "title"
+        ]
       },
-      "Tag": {
-        "description": "태그 정보",
-        "enum": ["로맨스", "판타지"],
-        "type": "string"
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "nickname",
+          "password"
+        ]
+      },
+      "LoginUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password"
+        ]
       }
     }
   }
