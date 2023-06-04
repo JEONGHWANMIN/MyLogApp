@@ -3,10 +3,9 @@ import { LoginUserDto } from '../dto';
 import { CreateUserDto } from '../dto';
 
 export type UsersApiSpec = Tspec.DefineApiSpec<{
-  basePath: 'users';
   tags: ['users'];
   paths: {
-    '/signup': {
+    '/users/signup': {
       post: {
         summary: '유저 회원가입';
         body: CreateUserDto;
@@ -17,7 +16,7 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/signin': {
+    '/users/signin': {
       post: {
         summary: '유저 로그인';
         body: LoginUserDto;
@@ -30,8 +29,8 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/check': {
-      post: {
+    '/users/check': {
+      get: {
         summary: '이메일 중복체크';
         query: {
           email: string;
@@ -44,7 +43,7 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/': {
+    '/users': {
       get: {
         security: 'bearerAuth';
         summary: '유저 로그아웃';
@@ -64,9 +63,10 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/renew': {
+    '/users/renew': {
       get: {
         summary: '토큰 갱신';
+
         responses: {
           200: {
             message: string;

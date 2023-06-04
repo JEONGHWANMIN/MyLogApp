@@ -3,10 +3,9 @@ import { Tspec } from 'tspec';
 import { CreateDiaryDto } from '../dto/diary.dto';
 
 export type DiaryApiSpec = Tspec.DefineApiSpec<{
-  basePath: 'diary';
   tags: ['diary'];
   paths: {
-    '/': {
+    '/diary': {
       get: {
         summary: '일기 리스트 조회';
         query: {
@@ -38,7 +37,7 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/{id}': {
+    '/diary/{id}': {
       get: {
         summary: '일기 조회';
         path: { id: number };
