@@ -192,9 +192,9 @@
         }
       }
     },
-    "diary/:id": {
+    "diary/{id}": {
       "delete": {
-        "operationId": "DiaryApiSpec_delete_/:id",
+        "operationId": "DiaryApiSpec_delete_/{id}",
         "tags": [
           "diary"
         ],
@@ -232,7 +232,7 @@
         }
       },
       "get": {
-        "operationId": "DiaryApiSpec_get_/:id",
+        "operationId": "DiaryApiSpec_get_/{id}",
         "tags": [
           "diary"
         ],
@@ -315,7 +315,7 @@
         }
       },
       "patch": {
-        "operationId": "DiaryApiSpec_patch_/:id",
+        "operationId": "DiaryApiSpec_patch_/{id}",
         "tags": [
           "diary"
         ],
