@@ -38,7 +38,7 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
         };
       };
     };
-    '/:id': {
+    '/{id}': {
       get: {
         summary: '일기 조회';
         path: { id: number };
