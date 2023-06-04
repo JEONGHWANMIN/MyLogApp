@@ -50,7 +50,7 @@ export class UsersController {
   }
 
   @UseGuards(RefreshTokenGuard)
-  @Get('/refresh')
+  @Get('/renew')
   refreshTokens(@GetTokenUser() user: RefreshTokenPayload) {
     const userId = user.userId;
     const refreshToken = user.refreshToken;
