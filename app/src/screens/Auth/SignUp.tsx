@@ -11,14 +11,14 @@ import {
 import CoreInput from '@/components/core/CoreInput';
 import CoreButton from '@/components/core/CoreButton';
 import {AuthParamListProps} from '@/navigation/types/types';
-import {SignUpForm} from '@/api/user/type/users.type';
-import {useMutation} from '@tanstack/react-query';
-import {signupApi} from '@/api/user';
+import {
+  useUsersApiSpecPostUsersSignup,
+  usersApiSpecGetUsersCheck,
+} from '@/orval/api/users/users';
+import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
 
 const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
-
-  const [passwordMatch, setPasswordMatch] = useState(true);
 
   const [form, setForm] = useState({
     email: '',
@@ -27,13 +27,14 @@ const SignUp = () => {
     confirmPassword: '',
   });
 
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(true);
+
+  const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
+
   const handleCloseKeyboard = () => {
     Keyboard.dismiss();
   };
-
-  const useSignUpApi = useMutation({
-    mutationFn: signupApi,
-  });
 
   const onChange = (text: string, name: string) => {
     if (name === 'confirmPassword' && text !== form.password) {
@@ -48,25 +49,44 @@ const SignUp = () => {
     }));
   };
 
+  const handleEmailDuplicate = async () => {
+    const response = await usersApiSpecGetUsersCheck({
+      email: form.email,
+    });
+
+    setIsEmailDuplicate(response.isDuplicate);
+  };
+
+  const usersApiSpecPostUsers = (
+    signUpForm: UsersApiSpecPostUsersSignupBody,
+  ) => {
+    useUsersApiSpecPostUsers.mutate(
+      {
+        data: signUpForm,
+      },
+      {
+        onSuccess: () => {
+          console.log('유저 회원가입 성공');
+        },
+        onError: () => {
+          console.log('유저 회원가입 실패');
+        },
+      },
+    );
+  };
+
   const handleSubmit = async () => {
     if (!passwordMatch) {
       return;
     }
 
-    const signUpForm: SignUpForm = {
+    const signUpForm = {
       email: form.email,
       nickname: form.nickname,
       password: form.password,
     };
 
-    useSignUpApi.mutate(signUpForm, {
-      onSuccess: () => {
-        console.log('회원가입에 성공했습니다.');
-      },
-      onError: () => {
-        console.log('회원가입에 실패');
-      },
-    });
+    usersApiSpecPostUsers(signUpForm);
   };
 
   return (
@@ -90,6 +110,7 @@ const SignUp = () => {
               />
               <CoreButton
                 mode="contained"
+                onPress={handleEmailDuplicate}
                 sx={{
                   fontSize: 14,
                 }}>
@@ -125,7 +146,10 @@ const SignUp = () => {
           </View>
         </View>
         <View>
-          <CoreButton mode="contained" onPress={handleSubmit}>
+          <CoreButton
+            mode="contained"
+            onPress={handleSubmit}
+            disabled={useUsersApiSpecPostUsers.isLoading || isEmailDuplicate}>
             회원가입
           </CoreButton>
         </View>
