@@ -24,6 +24,7 @@ export const customInstance = <T>(
 ): Promise<T> => {
   const source = axios.CancelToken.source();
   const promise = customAxiosInstance({
+    ...customConfig,
     ...config,
     ...options,
     cancelToken: source.token,
