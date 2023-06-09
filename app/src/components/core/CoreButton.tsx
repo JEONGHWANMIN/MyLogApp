@@ -8,12 +8,13 @@ interface ButtonProps extends Props {
   sx?: StyleProp<TextStyle>;
 }
 
-const CoreButton = ({children, mode, sx, ...props}: ButtonProps) => {
+const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
   return (
     <Button
       style={[
         mode === 'contained' ? styles.fill : styles.outlined,
         styles.container,
+        disabled && styles.disabled,
       ]}
       {...props}>
       <Text
@@ -45,5 +46,9 @@ const styles = StyleSheet.create({
   outlineText: {
     color: theme.colors.point.sageGreen,
     fontFamily: theme.typography.family.medium,
+  },
+  disabled: {
+    backgroundColor: theme.colors.gray[200],
+    borderColor: theme.colors.gray[200],
   },
 });
