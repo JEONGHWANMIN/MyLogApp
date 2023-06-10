@@ -12,6 +12,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
           size: number;
           page: number;
         };
+        header: {
+          Authorization: string;
+        };
         responses: {
           200: {
             message: string;
@@ -29,6 +32,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
       };
       post: {
         summary: '일기 쓰기';
+        header: {
+          Authorization: string;
+        };
         body: CreateDiaryDto;
         responses: {
           201: {
@@ -41,6 +47,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
       get: {
         summary: '일기 조회';
         path: { id: number };
+        header: {
+          Authorization: string;
+        };
         responses: {
           200: {
             message: string;
@@ -60,6 +69,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
       patch: {
         summary: '일기 수정';
         path: { id: number };
+        header: {
+          Authorization: string;
+        };
         body: CreateDiaryDto;
         responses: {
           200: {
@@ -70,6 +82,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
       delete: {
         summary: '일기 삭제';
         path: { id: number };
+        header: {
+          Authorization: string;
+        };
         responses: {
           200: {
             message: string;

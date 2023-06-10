@@ -56,6 +56,9 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
       };
       delete: {
         summary: '유저 회원탈퇴';
+        header: {
+          Authorization: string;
+        };
         responses: {
           204: {
             message: string;
@@ -66,7 +69,9 @@ export type UsersApiSpec = Tspec.DefineApiSpec<{
     '/users/renew': {
       get: {
         summary: '토큰 갱신';
-
+        header: {
+          Authorization: string;
+        };
         responses: {
           200: {
             message: string;
