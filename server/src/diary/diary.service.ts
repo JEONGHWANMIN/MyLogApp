@@ -12,10 +12,13 @@ import { Page } from 'src/common/utils/Page/Page';
 export class DiaryService {
   constructor(private prismaService: PrismaService) {}
 
-  async getAllDiaries(pageDto: SearchDiariesDto) {
+  async getAllDiaries(pageDto: SearchDiariesDto, userId: number) {
     const totalCount = await this.prismaService.diary.count();
 
     const diaries = await this.prismaService.diary.findMany({
+      where: {
+        userId,
+      },
       take: pageDto.getLimit(),
       skip: pageDto.getOffset(),
     });
