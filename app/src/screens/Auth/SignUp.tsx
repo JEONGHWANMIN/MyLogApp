@@ -23,13 +23,16 @@ const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(true);
   const [form, setForm] = useState({
     email: '',
     nickname: '',
     password: '',
     confirmPassword: '',
   });
+
+  const isEmptyField =
+    !form.email || !form.nickname || !form.password || !form.confirmPassword;
 
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
 
@@ -58,6 +61,10 @@ const SignUp = () => {
   };
 
   const onChange = (text: string, name: string) => {
+    if (name === 'confirmPassword') {
+      setPasswordMatch(form.password === text);
+    }
+
     setForm(prevForm => ({
       ...prevForm,
       [name]: text,
@@ -88,10 +95,14 @@ const SignUp = () => {
         data: signUpForm,
       },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          navigation.popToTop();
+          navigation.push('SignIn');
+          showSnackbarMessage('회원가입에 성공했습니다.', 'info');
+        },
         onError: error => {
           if (axios.isAxiosError(error)) {
-            console.log('유저 회원가입 실패');
+            showSnackbarMessage('회원가입에 실패했습니다.', 'error');
           }
         },
       },
@@ -100,6 +111,7 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     if (!passwordMatch) {
+      showSnackbarMessage('비밀번호가 일치하지 않습니다.', 'error');
       return;
     }
 
@@ -127,7 +139,6 @@ const SignUp = () => {
                 value={form.email}
                 placeholder="이메일"
                 onChangeText={text => onChange(text, 'email')}
-                error={isEmailDuplicate}
                 sx={{
                   flex: 1,
                 }}
@@ -179,7 +190,11 @@ const SignUp = () => {
           <CoreButton
             mode="contained"
             onPress={handleSubmit}
-            disabled={useUsersApiSpecPostUsers.isLoading || isEmailDuplicate}>
+            disabled={
+              useUsersApiSpecPostUsers.isLoading ||
+              isEmailDuplicate ||
+              isEmptyField
+            }>
             회원가입
           </CoreButton>
         </View>
