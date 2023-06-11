@@ -9,6 +9,7 @@ interface PointColor {
     taupe: '#B4AC9F';
     parePink: '#FBD1DD';
     dustBlue: '#A4B6C1';
+    error: '#FF4C4C';
   };
   gray: {
     50: '#F7F8F9';
@@ -67,6 +68,7 @@ const theme: MyTheme = {
       taupe: '#B4AC9F',
       parePink: '#FBD1DD',
       dustBlue: '#A4B6C1',
+      error: '#FF4C4C',
     },
     gray: {
       50: '#F7F8F9',
