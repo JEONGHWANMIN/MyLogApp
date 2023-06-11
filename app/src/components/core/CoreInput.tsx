@@ -5,17 +5,41 @@ import {TextInput} from 'react-native-paper';
 import {Props} from 'react-native-paper/lib/typescript/src/components/TextInput/TextInput';
 
 interface CoreInputProps extends Props {
+  error?: boolean;
   sx?: StyleProp<TextStyle>;
+  onFocusEvent?: () => void;
+  onBlurEvent?: () => void;
 }
 
-const CoreInput = ({sx, ...props}: CoreInputProps) => {
+const CoreInput = ({
+  error = false,
+  sx,
+  onFocusEvent,
+  onBlurEvent,
+  ...props
+}: CoreInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <TextInput
       {...props}
-      style={[styles.container, isFocused && styles.focus, sx]}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
+      style={[
+        styles.container,
+        isFocused && styles.focus,
+        error && styles.error,
+        sx,
+      ]}
+      onFocus={() => {
+        setIsFocused(true);
+        if (onFocusEvent) {
+          onFocusEvent();
+        }
+      }}
+      onBlur={() => {
+        setIsFocused(false);
+        if (onBlurEvent) {
+          onBlurEvent();
+        }
+      }}
     />
   );
 };
@@ -34,5 +58,11 @@ const styles = StyleSheet.create({
   },
   focus: {
     borderColor: theme.colors.point.sageGreen,
+  },
+  error: {
+    borderColor: theme.colors.point.error,
+    '&:placeholder': {
+      color: 'red',
+    },
   },
 });

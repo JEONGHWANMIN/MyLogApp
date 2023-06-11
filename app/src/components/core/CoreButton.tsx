@@ -11,6 +11,7 @@ interface ButtonProps extends Props {
 const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
   return (
     <Button
+      disabled={disabled}
       style={[
         mode === 'contained' ? styles.fill : styles.outlined,
         styles.container,
