@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import {theme} from '@/styles/theme';
 import {
   StyleSheet,
@@ -16,10 +17,13 @@ import {
   usersApiSpecGetUsersCheck,
 } from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
+import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 
 const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
-
+  const {setGlobalSnackbar} = useGlobalSnackbarStore();
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const [form, setForm] = useState({
     email: '',
     nickname: '',
@@ -27,22 +31,33 @@ const SignUp = () => {
     confirmPassword: '',
   });
 
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [isEmailDuplicate, setIsEmailDuplicate] = useState(true);
-
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
 
   const handleCloseKeyboard = () => {
     Keyboard.dismiss();
   };
 
-  const onChange = (text: string, name: string) => {
-    if (name === 'confirmPassword' && text !== form.password) {
-      setPasswordMatch(false);
-    } else if (name === 'confirmPassword' && text === form.password) {
+  const showSnackbarMessage = (message: string, mode: 'error' | 'info') => {
+    setGlobalSnackbar({
+      message,
+      actionLabel: '확인',
+      mode,
+      options: {
+        duration: 1500,
+      },
+    });
+  };
+
+  const handleConfirmPasswordCheck = () => {
+    if (form.password) {
+      setPasswordMatch(form.password === form.confirmPassword);
+    }
+    if (!form.password) {
       setPasswordMatch(true);
     }
+  };
 
+  const onChange = (text: string, name: string) => {
     setForm(prevForm => ({
       ...prevForm,
       [name]: text,
@@ -50,11 +65,19 @@ const SignUp = () => {
   };
 
   const handleEmailDuplicate = async () => {
-    const response = await usersApiSpecGetUsersCheck({
+    const {isDuplicate} = await usersApiSpecGetUsersCheck({
       email: form.email,
     });
 
-    setIsEmailDuplicate(response.isDuplicate);
+    const message = isDuplicate
+      ? '중복된 이메일 입니다.'
+      : '사용가능한 이메일 입니다.';
+
+    const mode = isDuplicate ? 'error' : 'info';
+
+    showSnackbarMessage(message, mode);
+
+    setIsEmailDuplicate(isDuplicate);
   };
 
   const usersApiSpecPostUsers = (
@@ -65,11 +88,11 @@ const SignUp = () => {
         data: signUpForm,
       },
       {
-        onSuccess: () => {
-          console.log('유저 회원가입 성공');
-        },
-        onError: () => {
-          console.log('유저 회원가입 실패');
+        onSuccess: () => {},
+        onError: error => {
+          if (axios.isAxiosError(error)) {
+            console.log('유저 회원가입 실패');
+          }
         },
       },
     );
@@ -80,7 +103,7 @@ const SignUp = () => {
       return;
     }
 
-    const signUpForm = {
+    const signUpForm: UsersApiSpecPostUsersSignupBody = {
       email: form.email,
       nickname: form.nickname,
       password: form.password,
@@ -104,6 +127,7 @@ const SignUp = () => {
                 value={form.email}
                 placeholder="이메일"
                 onChangeText={text => onChange(text, 'email')}
+                error={isEmailDuplicate}
                 sx={{
                   flex: 1,
                 }}
@@ -133,8 +157,9 @@ const SignUp = () => {
               value={form.confirmPassword}
               onChangeText={text => onChange(text, 'confirmPassword')}
               secureTextEntry
+              error={!passwordMatch}
+              onBlurEvent={handleConfirmPasswordCheck}
             />
-            {!passwordMatch && <Text>비밀번호가 일치하지 않습니다.</Text>}
             <View style={styles.registeredUserContainer}>
               <Text style={styles.registeredUserText}>이미 회원이신가요 ?</Text>
               <Text
@@ -143,6 +168,11 @@ const SignUp = () => {
                 로그인
               </Text>
             </View>
+            {!passwordMatch && (
+              <Text style={styles.errorMessage}>
+                비밀번호가 일치하지 않습니다.
+              </Text>
+            )}
           </View>
         </View>
         <View>
@@ -213,5 +243,9 @@ const styles = StyleSheet.create({
   loginLink: {
     fontSize: theme.typography.size.body3,
     fontWeight: theme.typography.weight.bold,
+  },
+  errorMessage: {
+    textAlign: 'center',
+    color: theme.colors.point.error,
   },
 });
