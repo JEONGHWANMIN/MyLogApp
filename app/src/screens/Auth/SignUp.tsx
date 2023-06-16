@@ -96,8 +96,7 @@ const SignUp = () => {
       },
       {
         onSuccess: () => {
-          navigation.popToTop();
-          navigation.push('SignIn');
+          navigation.replace('SignIn');
           showSnackbarMessage('회원가입에 성공했습니다.', 'info');
         },
         onError: error => {
@@ -115,13 +114,13 @@ const SignUp = () => {
       return;
     }
 
-    const signUpForm: UsersApiSpecPostUsersSignupBody = {
+    const requestForm: UsersApiSpecPostUsersSignupBody = {
       email: form.email,
       nickname: form.nickname,
       password: form.password,
     };
 
-    usersApiSpecPostUsers(signUpForm);
+    usersApiSpecPostUsers(requestForm);
   };
 
   return (

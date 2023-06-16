@@ -17,6 +17,17 @@ interface BottomTabParamsList {
   Setting: undefined;
 }
 
+type RootListParamsListProps = NativeStackNavigationProp<{
+  BottomTabNavigation: undefined;
+  AuthNavigation: undefined;
+}>;
+
+type BottomTabParamListProps = NativeStackNavigationProp<{
+  Home: undefined;
+  Diary: undefined;
+  Setting: undefined;
+}>;
+
 type AuthParamListProps = NativeStackNavigationProp<{
   Auth: undefined;
   SignUp: undefined;
@@ -27,5 +38,7 @@ export type {
   RootListParamsList,
   AuthListParamsList,
   BottomTabParamsList,
+  RootListParamsListProps,
+  BottomTabParamListProps,
   AuthParamListProps,
 };

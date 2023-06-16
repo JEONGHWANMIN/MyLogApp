@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   Keyboard,
   StyleSheet,
@@ -9,22 +10,102 @@ import {
 import CoreButton from '@/components/core/CoreButton';
 import CoreInput from '@/components/core/CoreInput';
 import {theme} from '@/styles/theme';
-import {useNavigation} from '@react-navigation/native';
-import {AuthParamListProps} from '@/navigation/types/types';
+import {
+  AuthParamListProps,
+  RootListParamsListProps,
+} from '@/navigation/types/types';
+import {useUsersApiSpecPostUsersSignin} from '@/orval/api/users/users';
+import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
+import {LocalStorage} from '@/utils/localStorage/localStorage';
+import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
+import axios from 'axios';
 
 const SignIn = () => {
-  const navigation = useNavigation<AuthParamListProps>();
+  const navigation = useNavigation<
+    AuthParamListProps & RootListParamsListProps
+  >();
+  const {setGlobalSnackbar} = useGlobalSnackbarStore();
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+
+  const showSnackbarMessage = (message: string, mode: 'error' | 'info') => {
+    setGlobalSnackbar({
+      message,
+      actionLabel: '확인',
+      mode,
+      options: {
+        duration: 1500,
+      },
+    });
+  };
+
   const handleCloseKeyboard = () => {
     Keyboard.dismiss();
   };
+
+  const handleChange = (text: string, name: string) => {
+    setForm(prev => ({
+      ...prev,
+      [name]: text,
+    }));
+  };
+
+  const useUserSignInAPI = useUsersApiSpecPostUsersSignin();
+
+  const userSignInAPI = (form: UsersApiSpecPostUsersSigninBody) => {
+    useUserSignInAPI.mutate(
+      {
+        data: form,
+      },
+      {
+        onSuccess: async response => {
+          const {accessToken, refreshToken} = response;
+          const localStorage = LocalStorage.getInstance();
+
+          await localStorage.storeData('accessToken', accessToken);
+          await localStorage.storeData('refreshToken', refreshToken);
+
+          navigation.navigate('BottomTabNavigation');
+          showSnackbarMessage('로그인이 완료되었습니다', 'info');
+        },
+        onError: error => {
+          if (axios.isAxiosError(error)) {
+            showSnackbarMessage(
+              '이메일, 비밀번호를 다시 확인해주세요.',
+              'error',
+            );
+          }
+        },
+      },
+    );
+  };
+
+  const handleSubmit = () => {
+    if (!form.email || !form.password) {
+      showSnackbarMessage('이메일, 비밀번호를 입력해주세요.', 'error');
+      return;
+    }
+
+    userSignInAPI(form);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>PenPle</Text>
           <View style={styles.inputContainer}>
-            <CoreInput placeholder="이메일" />
-            <CoreInput placeholder="패스워드" secureTextEntry />
+            <CoreInput
+              placeholder="이메일"
+              onChangeText={text => handleChange(text, 'email')}
+            />
+            <CoreInput
+              placeholder="패스워드"
+              onChangeText={text => handleChange(text, 'password')}
+              secureTextEntry
+            />
             <View style={styles.registeredUserContainer}>
               <Text style={styles.registeredUserText}>회원이 아니신가요 ?</Text>
               <Text
@@ -36,7 +117,9 @@ const SignIn = () => {
           </View>
         </View>
         <View>
-          <CoreButton mode="contained">로그인</CoreButton>
+          <CoreButton mode="contained" onPress={handleSubmit}>
+            로그인
+          </CoreButton>
         </View>
       </View>
     </TouchableWithoutFeedback>
