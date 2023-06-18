@@ -3,6 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 interface RootListParamsList {
   BottomTabNavigation: undefined;
   AuthNavigation: undefined;
+  SplashScreen: undefined;
 }
 
 interface AuthListParamsList {
@@ -20,6 +21,7 @@ interface BottomTabParamsList {
 type RootListParamsListProps = NativeStackNavigationProp<{
   BottomTabNavigation: undefined;
   AuthNavigation: undefined;
+  SplashScreen: undefined;
 }>;
 
 type BottomTabParamListProps = NativeStackNavigationProp<{
