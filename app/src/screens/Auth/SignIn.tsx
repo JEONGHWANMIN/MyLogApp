@@ -67,7 +67,7 @@ const SignIn = () => {
           await localStorage.storeData('accessToken', accessToken);
           await localStorage.storeData('refreshToken', refreshToken);
 
-          navigation.navigate('BottomTabNavigation');
+          navigation.replace('BottomTabNavigation');
           showSnackbarMessage('로그인이 완료되었습니다', 'info');
         },
         onError: error => {
