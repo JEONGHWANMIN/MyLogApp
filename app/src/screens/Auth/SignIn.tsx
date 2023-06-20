@@ -19,6 +19,7 @@ import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
 import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 import axios from 'axios';
+import {TextInput} from 'react-native-paper';
 
 const SignIn = () => {
   const navigation = useNavigation<
@@ -100,6 +101,7 @@ const SignIn = () => {
             <CoreInput
               placeholder="이메일"
               onChangeText={text => handleChange(text, 'email')}
+              right={<TextInput.Icon icon="eye" />}
             />
             <CoreInput
               placeholder="패스워드"
