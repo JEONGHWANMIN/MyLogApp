@@ -17,6 +17,7 @@ const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
         styles.container,
         disabled && styles.disabled,
       ]}
+      mode={mode}
       {...props}>
       <Text
         style={[
@@ -32,7 +33,11 @@ const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
 export default CoreButton;
 
 const styles = StyleSheet.create({
-  container: {justifyContent: 'center', height: 50, borderRadius: 10},
+  container: {
+    justifyContent: 'center',
+    height: 50,
+    borderRadius: 10,
+  },
   fill: {
     backgroundColor: theme.colors.point.sageGreen,
   },
