@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
-import {useNavigation} from '@react-navigation/native';
 import {AuthParamListProps, RootListParamsListProps} from '@/navigation/types/types';
 import {theme} from '@/styles/theme';
 
 const SplashScreen = () => {
   const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
+
   useEffect(() => {
     const checkLogin = async () => {
       const localStorage = LocalStorage.getInstance();
