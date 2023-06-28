@@ -49,6 +49,7 @@ const SignUp = () => {
       },
     });
   };
+
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
 
   const usersApiSpecPostUsers = (signUpForm: UsersApiSpecPostUsersSignupBody) => {
@@ -98,7 +99,7 @@ const SignUp = () => {
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
                   <CoreInput
-                    placeholder="email"
+                    placeholder="이메일"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -125,7 +126,7 @@ const SignUp = () => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <CoreInput
-                  placeholder="First name"
+                  placeholder="닉네임"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -140,7 +141,7 @@ const SignUp = () => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <CoreInput
-                  placeholder="First name"
+                  placeholder="비밀번호"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -155,7 +156,7 @@ const SignUp = () => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <CoreInput
-                  placeholder="First name"
+                  placeholder="비밀번호 확인"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
