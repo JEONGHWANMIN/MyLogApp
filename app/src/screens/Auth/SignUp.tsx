@@ -21,11 +21,13 @@ interface SignUpForm {
 const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
+  const [isEmailCheck, setIsEmailCheck] = useState<boolean | null>(null);
 
   const {
     control,
     handleSubmit,
     formState: {errors},
+    getValues,
   } = useForm<SignUpForm>({
     defaultValues: {
       email: '',
@@ -51,6 +53,19 @@ const SignUp = () => {
   };
 
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
+
+  const handleEmailDuplicate = async () => {
+    if (typeof isEmailCheck === 'boolean') {
+      setIsEmailCheck(null);
+      return;
+    }
+
+    const {isDuplicate} = await usersApiSpecGetUsersCheck({
+      email: getValues().email,
+    });
+
+    setIsEmailCheck(isDuplicate);
+  };
 
   const usersApiSpecPostUsers = (signUpForm: UsersApiSpecPostUsersSignupBody) => {
     useUsersApiSpecPostUsers.mutate(
@@ -96,9 +111,11 @@ const SignUp = () => {
                 control={control}
                 rules={{
                   required: true,
+                  minLength: 6,
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
                   <CoreInput
+                    disabled={isEmailCheck === false}
                     placeholder="이메일"
                     onBlur={onBlur}
                     onChangeText={onChange}
@@ -112,11 +129,11 @@ const SignUp = () => {
               />
               <CoreButton
                 mode="contained"
-                // onPress={handleEmailDuplicate}
+                onPress={handleEmailDuplicate}
                 sx={{
                   fontSize: 14,
                 }}>
-                중복확인
+                {typeof isEmailCheck === 'boolean' ? '취소' : '중복확인'}
               </CoreButton>
             </View>
             <Controller
