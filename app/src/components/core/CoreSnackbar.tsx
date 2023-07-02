@@ -13,7 +13,7 @@ const CoreSnackbar = () => {
         theme={{
           isV3: false,
         }}
-        style={mode === 'error' ? styles.error : styles.info}
+        style={mode && styles[mode]}
         visible={visible}
         onDismiss={onDismissSnackBar}
         {...options}>
@@ -23,15 +23,7 @@ const CoreSnackbar = () => {
             onPress={() => {
               onDismissSnackBar();
             }}>
-            <Text
-              style={[
-                styles.button,
-                mode === 'error'
-                  ? styles.errorActionText
-                  : styles.infoActionText,
-              ]}>
-              {actionLabel}
-            </Text>
+            <Text style={[styles.button, styles.infoActionText]}>{actionLabel}</Text>
           </Button>
         </View>
       </Snackbar>
@@ -48,6 +40,9 @@ const styles = StyleSheet.create({
   },
   error: {
     backgroundColor: theme.colors.point.error,
+  },
+  warning: {
+    backgroundColor: theme.colors.point.warning,
   },
   content: {
     flex: 1,
@@ -66,6 +61,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   errorActionText: {
+    color: 'white',
+  },
+  warningActionText: {
     color: 'white',
   },
 });

@@ -19,11 +19,7 @@ const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
       ]}
       mode={mode}
       {...props}>
-      <Text
-        style={[
-          mode === 'contained' ? styles.fillText : styles.outlineText,
-          sx,
-        ]}>
+      <Text style={[mode === 'contained' ? styles.fillText : styles.outlineText, sx]}>
         {children}
       </Text>
     </Button>
