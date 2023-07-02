@@ -21,7 +21,7 @@ interface SignUpForm {
 const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
-  const [isEmailCheck, setIsEmailCheck] = useState<boolean | null>(null);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
 
   const {control, handleSubmit, getValues} = useForm<SignUpForm>({
     defaultValues: {
@@ -36,7 +36,7 @@ const SignUp = () => {
     Keyboard.dismiss();
   };
 
-  const showSnackbarMessage = (message: string, mode: 'error' | 'info') => {
+  const showSnackbarMessage = (message: string, mode: 'error' | 'info' | 'warning') => {
     setGlobalSnackbar({
       message,
       actionLabel: '확인',
@@ -55,20 +55,20 @@ const SignUp = () => {
     });
 
     if (isDuplicate) {
-      showSnackbarMessage('중복된 이메일 입니다.', 'error');
+      showSnackbarMessage('중복된 이메일 입니다.', 'warning');
     }
 
     if (!isDuplicate) {
       showSnackbarMessage('사용 가능한 이메일 입니다.', 'info');
     }
 
-    setIsEmailCheck(isDuplicate);
+    setIsEmailDuplicate(isDuplicate);
   };
 
-  const usersApiSpecPostUsers = (signUpForm: UsersApiSpecPostUsersSignupBody) => {
+  const usersApiSpecPostUsers = (requestForm: UsersApiSpecPostUsersSignupBody) => {
     useUsersApiSpecPostUsers.mutate(
       {
-        data: signUpForm,
+        data: requestForm,
       },
       {
         onSuccess: () => {
@@ -91,6 +91,10 @@ const SignUp = () => {
       password: data.password,
     };
 
+    if (isEmailDuplicate) {
+      showSnackbarMessage('이메일 중복확인을 해주세요.', 'error');
+    }
+
     usersApiSpecPostUsers(requestForm);
   };
 
@@ -109,11 +113,9 @@ const SignUp = () => {
                 control={control}
                 rules={{
                   required: true,
-                  minLength: 6,
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
                   <CoreInput
-                    disabled={isEmailCheck === false}
                     placeholder="이메일"
                     onBlur={onBlur}
                     onChangeText={onChange}
@@ -129,6 +131,7 @@ const SignUp = () => {
                 mode="contained"
                 onPress={handleEmailDuplicate}
                 sx={{
+                  width: 100,
                   fontSize: 14,
                 }}>
                 중복확인
@@ -156,6 +159,7 @@ const SignUp = () => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <CoreInput
+                  secureTextEntry
                   placeholder="비밀번호"
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -171,6 +175,7 @@ const SignUp = () => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <CoreInput
+                  secureTextEntry
                   placeholder="비밀번호 확인"
                   onBlur={onBlur}
                   onChangeText={onChange}
