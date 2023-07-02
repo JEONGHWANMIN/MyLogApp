@@ -23,12 +23,7 @@ const SignUp = () => {
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
   const [isEmailCheck, setIsEmailCheck] = useState<boolean | null>(null);
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-    getValues,
-  } = useForm<SignUpForm>({
+  const {control, handleSubmit, getValues} = useForm<SignUpForm>({
     defaultValues: {
       email: '',
       nickname: '',
@@ -55,14 +50,17 @@ const SignUp = () => {
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
 
   const handleEmailDuplicate = async () => {
-    if (typeof isEmailCheck === 'boolean') {
-      setIsEmailCheck(null);
-      return;
-    }
-
     const {isDuplicate} = await usersApiSpecGetUsersCheck({
       email: getValues().email,
     });
+
+    if (isDuplicate) {
+      showSnackbarMessage('중복된 이메일 입니다.', 'error');
+    }
+
+    if (!isDuplicate) {
+      showSnackbarMessage('사용 가능한 이메일 입니다.', 'info');
+    }
 
     setIsEmailCheck(isDuplicate);
   };
@@ -133,7 +131,7 @@ const SignUp = () => {
                 sx={{
                   fontSize: 14,
                 }}>
-                {typeof isEmailCheck === 'boolean' ? '취소' : '중복확인'}
+                중복확인
               </CoreButton>
             </View>
             <Controller
