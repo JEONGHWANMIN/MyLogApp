@@ -10,6 +10,7 @@ interface PointColor {
     parePink: '#FBD1DD';
     dustBlue: '#A4B6C1';
     error: '#FF4C4C';
+    warning: '#FFC107';
   };
   gray: {
     50: '#F7F8F9';
@@ -69,6 +70,7 @@ const theme: MyTheme = {
       parePink: '#FBD1DD',
       dustBlue: '#A4B6C1',
       error: '#FF4C4C',
+      warning: '#FFC107',
     },
     gray: {
       50: '#F7F8F9',
