@@ -7,7 +7,7 @@ interface SnackbarState {
   message: string;
   visible: boolean;
   actionLabel: string;
-  mode?: 'info' | 'error';
+  mode?: 'info' | 'error' | 'warning';
   options?: SnackbarProps;
   onDismissSnackBar: () => void;
   setGlobalSnackbar: (config: GlobalSnackbarConfig) => void;
@@ -18,7 +18,7 @@ interface GlobalSnackbarConfig {
   visible?: boolean;
   options?: SnackbarProps;
   actionLabel?: string;
-  mode?: 'info' | 'error';
+  mode?: 'info' | 'error' | 'warning';
 }
 
 const useGlobalSnackbarStore = create<SnackbarState>(set => ({
