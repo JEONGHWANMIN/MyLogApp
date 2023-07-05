@@ -4,6 +4,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import AuthNavigation from './AuthNavigation';
 
 import SplashScreen from '@/screens/SplashScreen/SplashScreen';
+import Write from '@/screens/BottomTab/Write';
 
 const RootStack = createNativeStackNavigator();
 
@@ -16,10 +17,10 @@ const RootNavigation = () => {
       }}>
       <RootStack.Screen name="SplashScreen" component={SplashScreen} />
       <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
-      <RootStack.Screen
-        name="BottomTabNavigation"
-        component={BottomTabNavigation}
-      />
+      <RootStack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
+      <RootStack.Group screenOptions={{presentation: 'modal', animation: 'slide_from_bottom'}}>
+        <RootStack.Screen name="Write" component={Write} />
+      </RootStack.Group>
     </RootStack.Navigator>
   );
 };
