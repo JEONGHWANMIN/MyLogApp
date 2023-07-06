@@ -1,9 +1,9 @@
-import {BottomTabParamListProps} from '@/navigation/types/types';
-import {theme} from '@/styles/theme';
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {IconButton} from 'react-native-paper';
+import {theme} from '@/styles/theme';
+import {BottomTabParamListProps} from '@/navigation/types/types';
 
 const DiaryWriteButton = () => {
   const navigation = useNavigation<BottomTabParamListProps>();
@@ -13,9 +13,12 @@ const DiaryWriteButton = () => {
   };
 
   return (
-    <View style={styles.writeDiaryButton}>
-      <IconButton icon="lead-pencil" onPress={handleGoDiaryWrite} />
-    </View>
+    <TouchableOpacity
+      style={styles.writeDiaryButton}
+      onPress={handleGoDiaryWrite}
+      activeOpacity={0.75}>
+      <IconButton icon="lead-pencil" />
+    </TouchableOpacity>
   );
 };
 
