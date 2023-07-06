@@ -1,30 +1,21 @@
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import CoreButton from '@/components/core/CoreButton';
 import CoreInput from '@/components/core/CoreInput';
 import {theme} from '@/styles/theme';
-import {
-  AuthParamListProps,
-  RootListParamsListProps,
-} from '@/navigation/types/types';
+import {AuthParamListProps, RootListParamsListProps} from '@/navigation/types/types';
 import {useUsersApiSpecPostUsersSignin} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
 import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 import axios from 'axios';
 import {TextInput} from 'react-native-paper';
+import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 
 const SignIn = () => {
-  const navigation = useNavigation<
-    AuthParamListProps & RootListParamsListProps
-  >();
+  const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
+  const {handleCloseKeyboard} = useKeyBoardClose();
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
   const [form, setForm] = useState({
     email: '',
@@ -40,10 +31,6 @@ const SignIn = () => {
         duration: 1500,
       },
     });
-  };
-
-  const handleCloseKeyboard = () => {
-    Keyboard.dismiss();
   };
 
   const handleChange = (text: string, name: string) => {
@@ -73,10 +60,7 @@ const SignIn = () => {
         },
         onError: error => {
           if (axios.isAxiosError(error)) {
-            showSnackbarMessage(
-              '이메일, 비밀번호를 다시 확인해주세요.',
-              'error',
-            );
+            showSnackbarMessage('이메일, 비밀번호를 다시 확인해주세요.', 'error');
           }
         },
       },
@@ -110,9 +94,7 @@ const SignIn = () => {
             />
             <View style={styles.registeredUserContainer}>
               <Text style={styles.registeredUserText}>회원이 아니신가요 ?</Text>
-              <Text
-                style={styles.loginLink}
-                onPress={() => navigation.push('SignUp')}>
+              <Text style={styles.loginLink} onPress={() => navigation.push('SignUp')}>
                 회원가입
               </Text>
             </View>

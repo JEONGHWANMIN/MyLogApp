@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {theme} from '@/styles/theme';
-import {StyleSheet, Text, View, Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import CoreInput from '@/components/core/CoreInput';
 import CoreButton from '@/components/core/CoreButton';
 import {AuthParamListProps} from '@/navigation/types/types';
@@ -10,6 +10,7 @@ import {useUsersApiSpecPostUsersSignup, usersApiSpecGetUsersCheck} from '@/orval
 import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
 import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 import {Controller, useForm} from 'react-hook-form';
+import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 
 interface SignUpForm {
   email: string;
@@ -22,6 +23,7 @@ const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {setGlobalSnackbar} = useGlobalSnackbarStore();
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  const {handleCloseKeyboard} = useKeyBoardClose();
 
   const {control, handleSubmit, getValues} = useForm<SignUpForm>({
     defaultValues: {
@@ -31,10 +33,6 @@ const SignUp = () => {
       passwordMatch: '',
     },
   });
-
-  const handleCloseKeyboard = () => {
-    Keyboard.dismiss();
-  };
 
   const showSnackbarMessage = (message: string, mode: 'error' | 'info' | 'warning') => {
     setGlobalSnackbar({
@@ -93,6 +91,7 @@ const SignUp = () => {
 
     if (isEmailDuplicate) {
       showSnackbarMessage('이메일 중복확인을 해주세요.', 'error');
+      return;
     }
 
     usersApiSpecPostUsers(requestForm);
