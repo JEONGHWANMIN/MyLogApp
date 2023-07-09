@@ -2,9 +2,8 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabNavigation from './BottomTabNavigation';
 import AuthNavigation from './AuthNavigation';
-
 import SplashScreen from '@/screens/SplashScreen/SplashScreen';
-import Write from '@/screens/BottomTab/Write';
+import Write from '@/screens/Write/Write';
 
 const RootStack = createNativeStackNavigator();
 
@@ -18,7 +17,6 @@ const RootNavigation = () => {
       <RootStack.Screen name="SplashScreen" component={SplashScreen} />
       <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
       <RootStack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
-      {/* <RootStack.Group screenOptions={{presentation: 'modal', animation: 'simple_push'}}> */}
       <RootStack.Screen
         name="Write"
         component={Write}
@@ -26,7 +24,6 @@ const RootNavigation = () => {
           animation: 'fade_from_bottom',
         }}
       />
-      {/* </RootStack.Group> */}
     </RootStack.Navigator>
   );
 };
