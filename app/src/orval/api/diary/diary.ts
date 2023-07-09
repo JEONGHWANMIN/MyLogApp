@@ -48,9 +48,8 @@ export const diaryApiSpecGetDiary = (
   );
 };
 
-export const getDiaryApiSpecGetDiaryQueryKey = (
-  params: DiaryApiSpecGetDiaryParams,
-) => [`/diary`, ...(params ? [params] : [])] as const;
+export const getDiaryApiSpecGetDiaryQueryKey = (params: DiaryApiSpecGetDiaryParams) =>
+  [`/diary`, ...(params ? [params] : [])] as const;
 
 export const getDiaryApiSpecGetDiaryQueryOptions = <
   TData = Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
@@ -58,26 +57,18 @@ export const getDiaryApiSpecGetDiaryQueryOptions = <
 >(
   params: DiaryApiSpecGetDiaryParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
-): UseQueryOptions<
-  Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
-  TError,
-  TData
-> & {queryKey: QueryKey} => {
+): UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
   const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryQueryKey(params);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof diaryApiSpecGetDiary>>
-  > = ({signal}) => diaryApiSpecGetDiary(params, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>> = ({signal}) =>
+    diaryApiSpecGetDiary(params, requestOptions, signal);
 
   return {queryKey, queryFn, ...queryOptions};
 };
@@ -96,19 +87,13 @@ export const useDiaryApiSpecGetDiary = <
 >(
   params: DiaryApiSpecGetDiaryParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
   const queryOptions = getDiaryApiSpecGetDiaryQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
 
   query.queryKey = queryOptions.queryKey;
 
@@ -272,8 +257,7 @@ export const diaryApiSpecGetDiaryId = (
   );
 };
 
-export const getDiaryApiSpecGetDiaryIdQueryKey = (id: number) =>
-  [`/diary/${id}`] as const;
+export const getDiaryApiSpecGetDiaryIdQueryKey = (id: number) => [`/diary/${id}`] as const;
 
 export const getDiaryApiSpecGetDiaryIdQueryOptions = <
   TData = Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
@@ -281,26 +265,18 @@ export const getDiaryApiSpecGetDiaryIdQueryOptions = <
 >(
   id: number,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
-): UseQueryOptions<
-  Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
-  TError,
-  TData
-> & {queryKey: QueryKey} => {
+): UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
   const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryIdQueryKey(id);
+  const queryKey = queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryIdQueryKey(id);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>
-  > = ({signal}) => diaryApiSpecGetDiaryId(id, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>> = ({signal}) =>
+    diaryApiSpecGetDiaryId(id, requestOptions, signal);
 
   return {queryKey, queryFn, enabled: !!id, ...queryOptions};
 };
@@ -319,19 +295,13 @@ export const useDiaryApiSpecGetDiaryId = <
 >(
   id: number,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
   const queryOptions = getDiaryApiSpecGetDiaryIdQueryOptions(id, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
 
   query.queryKey = queryOptions.queryKey;
 

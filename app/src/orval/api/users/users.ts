@@ -87,8 +87,7 @@ export const getUsersApiSpecPostUsersSignupMutationOptions = <
 export type UsersApiSpecPostUsersSignupMutationResult = NonNullable<
   Awaited<ReturnType<typeof usersApiSpecPostUsersSignup>>
 >;
-export type UsersApiSpecPostUsersSignupMutationBody =
-  UsersApiSpecPostUsersSignupBody;
+export type UsersApiSpecPostUsersSignupMutationBody = UsersApiSpecPostUsersSignupBody;
 export type UsersApiSpecPostUsersSignupMutationError = ErrorType<unknown>;
 
 /**
@@ -106,8 +105,7 @@ export const useUsersApiSpecPostUsersSignup = <
   >;
   request?: SecondParameter<typeof customInstance>;
 }) => {
-  const mutationOptions =
-    getUsersApiSpecPostUsersSignupMutationOptions(options);
+  const mutationOptions = getUsersApiSpecPostUsersSignupMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
@@ -163,8 +161,7 @@ export const getUsersApiSpecPostUsersSigninMutationOptions = <
 export type UsersApiSpecPostUsersSigninMutationResult = NonNullable<
   Awaited<ReturnType<typeof usersApiSpecPostUsersSignin>>
 >;
-export type UsersApiSpecPostUsersSigninMutationBody =
-  UsersApiSpecPostUsersSigninBody;
+export type UsersApiSpecPostUsersSigninMutationBody = UsersApiSpecPostUsersSigninBody;
 export type UsersApiSpecPostUsersSigninMutationError = ErrorType<unknown>;
 
 /**
@@ -182,8 +179,7 @@ export const useUsersApiSpecPostUsersSignin = <
   >;
   request?: SecondParameter<typeof customInstance>;
 }) => {
-  const mutationOptions =
-    getUsersApiSpecPostUsersSigninMutationOptions(options);
+  const mutationOptions = getUsersApiSpecPostUsersSigninMutationOptions(options);
 
   return useMutation(mutationOptions);
 };
@@ -201,9 +197,8 @@ export const usersApiSpecGetUsersCheck = (
   );
 };
 
-export const getUsersApiSpecGetUsersCheckQueryKey = (
-  params: UsersApiSpecGetUsersCheckParams,
-) => [`/users/check`, ...(params ? [params] : [])] as const;
+export const getUsersApiSpecGetUsersCheckQueryKey = (params: UsersApiSpecGetUsersCheckParams) =>
+  [`/users/check`, ...(params ? [params] : [])] as const;
 
 export const getUsersApiSpecGetUsersCheckQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
@@ -211,26 +206,19 @@ export const getUsersApiSpecGetUsersCheckQueryOptions = <
 >(
   params: UsersApiSpecGetUsersCheckParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
-): UseQueryOptions<
-  Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
-  TError,
-  TData
-> & {queryKey: QueryKey} => {
+): UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
   const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getUsersApiSpecGetUsersCheckQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersCheckQueryKey(params);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>
-  > = ({signal}) => usersApiSpecGetUsersCheck(params, requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>> = ({
+    signal,
+  }) => usersApiSpecGetUsersCheck(params, requestOptions, signal);
 
   return {queryKey, queryFn, ...queryOptions};
 };
@@ -249,22 +237,13 @@ export const useUsersApiSpecGetUsersCheck = <
 >(
   params: UsersApiSpecGetUsersCheckParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
-      TError,
-      TData
-    >;
+    query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData>;
     request?: SecondParameter<typeof customInstance>;
   },
 ): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
-  const queryOptions = getUsersApiSpecGetUsersCheckQueryOptions(
-    params,
-    options,
-  );
+  const queryOptions = getUsersApiSpecGetUsersCheckQueryOptions(params, options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
 
   query.queryKey = queryOptions.queryKey;
 
@@ -274,13 +253,8 @@ export const useUsersApiSpecGetUsersCheck = <
 /**
  * @summary 유저 회원탈퇴
  */
-export const usersApiSpecDeleteUsers = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<UsersApiSpecDeleteUsers204>(
-    {url: `/users`, method: 'delete'},
-    options,
-  );
+export const usersApiSpecDeleteUsers = (options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<UsersApiSpecDeleteUsers204>({url: `/users`, method: 'delete'}, options);
 };
 
 export const getUsersApiSpecDeleteUsersMutationOptions = <
@@ -346,10 +320,7 @@ export const usersApiSpecGetUsers = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<UsersApiSpecGetUsers200>(
-    {url: `/users`, method: 'get', signal},
-    options,
-  );
+  return customInstance<UsersApiSpecGetUsers200>({url: `/users`, method: 'get', signal}, options);
 };
 
 export const getUsersApiSpecGetUsersQueryKey = () => [`/users`] as const;
@@ -358,24 +329,17 @@ export const getUsersApiSpecGetUsersQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
-}): UseQueryOptions<
-  Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
-  TError,
-  TData
-> & {queryKey: QueryKey} => {
+}): UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
   const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof usersApiSpecGetUsers>>
-  > = ({signal}) => usersApiSpecGetUsers(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsers>>> = ({signal}) =>
+    usersApiSpecGetUsers(requestOptions, signal);
 
   return {queryKey, queryFn, ...queryOptions};
 };
@@ -392,18 +356,12 @@ export const useUsersApiSpecGetUsers = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
   const queryOptions = getUsersApiSpecGetUsersQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
 
   query.queryKey = queryOptions.queryKey;
 
@@ -423,32 +381,24 @@ export const usersApiSpecGetUsersRenew = (
   );
 };
 
-export const getUsersApiSpecGetUsersRenewQueryKey = () =>
-  [`/users/renew`] as const;
+export const getUsersApiSpecGetUsersRenewQueryKey = () => [`/users/renew`] as const;
 
 export const getUsersApiSpecGetUsersRenewQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
-}): UseQueryOptions<
-  Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
-  TError,
-  TData
-> & {queryKey: QueryKey} => {
+}): UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
   const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getUsersApiSpecGetUsersRenewQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersRenewQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>
-  > = ({signal}) => usersApiSpecGetUsersRenew(requestOptions, signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>> = ({
+    signal,
+  }) => usersApiSpecGetUsersRenew(requestOptions, signal);
 
   return {queryKey, queryFn, ...queryOptions};
 };
@@ -465,18 +415,12 @@ export const useUsersApiSpecGetUsersRenew = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
   TError = ErrorType<unknown>,
 >(options?: {
-  query?: UseQueryOptions<
-    Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
-    TError,
-    TData
-  >;
+  query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>, TError, TData>;
   request?: SecondParameter<typeof customInstance>;
 }): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
   const queryOptions = getUsersApiSpecGetUsersRenewQueryOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
 
   query.queryKey = queryOptions.queryKey;
 
