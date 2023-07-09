@@ -2,7 +2,7 @@ import {defineConfig} from 'orval';
 
 export default defineConfig({
   penple: {
-    input: '../server/openapi.json',
+    input: 'http://localhost:8080/api-docs',
     output: {
       mode: 'tags-split',
       target: 'src/orval/api',
