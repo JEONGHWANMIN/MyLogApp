@@ -18,9 +18,15 @@ const RootNavigation = () => {
       <RootStack.Screen name="SplashScreen" component={SplashScreen} />
       <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
       <RootStack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
-      <RootStack.Group screenOptions={{presentation: 'modal', animation: 'slide_from_bottom'}}>
-        <RootStack.Screen name="Write" component={Write} />
-      </RootStack.Group>
+      {/* <RootStack.Group screenOptions={{presentation: 'modal', animation: 'simple_push'}}> */}
+      <RootStack.Screen
+        name="Write"
+        component={Write}
+        options={{
+          animation: 'fade_from_bottom',
+        }}
+      />
+      {/* </RootStack.Group> */}
     </RootStack.Navigator>
   );
 };

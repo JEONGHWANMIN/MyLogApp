@@ -23,6 +23,10 @@ const Write = () => {
     navigate.goBack();
   };
 
+  const handleOptionModal = () => {
+    console.log('모달 오픈');
+  };
+
   return (
     <TouchableWithoutFeedback onPress={handleCloseKeyboard} style={styles.container}>
       <SafeAreaView
@@ -39,6 +43,14 @@ const Write = () => {
             onPress={() => console.log('전송')}
           />
         </View>
+        <View style={styles.optionContainer}>
+          <IconButton
+            icon="plus-circle-outline"
+            size={45}
+            iconColor={theme.colors.gray[500]}
+            onPress={handleOptionModal}
+          />
+        </View>
         <View style={styles.textContainer}>
           <TextInput
             style={styles.textTitleInput}
@@ -46,7 +58,6 @@ const Write = () => {
             onChangeText={text => setTitle(text)}
             textAlignVertical="top"
             placeholder="주제를 입력해주세요."
-            autoFocus
           />
           <TextInput
             style={styles.textContentInput}
@@ -55,7 +66,6 @@ const Write = () => {
             textAlignVertical="top"
             multiline={true}
             placeholder="오늘의 일기를 작성해주세요."
-            autoFocus
           />
         </View>
       </SafeAreaView>
@@ -81,24 +91,25 @@ const styles = StyleSheet.create({
     fontWeight: theme.typography.weight.bold,
   },
   optionContainer: {
-    height: 75,
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+
+    // backgroundColor: 'red',
   },
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    // backgroundColor: 'blue',
   },
   textTitleInput: {
     fontSize: 18,
     fontFamily: theme.typography.family.bold,
   },
   textContentInput: {
-    marginTop: 8,
-    fontSize: 16,
     flex: 1,
+    marginTop: 2,
+    fontSize: 16,
+    lineHeight: 20,
     fontFamily: theme.typography.family.medium,
-    lineHeight: 0,
-    // letterSpacing: 3,
-    // backgroundColor: 'red',
   },
 });

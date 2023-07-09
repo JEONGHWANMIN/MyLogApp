@@ -6,7 +6,6 @@ import Setting from '@/screens/BottomTab/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
-import Write from '@/screens/BottomTab/Write';
 
 const BottomTab = createBottomTabNavigator();
 
