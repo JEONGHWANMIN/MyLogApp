@@ -3,11 +3,15 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  // relationMode = "prisma"
 }
 
 model User {
@@ -30,6 +34,8 @@ model Diary {
   userId    Int
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   tags      DiaryTags[]
+
+  @@index([userId])
 }
 
 model DiaryTags {
@@ -40,6 +46,7 @@ model DiaryTags {
   tagId   Int?
 
   @@unique([tagId, diaryId])
+  @@index([diaryId])
 }
 
 model Tag {

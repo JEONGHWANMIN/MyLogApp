@@ -16,7 +16,6 @@ dev.db
 migrations*
 dev.db*
 
-
 # OS
 .DS_Store
 
@@ -39,3 +38,5 @@ dev.db*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.env
