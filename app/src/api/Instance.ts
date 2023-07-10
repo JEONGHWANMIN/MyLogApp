@@ -1,16 +1,14 @@
 import {Platform} from 'react-native';
-import axios, {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse} from 'axios';
 import {LocalStorage} from '../utils/localStorage/localStorage';
 import {usersApiSpecGetUsersRenew} from '@/orval/api/users/users';
 export type ErrorType<Error> = AxiosError<Error>;
 
-const _ANDROID_AVD_API_HOST = 'http://10.0.2.2:8080';
-const _IOS_API_HOST = 'http://localhost:8080';
+// const _ANDROID_AVD_API_HOST = 'http://10.0.2.2:8080';
+// const _IOS_API_HOST = 'http://localhost:8080';
+
+const _ANDROID_AVD_API_HOST = 'http://192.168.1.7:8080';
+const _IOS_API_HOST = 'http://192.168.1.7:8080';
 
 const customConfig: AxiosRequestConfig = {
   baseURL: Platform.OS === 'android' ? _ANDROID_AVD_API_HOST : _IOS_API_HOST,

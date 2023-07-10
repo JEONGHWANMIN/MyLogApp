@@ -1,5 +1,6 @@
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {theme} from '@/styles/theme';
+import {useGlobalModalStore} from '@/utils/state/modal.zustand';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
@@ -12,19 +13,24 @@ import {
   View,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
+import {ModalContent} from './_components/ModalContent';
 
 const Write = () => {
   const navigate = useNavigation();
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const {setGlobalModalConfig} = useGlobalModalStore();
 
   const handleGoBack = () => {
     navigate.goBack();
   };
 
   const handleOptionModal = () => {
-    console.log('모달 오픈');
+    setGlobalModalConfig({
+      visible: true,
+      children: <ModalContent />,
+    });
   };
 
   return (
