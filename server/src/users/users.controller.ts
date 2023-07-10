@@ -12,10 +12,7 @@ import { CreateUserDto, LoginUserDto } from './dto';
 import { UsersService } from './users.service';
 import { GetTokenUser } from 'src/common/decorator/user.decorator';
 import { AccessTokenGuard, RefreshTokenGuard } from 'src/common/guards';
-import {
-  AccessTokenPayload,
-  RefreshTokenPayload,
-} from './types/TokenPayload.type';
+import { AccessTokenPayload, RefreshTokenPayload } from './types/tokenPayload';
 
 @Injectable()
 @Controller('users')

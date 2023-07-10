@@ -14,7 +14,7 @@ import {
 import { AccessTokenGuard } from 'src/common/guards';
 import { DiaryService } from './diary.service';
 import { GetTokenUser } from 'src/common/decorator/user.decorator';
-import { AccessTokenPayload } from 'src/users/types/TokenPayload.type';
+import { AccessTokenPayload } from 'src/users/types/tokenPayload';
 import { CreateDiaryDto } from './dto/diary.dto';
 import { SearchDiariesDto } from './dto/searchDiary.dto';
 
