@@ -17,13 +17,18 @@ import {ModalContent} from './_components/ModalContent';
 
 const Write = () => {
   const navigate = useNavigation();
+  const {setGlobalModalConfig} = useGlobalModalStore();
   const {handleCloseKeyboard} = useKeyBoardClose();
+  const [textAlineFormat, setTextAlineFormat] = useState<'left' | 'center'>('left');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const {setGlobalModalConfig} = useGlobalModalStore();
 
   const handleGoBack = () => {
     navigate.goBack();
+  };
+
+  const handleChangeTextAlign = () => {
+    setTextAlineFormat(textAlineFormat === 'left' ? 'center' : 'left');
   };
 
   const handleOptionModal = () => {
@@ -48,25 +53,37 @@ const Write = () => {
         </View>
         <View style={styles.textContainer}>
           <TextInput
-            style={styles.textTitleInput}
+            style={[styles.textTitleInput, {textAlign: textAlineFormat}]}
             value={title}
             onChangeText={text => setTitle(text)}
             textAlignVertical="top"
-            placeholder="주제를 입력해주세요."
+            placeholder="주제를 입력해주세요 : )"
           />
           <TextInput
-            style={styles.textContentInput}
+            style={[styles.textContentInput, {textAlign: textAlineFormat}]}
             value={text}
             onChangeText={text => setText(text)}
             textAlignVertical="top"
             multiline={true}
-            placeholder="오늘의 일기를 작성해주세요."
+            placeholder="오늘의 감정은 어떠셨나요?"
           />
         </View>
         <View style={styles.optionContainer}>
           <IconButton
-            icon="plus-circle-outline"
-            size={30}
+            icon={`format-align-${textAlineFormat}`}
+            size={25}
+            iconColor={theme.colors.gray[500]}
+            onPress={handleChangeTextAlign}
+          />
+          <IconButton
+            icon="emoticon"
+            size={25}
+            iconColor={theme.colors.gray[500]}
+            onPress={handleOptionModal}
+          />
+          <IconButton
+            icon="weather-night"
+            size={25}
             iconColor={theme.colors.gray[500]}
             onPress={handleOptionModal}
           />
@@ -104,7 +121,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     height: 50,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   textContainer: {
@@ -115,12 +131,15 @@ const styles = StyleSheet.create({
   textTitleInput: {
     fontSize: 18,
     fontFamily: theme.typography.family.bold,
+    color: theme.colors.gray[800],
+    textAlign: 'center',
   },
   textContentInput: {
     flex: 1,
-    marginTop: 2,
+    marginTop: 10,
     fontSize: 16,
-    lineHeight: 20,
+    lineHeight: 25,
     fontFamily: theme.typography.family.medium,
+    color: theme.colors.gray[800],
   },
 });
