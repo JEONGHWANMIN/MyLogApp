@@ -35,10 +35,7 @@ const Write = () => {
 
   return (
     <TouchableWithoutFeedback onPress={handleCloseKeyboard} style={styles.container}>
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}>
+      <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.header}>
           <IconButton icon="keyboard-backspace" onPress={handleGoBack} />
           <Text style={styles.headerTitle}>{DateUtils.getYearMonthDayDayOfWeek()}</Text>
@@ -47,14 +44,6 @@ const Write = () => {
             iconColor="green"
             size={24}
             onPress={() => console.log('전송')}
-          />
-        </View>
-        <View style={styles.optionContainer}>
-          <IconButton
-            icon="plus-circle-outline"
-            size={45}
-            iconColor={theme.colors.gray[500]}
-            onPress={handleOptionModal}
           />
         </View>
         <View style={styles.textContainer}>
@@ -74,6 +63,14 @@ const Write = () => {
             placeholder="오늘의 일기를 작성해주세요."
           />
         </View>
+        <View style={styles.optionContainer}>
+          <IconButton
+            icon="plus-circle-outline"
+            size={30}
+            iconColor={theme.colors.gray[500]}
+            onPress={handleOptionModal}
+          />
+        </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -85,12 +82,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   header: {
     height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
+    borderBottomColor: theme.colors.gray[100],
+    borderBottomWidth: 1,
   },
   headerTitle: {
     fontSize: 15,
@@ -98,15 +100,17 @@ const styles = StyleSheet.create({
     fontWeight: theme.typography.weight.bold,
   },
   optionContainer: {
+    borderTopColor: theme.colors.gray[100],
+    borderTopWidth: 1,
     height: 50,
     flexDirection: 'row',
     justifyContent: 'center',
-
-    // backgroundColor: 'red',
+    alignItems: 'center',
   },
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
+    marginTop: 20,
   },
   textTitleInput: {
     fontSize: 18,
