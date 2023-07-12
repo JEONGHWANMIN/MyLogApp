@@ -16,6 +16,7 @@ const AuthNavigation = () => {
     <AuthStack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
+        animation: 'slide_from_right',
       }}>
       <AuthStack.Screen
         name="Auth"
@@ -30,11 +31,7 @@ const AuthNavigation = () => {
         options={{
           headerTitle: '로그인',
           headerLeft: () => (
-            <IconButton
-              icon="keyboard-backspace"
-              size={27}
-              onPress={() => navigation.goBack()}
-            />
+            <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
           ),
         }}
       />
@@ -44,11 +41,7 @@ const AuthNavigation = () => {
         options={{
           headerTitle: '회원가입',
           headerLeft: () => (
-            <IconButton
-              icon="keyboard-backspace"
-              size={27}
-              onPress={() => navigation.goBack()}
-            />
+            <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
           ),
         }}
       />
