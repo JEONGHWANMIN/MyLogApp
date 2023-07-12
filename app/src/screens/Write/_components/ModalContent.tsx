@@ -1,11 +1,16 @@
 import {theme} from '@/styles/theme';
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatGrid} from 'react-native-super-grid';
 
 const WeatherSetting = () => {
   return (
     <View>
-      <Text>날씨</Text>
+      <FlatGrid
+        itemDimension={80}
+        data={[1, 2, 3, 4, 5, 6]}
+        renderItem={({item}) => <Text>{item}</Text>}
+      />
     </View>
   );
 };
