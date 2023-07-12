@@ -1,15 +1,65 @@
 import {theme} from '@/styles/theme';
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {IconButton} from 'react-native-paper';
 import {FlatGrid} from 'react-native-super-grid';
+
+const MOODS = [
+  {
+    key: 'emoticon-cry-outline',
+    value: 'cry',
+  },
+  {
+    key: 'emoticon-confused-outline',
+    value: 'confused',
+  },
+  {
+    key: 'emoticon-cool-outline',
+    value: 'cool',
+  },
+  {
+    key: 'emoticon-cry-outline',
+    value: 'cry',
+  },
+  {
+    key: 'emoticon-dead-outline',
+    value: 'dead',
+  },
+  {
+    key: 'emoticon-devil-outline',
+    value: 'devil',
+  },
+  {
+    key: 'emoticon-excited-outline',
+    value: 'excited',
+  },
+];
 
 const WeatherSetting = () => {
   return (
     <View>
       <FlatGrid
-        itemDimension={80}
-        data={[1, 2, 3, 4, 5, 6]}
-        renderItem={({item}) => <Text>{item}</Text>}
+        itemDimension={50}
+        data={[
+          'emoticon-angry',
+          'emoticon-confused',
+          'emoticon-cool',
+          'emoticon-cry',
+          'emoticon-dead',
+          'emoticon-devil',
+          'emoticon-excited',
+        ]}
+        maxItemsPerRow={3}
+        renderItem={icon => (
+          <View style={styles.iconContainer}>
+            <IconButton
+              icon={icon.item}
+              size={40}
+              iconColor={theme.colors.gray[500]}
+              onPress={() => console.log('asd')}
+            />
+          </View>
+        )}
       />
     </View>
   );
@@ -17,8 +67,22 @@ const WeatherSetting = () => {
 
 const MoodSetting = () => {
   return (
-    <View>
-      <Text>기분</Text>
+    <View style={{alignItems: 'center'}}>
+      <FlatGrid
+        itemDimension={50}
+        maxItemsPerRow={3}
+        data={MOODS}
+        renderItem={({item}) => (
+          <View style={styles.iconContainer}>
+            <IconButton
+              icon={item.key}
+              size={40}
+              iconColor={theme.colors.gray[500]}
+              onPress={() => console.log('asd')}
+            />
+          </View>
+        )}
+      />
     </View>
   );
 };
@@ -55,7 +119,8 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
+    // backgroundColor: 'red',
   },
   tabText: {
     zIndex: 2,
@@ -67,4 +132,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: 'red',
   },
+  iconContainer: {justifyContent: 'center', alignItems: 'center'},
 });
