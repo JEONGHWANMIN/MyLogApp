@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import CoreButton from '@/components/core/CoreButton';
 import CoreInput from '@/components/core/CoreInput';
 import {theme} from '@/styles/theme';
@@ -77,7 +77,7 @@ const SignIn = () => {
 
   return (
     <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <View>
           <Text style={styles.title}>PenPle</Text>
           <View style={styles.inputContainer}>
@@ -99,12 +99,16 @@ const SignIn = () => {
             </View>
           </View>
         </View>
-        <View>
-          <CoreButton mode="contained" onPress={handleSubmit}>
-            로그인
-          </CoreButton>
-        </View>
-      </View>
+        <CoreButton
+          mode="contained"
+          onPress={handleSubmit}
+          loading={useUserSignInAPI.isLoading}
+          labelStyle={{
+            color: theme.colors.point.mintGreen,
+          }}>
+          <Text>로그인</Text>
+        </CoreButton>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
