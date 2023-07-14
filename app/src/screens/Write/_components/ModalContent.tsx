@@ -1,89 +1,42 @@
 import {theme} from '@/styles/theme';
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
-import {FlatGrid} from 'react-native-super-grid';
-
-const MOODS = [
-  {
-    key: 'emoticon-cry-outline',
-    value: 'cry',
-  },
-  {
-    key: 'emoticon-confused-outline',
-    value: 'confused',
-  },
-  {
-    key: 'emoticon-cool-outline',
-    value: 'cool',
-  },
-  {
-    key: 'emoticon-cry-outline',
-    value: 'cry',
-  },
-  {
-    key: 'emoticon-dead-outline',
-    value: 'dead',
-  },
-  {
-    key: 'emoticon-devil-outline',
-    value: 'devil',
-  },
-  {
-    key: 'emoticon-excited-outline',
-    value: 'excited',
-  },
-];
+import {MOODS, WEATHERS} from '../_constants/_constants';
 
 const WeatherSetting = () => {
   return (
-    <View>
-      <FlatGrid
-        itemDimension={50}
-        data={[
-          'emoticon-angry',
-          'emoticon-confused',
-          'emoticon-cool',
-          'emoticon-cry',
-          'emoticon-dead',
-          'emoticon-devil',
-          'emoticon-excited',
-        ]}
-        maxItemsPerRow={3}
-        renderItem={icon => (
-          <View style={styles.iconContainer}>
-            <IconButton
-              icon={icon.item}
-              size={40}
-              iconColor={theme.colors.gray[500]}
-              onPress={() => console.log('asd')}
-            />
-          </View>
-        )}
-      />
-    </View>
+    <FlatList
+      data={WEATHERS}
+      renderItem={({item}) => (
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={() => console.log('asd')}>
+            <IconButton icon={item.key} size={40} iconColor={item.color} />
+            <Text>{item.description}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      numColumns={3}
+      keyExtractor={item => item.key}
+    />
   );
 };
 
 const MoodSetting = () => {
   return (
-    <View style={{alignItems: 'center'}}>
-      <FlatGrid
-        itemDimension={50}
-        maxItemsPerRow={3}
-        data={MOODS}
-        renderItem={({item}) => (
-          <View style={styles.iconContainer}>
-            <IconButton
-              icon={item.key}
-              size={40}
-              iconColor={theme.colors.gray[500]}
-              onPress={() => console.log('asd')}
-            />
-          </View>
-        )}
-      />
-    </View>
+    <FlatList
+      data={MOODS}
+      renderItem={({item}) => (
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={() => console.log('asd')}>
+            <IconButton icon={item.key} size={40} iconColor={item.color} />
+            <Text>{item.description}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      numColumns={3}
+      keyExtractor={item => item.key}
+    />
   );
 };
 
@@ -95,7 +48,10 @@ const ModalContent = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.title}>오늘의 하루를 아이콘으로 표현해보세요!</Text>
+      </View>
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={() => handleChangeTab('날씨')} style={styles.tab}>
           <Text style={styles.tabText}>날씨</Text>
@@ -112,15 +68,25 @@ const ModalContent = () => {
 export {ModalContent};
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: theme.typography.size.body1,
+    fontWeight: theme.typography.weight.bold,
+    color: theme.colors.gray[600],
+  },
   tabContainer: {
     flexDirection: 'row',
+    marginTop: 10,
   },
   tab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 10,
-    // backgroundColor: 'red',
+    gap: 10,
+    paddingVertical: 15,
   },
   tabText: {
     zIndex: 2,
@@ -129,8 +95,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   borderTob: {
-    borderTopWidth: 1,
-    borderTopColor: 'red',
+    // borderTopWidth: 1,
+    // borderTopColor: 'red',
   },
-  iconContainer: {justifyContent: 'center', alignItems: 'center'},
+  iconContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {},
 });
