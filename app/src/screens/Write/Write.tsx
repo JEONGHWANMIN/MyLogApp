@@ -13,28 +13,100 @@ import {
   View,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
-import {ModalContent} from './_components/ModalContent';
+import {ModalContent, TAB_NAME} from './_components/ModalContent';
+import {useDiaryApiSpecPostDiary} from '@/orval/api/diary/diary';
+import {DiaryApiSpecPostDiaryBody} from '@/orval/model';
+import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
+import {INITIAL_OPTIONS_FORM, INITIAL_TEXT_FORM} from './_constants/_constants';
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
+import axios from 'axios';
+
+export interface Option {
+  key: string;
+  value: string;
+  description: string;
+  color: string;
+}
 
 const Write = () => {
   const navigate = useNavigation();
   const {setGlobalModalConfig} = useGlobalModalStore();
+  const {setGlobalDialogConfig} = useGlobalDialogStore();
+  const {showSnackbarMessage} = useShowSnackbarMessage();
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [textAlineFormat, setTextAlineFormat] = useState<'left' | 'center'>('left');
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-
-  const handleGoBack = () => {
-    navigate.goBack();
-  };
+  const [textForm, setTextForm] = useState(INITIAL_TEXT_FORM);
+  const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
 
   const handleChangeTextAlign = () => {
     setTextAlineFormat(textAlineFormat === 'left' ? 'center' : 'left');
   };
 
-  const handleOptionModal = () => {
+  const handleGoBack = () => {
+    setGlobalDialogConfig({
+      title: '일기작성을 취소하시겠어요?',
+      leftButtonText: '작성 유지',
+      rightButtonText: '작성 취소',
+      rightButtonEvent: () => navigate.goBack(),
+    });
+  };
+
+  const handleChangeOptions = (name: string, option: Option) => {
+    setOptions(prev => ({
+      ...prev,
+      [name]: option,
+    }));
+  };
+
+  const handleChangeText = (name: string, text: string) => {
+    setTextForm({
+      ...textForm,
+      [name]: text,
+    });
+  };
+
+  const handleOptionModal = (tab: TAB_NAME) => {
     setGlobalModalConfig({
       visible: true,
-      children: <ModalContent />,
+      children: <ModalContent handleChangeOptions={handleChangeOptions} defaultTab={tab} />,
+    });
+  };
+
+  const diaryWriteMutate = useDiaryApiSpecPostDiary();
+
+  const saveDiary = (requestData: DiaryApiSpecPostDiaryBody) => {
+    diaryWriteMutate.mutate(
+      {
+        data: requestData,
+      },
+      {
+        onSuccess: () => {
+          navigate.goBack();
+          showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
+        },
+        onError: error => {
+          if (axios.isAxiosError(error)) {
+            showSnackbarMessage('일기 작성이 실패했습니다 : (', 'error');
+          }
+        },
+      },
+    );
+  };
+
+  const handleDiarySubmit = () => {
+    const requestForm: DiaryApiSpecPostDiaryBody = {
+      title: textForm.title,
+      content: textForm.content,
+      mood: options.mood.value,
+      weather: options.weather.value,
+      tags: [],
+    };
+
+    setGlobalDialogConfig({
+      title: '일기를 등록하시겠어요?',
+      leftButtonText: '취소',
+      rightButtonText: '등록',
+      rightButtonEvent: () => saveDiary(requestForm),
     });
   };
 
@@ -44,28 +116,35 @@ const Write = () => {
         <View style={styles.header}>
           <IconButton icon="keyboard-backspace" onPress={handleGoBack} />
           <Text style={styles.headerTitle}>{DateUtils.getYearMonthDayDayOfWeek()}</Text>
-          <IconButton
-            icon="check"
-            iconColor="green"
-            size={24}
-            onPress={() => console.log('전송')}
-          />
+          <IconButton icon="check" iconColor="green" size={24} onPress={handleDiarySubmit} />
+        </View>
+        <View style={styles.iconContainer}>
+          {options.mood.key && (
+            <View style={styles.iconPreviewContainer}>
+              <IconButton icon={options.mood.key} size={30} iconColor={options.mood.color} />
+            </View>
+          )}
+          {options.weather.key && (
+            <View style={styles.iconPreviewContainer}>
+              <IconButton icon={options.weather.key} size={30} iconColor={options.weather.color} />
+            </View>
+          )}
         </View>
         <View style={styles.textContainer}>
           <TextInput
             style={[styles.textTitleInput, {textAlign: textAlineFormat}]}
-            value={title}
-            onChangeText={text => setTitle(text)}
+            value={textForm.title}
+            onChangeText={text => handleChangeText('title', text)}
             textAlignVertical="top"
             placeholder="주제를 입력해주세요 : )"
           />
           <TextInput
             style={[styles.textContentInput, {textAlign: textAlineFormat}]}
-            value={text}
-            onChangeText={text => setText(text)}
+            value={textForm.content}
+            onChangeText={text => handleChangeText('content', text)}
             textAlignVertical="top"
             multiline={true}
-            placeholder="오늘의 감정은 어떠셨나요?"
+            placeholder="오늘의 일기를 작성해주세요 !"
           />
         </View>
         <View style={styles.optionContainer}>
@@ -79,13 +158,13 @@ const Write = () => {
             icon="emoticon"
             size={25}
             iconColor={theme.colors.gray[500]}
-            onPress={handleOptionModal}
+            onPress={() => handleOptionModal('기분')}
           />
           <IconButton
             icon="weather-night"
             size={25}
             iconColor={theme.colors.gray[500]}
-            onPress={handleOptionModal}
+            onPress={() => handleOptionModal('날씨')}
           />
         </View>
       </SafeAreaView>
@@ -116,6 +195,13 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: theme.typography.weight.bold,
   },
+  iconContainer: {
+    height: 40,
+    marginTop: 10,
+    marginHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   optionContainer: {
     borderTopColor: theme.colors.gray[100],
     borderTopWidth: 1,
@@ -126,7 +212,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 20,
+    marginTop: 10,
   },
   textTitleInput: {
     fontSize: 18,
@@ -141,5 +227,12 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontFamily: theme.typography.family.medium,
     color: theme.colors.gray[800],
+  },
+  iconPreviewContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconPreviewText: {
+    fontWeight: theme.typography.weight.bold,
   },
 });
