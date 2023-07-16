@@ -38,7 +38,7 @@ export const customInstance = <T>(
   return promise;
 };
 
-axios.interceptors.request.use(
+customAxiosInstance.interceptors.request.use(
   async config => {
     const copyConfig = {...config};
     const localStorage = LocalStorage.getInstance();
@@ -51,6 +51,8 @@ axios.interceptors.request.use(
         Authorization: `Bearer ${accessToken}`,
       } as AxiosRequestHeaders;
     }
+
+    console.log(copyConfig.headers);
 
     if (config.url?.includes('renew')) {
       const refreshToken = await localStorage.getData('refreshToken');
@@ -71,7 +73,7 @@ axios.interceptors.request.use(
   },
 );
 
-axios.interceptors.response.use(
+customAxiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
