@@ -8,9 +8,9 @@ import CoreButton from '@/components/core/CoreButton';
 import {AuthParamListProps} from '@/navigation/types/types';
 import {useUsersApiSpecPostUsersSignup, usersApiSpecGetUsersCheck} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
-import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 import {Controller, useForm} from 'react-hook-form';
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 
 interface SignUpForm {
   email: string;
@@ -21,10 +21,9 @@ interface SignUpForm {
 
 const SignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
-  const {setGlobalSnackbar} = useGlobalSnackbarStore();
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const {handleCloseKeyboard} = useKeyBoardClose();
-
+  const {showSnackbarMessage} = useShowSnackbarMessage();
   const {control, handleSubmit, getValues} = useForm<SignUpForm>({
     defaultValues: {
       email: '',
@@ -33,17 +32,6 @@ const SignUp = () => {
       passwordMatch: '',
     },
   });
-
-  const showSnackbarMessage = (message: string, mode: 'error' | 'info' | 'warning') => {
-    setGlobalSnackbar({
-      message,
-      actionLabel: '확인',
-      mode,
-      options: {
-        duration: 1500,
-      },
-    });
-  };
 
   const useUsersApiSpecPostUsers = useUsersApiSpecPostUsersSignup();
 

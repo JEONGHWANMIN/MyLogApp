@@ -8,29 +8,18 @@ import {AuthParamListProps, RootListParamsListProps} from '@/navigation/types/ty
 import {useUsersApiSpecPostUsersSignin} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
-import {useGlobalSnackbarStore} from '@/utils/state/snackbar.zustand';
 import axios from 'axios';
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
   const {handleCloseKeyboard} = useKeyBoardClose();
-  const {setGlobalSnackbar} = useGlobalSnackbarStore();
+  const {showSnackbarMessage} = useShowSnackbarMessage();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
-
-  const showSnackbarMessage = (message: string, mode: 'error' | 'info') => {
-    setGlobalSnackbar({
-      message,
-      actionLabel: '확인',
-      mode,
-      options: {
-        duration: 1500,
-      },
-    });
-  };
 
   const handleChange = (text: string, name: string) => {
     setForm(prev => ({
