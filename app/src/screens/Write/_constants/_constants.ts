@@ -147,3 +147,23 @@ export const WEATHERS = [
     color: '#311B92', // 진한 보라
   },
 ] as const;
+
+export const INITIAL_TEXT_FORM = {
+  title: '',
+  content: '',
+};
+
+export const INITIAL_OPTIONS_FORM = {
+  weather: {
+    key: '',
+    value: '',
+    description: '',
+    color: '',
+  },
+  mood: {
+    key: '',
+    value: '',
+    description: '',
+    color: '',
+  },
+};
