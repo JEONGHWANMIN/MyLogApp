@@ -17,6 +17,7 @@ const CoreButton = ({children, mode, sx, disabled, ...props}: ButtonProps) => {
         styles.container,
         disabled && styles.disabled,
       ]}
+      contentStyle={styles.container}
       mode={mode}
       {...props}>
       <Text style={[mode === 'contained' ? styles.fillText : styles.outlineText, sx]}>
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.typography.family.medium,
   },
   outlineText: {
+    flex: 1,
     color: theme.colors.point.sageGreen,
     fontFamily: theme.typography.family.medium,
   },

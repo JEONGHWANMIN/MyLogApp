@@ -34,30 +34,33 @@ const CoreDialog = () => {
           )}
           <Dialog.Actions style={styles.actionContainer}>
             {leftButtonText && (
-              <CoreButton
-                onPress={() => {
-                  if (leftButtonEvent) {
-                    leftButtonEvent();
-                  }
-                  hideDialog();
-                }}
-                sx={{
-                  backgroundColor: 'red',
-                }}>
-                {leftButtonText}
-              </CoreButton>
+              <View style={styles.flexOne}>
+                <CoreButton
+                  onPress={() => {
+                    if (leftButtonEvent) {
+                      leftButtonEvent();
+                    }
+                    hideDialog();
+                  }}
+                  sx={{}}>
+                  {leftButtonText}
+                </CoreButton>
+              </View>
             )}
             {rightButtonText && (
-              <CoreButton
-                mode="contained"
-                onPress={() => {
-                  if (rightButtonEvent) {
-                    rightButtonEvent();
-                  }
-                  hideDialog();
-                }}>
-                {rightButtonText}
-              </CoreButton>
+              <View style={styles.flexOne}>
+                <CoreButton
+                  mode="contained"
+                  sx={{}}
+                  onPress={() => {
+                    if (rightButtonEvent) {
+                      rightButtonEvent();
+                    }
+                    hideDialog();
+                  }}>
+                  {rightButtonText}
+                </CoreButton>
+              </View>
             )}
           </Dialog.Actions>
         </Dialog>
@@ -72,11 +75,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
   },
-  actionContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-  },
   title: {
-    fontSize: theme.typography.size.body1,
+    textAlign: 'center',
+    fontWeight: theme.typography.weight.extraBold,
+    fontSize: 18,
+    color: theme.colors.gray[500],
+  },
+  flexOne: {
+    flex: 1,
+  },
+  actionContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
   },
 });
