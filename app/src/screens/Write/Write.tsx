@@ -3,7 +3,7 @@ import {theme} from '@/styles/theme';
 import {useGlobalModalStore} from '@/utils/state/modal.zustand';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {ModalContent, TAB_NAME} from './_components/ModalContent';
 import {useDiaryApiSpecPostDiary} from '@/orval/api/diary/diary';
 import {DiaryApiSpecPostDiaryBody} from '@/orval/model';
@@ -65,6 +65,13 @@ const Write = () => {
     });
   };
 
+  useEffect(() => {
+    setGlobalModalConfig({
+      visible: true,
+      children: <ModalContent handleChangeOptions={handleChangeOptions} defaultTab={'기분'} />,
+    });
+  }, [setGlobalModalConfig]);
+
   const handleOptionModal = (tab: TAB_NAME) => {
     setGlobalModalConfig({
       visible: true,
@@ -116,7 +123,15 @@ const Write = () => {
         <View style={styles.header}>
           <IconButton icon="keyboard-backspace" onPress={handleGoBack} />
           <Text style={styles.headerTitle}>{DateUtils.getYearMonthDayDayOfWeek()}</Text>
-          <IconButton icon="check" iconColor="green" size={24} onPress={handleDiarySubmit} />
+          {diaryWriteMutate.isLoading ? (
+            <ActivityIndicator
+              size={18}
+              style={styles.loading}
+              color={theme.colors.point.mintGreen}
+            />
+          ) : (
+            <IconButton icon="check" iconColor="green" size={24} onPress={handleDiarySubmit} />
+          )}
         </View>
         <View style={styles.iconContainer}>
           {options.mood.key && (
@@ -201,6 +216,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  loading: {
+    paddingRight: 20,
   },
   optionContainer: {
     borderTopColor: theme.colors.gray[100],
