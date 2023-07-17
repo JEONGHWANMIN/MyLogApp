@@ -29,7 +29,7 @@ const AuthNavigation = () => {
         name="SignIn"
         component={SignIn}
         options={{
-          headerTitle: '로그인',
+          headerTitle: '',
           headerLeft: () => (
             <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
           ),
@@ -39,7 +39,7 @@ const AuthNavigation = () => {
         name="SignUp"
         component={SignUp}
         options={{
-          headerTitle: '회원가입',
+          headerTitle: '',
           headerLeft: () => (
             <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
           ),
