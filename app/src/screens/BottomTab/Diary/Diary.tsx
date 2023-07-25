@@ -10,8 +10,6 @@ const Diary = () => {
     size: 10,
   });
 
-  console.log(diaryListStatus.data?.data.items);
-
   const diaryList = diaryListStatus.data?.data.items;
   return (
     <View style={styles.container}>
