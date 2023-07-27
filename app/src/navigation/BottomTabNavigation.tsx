@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import Diary from '@/screens/BottomTab/Diary';
 import Home from '@/screens/BottomTab/Home';
 import Setting from '@/screens/BottomTab/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
+import Diary from '@/screens/BottomTab/Diary/Diary';
 
 const BottomTab = createBottomTabNavigator();
 
