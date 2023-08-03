@@ -4,16 +4,17 @@ import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {DiaryItem} from './_components/DiaryItem';
 
+const ItemSeparator = () => <View style={styles.itemSeparator} />;
+
 const Diary = () => {
   const diaryListStatus = useDiaryApiSpecGetDiary({
     page: 1,
-    size: 10,
+    size: 30,
   });
 
   const diaryList = diaryListStatus.data?.data.items;
 
-  console.log(diaryList);
-  const ItemSeparator = () => <View style={styles.itemSeparator} />;
+  console.log(diaryList?.length);
 
   return (
     <View style={styles.container}>
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   diaryListView: {
+    // flex: 1,
     paddingHorizontal: 12,
   },
   itemSeparator: {
