@@ -28,12 +28,12 @@ interface MyTheme {
   colors: Partial<MD2Colors> & PointColor;
   typography: {
     size: {
-      H1: 90;
-      H2: 54;
-      H3: 36;
-      H4: 28;
-      H5: 24;
-      H6: 20;
+      H1: 42;
+      H2: 36;
+      H3: 28;
+      H4: 24;
+      H5: 20;
+      H6: 18;
       body1: 16;
       body2: 15;
       body3: 14;
@@ -85,12 +85,12 @@ const theme: MyTheme = {
   },
   typography: {
     size: {
-      H1: 90,
-      H2: 54,
-      H3: 36,
-      H4: 28,
-      H5: 24,
-      H6: 20,
+      H1: 42,
+      H2: 36,
+      H3: 28,
+      H4: 24,
+      H5: 20,
+      H6: 18,
       body1: 16,
       body2: 15,
       body3: 14,
