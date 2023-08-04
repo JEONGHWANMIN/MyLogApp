@@ -10,11 +10,6 @@ export default defineConfig({
       schemas: 'src/orval/model',
       client: 'react-query',
       override: {
-        query: {
-          useQuery: true,
-          useInfinite: true,
-          useInfiniteQueryParam: 'page',
-        },
         operations: {
           diaryApiSpecGetDiary: {
             query: {
