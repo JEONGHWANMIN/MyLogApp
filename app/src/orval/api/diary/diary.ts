@@ -4,13 +4,15 @@
  * Tspec API
  * OpenAPI spec version: 0.0.1
  */
-import {useQuery, useMutation} from '@tanstack/react-query';
+import {useQuery, useInfiniteQuery, useMutation} from '@tanstack/react-query';
 import type {
   UseQueryOptions,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   QueryFunction,
   MutationFunction,
   UseQueryResult,
+  UseInfiniteQueryResult,
   QueryKey,
 } from '@tanstack/react-query';
 import type {
@@ -50,6 +52,67 @@ export const diaryApiSpecGetDiary = (
 
 export const getDiaryApiSpecGetDiaryQueryKey = (params: DiaryApiSpecGetDiaryParams) =>
   [`/diary`, ...(params ? [params] : [])] as const;
+
+export const getDiaryApiSpecGetDiaryInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
+  TError = ErrorType<unknown>,
+>(
+  params: DiaryApiSpecGetDiaryParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryQueryKey(params);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof diaryApiSpecGetDiary>>> = ({
+    signal,
+    pageParam,
+  }) => diaryApiSpecGetDiary({page: pageParam, ...params}, requestOptions, signal);
+
+  return {queryKey, queryFn, ...queryOptions};
+};
+
+export type DiaryApiSpecGetDiaryInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof diaryApiSpecGetDiary>>
+>;
+export type DiaryApiSpecGetDiaryInfiniteQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 일기 리스트 조회
+ */
+export const useDiaryApiSpecGetDiaryInfinite = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
+  TError = ErrorType<unknown>,
+>(
+  params: DiaryApiSpecGetDiaryParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getDiaryApiSpecGetDiaryInfiniteQueryOptions(params, options);
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
 
 export const getDiaryApiSpecGetDiaryQueryOptions = <
   TData = Awaited<ReturnType<typeof diaryApiSpecGetDiary>>,
@@ -258,6 +321,65 @@ export const diaryApiSpecGetDiaryId = (
 };
 
 export const getDiaryApiSpecGetDiaryIdQueryKey = (id: number) => [`/diary/${id}`] as const;
+
+export const getDiaryApiSpecGetDiaryIdInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getDiaryApiSpecGetDiaryIdQueryKey(id);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>> = ({signal}) =>
+    diaryApiSpecGetDiaryId(id, requestOptions, signal);
+
+  return {queryKey, queryFn, enabled: !!id, ...queryOptions};
+};
+
+export type DiaryApiSpecGetDiaryIdInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>
+>;
+export type DiaryApiSpecGetDiaryIdInfiniteQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 일기 조회
+ */
+export const useDiaryApiSpecGetDiaryIdInfinite = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getDiaryApiSpecGetDiaryIdInfiniteQueryOptions(id, options);
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
 
 export const getDiaryApiSpecGetDiaryIdQueryOptions = <
   TData = Awaited<ReturnType<typeof diaryApiSpecGetDiaryId>>,

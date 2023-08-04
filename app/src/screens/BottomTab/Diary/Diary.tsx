@@ -14,8 +14,6 @@ const Diary = () => {
 
   const diaryList = diaryListStatus.data?.data.items;
 
-  console.log(diaryList?.length);
-
   return (
     <View style={styles.container}>
       <View style={styles.diaryListView}>

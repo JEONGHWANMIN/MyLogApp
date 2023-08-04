@@ -4,13 +4,15 @@
  * Tspec API
  * OpenAPI spec version: 0.0.1
  */
-import {useQuery, useMutation} from '@tanstack/react-query';
+import {useQuery, useInfiniteQuery, useMutation} from '@tanstack/react-query';
 import type {
   UseQueryOptions,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   QueryFunction,
   MutationFunction,
   UseQueryResult,
+  UseInfiniteQueryResult,
   QueryKey,
 } from '@tanstack/react-query';
 import type {
@@ -200,6 +202,67 @@ export const usersApiSpecGetUsersCheck = (
 export const getUsersApiSpecGetUsersCheckQueryKey = (params: UsersApiSpecGetUsersCheckParams) =>
   [`/users/check`, ...(params ? [params] : [])] as const;
 
+export const getUsersApiSpecGetUsersCheckInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+  TError = ErrorType<unknown>,
+>(
+  params: UsersApiSpecGetUsersCheckParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersCheckQueryKey(params);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>> = ({
+    signal,
+    pageParam,
+  }) => usersApiSpecGetUsersCheck({page: pageParam, ...params}, requestOptions, signal);
+
+  return {queryKey, queryFn, ...queryOptions};
+};
+
+export type UsersApiSpecGetUsersCheckInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>
+>;
+export type UsersApiSpecGetUsersCheckInfiniteQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 이메일 중복체크
+ */
+export const useUsersApiSpecGetUsersCheckInfinite = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+  TError = ErrorType<unknown>,
+>(
+  params: UsersApiSpecGetUsersCheckParams,
+  options?: {
+    query?: UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseInfiniteQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getUsersApiSpecGetUsersCheckInfiniteQueryOptions(params, options);
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
+
 export const getUsersApiSpecGetUsersCheckQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
   TError = ErrorType<unknown>,
@@ -325,6 +388,51 @@ export const usersApiSpecGetUsers = (
 
 export const getUsersApiSpecGetUsersQueryKey = () => [`/users`] as const;
 
+export const getUsersApiSpecGetUsersInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}): UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsers>>> = ({signal}) =>
+    usersApiSpecGetUsers(requestOptions, signal);
+
+  return {queryKey, queryFn, ...queryOptions};
+};
+
+export type UsersApiSpecGetUsersInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecGetUsers>>
+>;
+export type UsersApiSpecGetUsersInfiniteQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 유저 로그아웃
+ */
+export const useUsersApiSpecGetUsersInfinite = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsers>>, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}): UseInfiniteQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getUsersApiSpecGetUsersInfiniteQueryOptions(options);
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
+
 export const getUsersApiSpecGetUsersQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsers>>,
   TError = ErrorType<unknown>,
@@ -382,6 +490,62 @@ export const usersApiSpecGetUsersRenew = (
 };
 
 export const getUsersApiSpecGetUsersRenewQueryKey = () => [`/users/renew`] as const;
+
+export const getUsersApiSpecGetUsersRenewInfiniteQueryOptions = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseInfiniteQueryOptions<
+  Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
+  TError,
+  TData
+> & {queryKey: QueryKey} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersRenewQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>> = ({
+    signal,
+  }) => usersApiSpecGetUsersRenew(requestOptions, signal);
+
+  return {queryKey, queryFn, ...queryOptions};
+};
+
+export type UsersApiSpecGetUsersRenewInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>
+>;
+export type UsersApiSpecGetUsersRenewInfiniteQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 토큰 갱신
+ */
+export const useUsersApiSpecGetUsersRenewInfinite = <
+  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseInfiniteQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getUsersApiSpecGetUsersRenewInfiniteQueryOptions(options);
+
+  const query = useInfiniteQuery(queryOptions) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
 
 export const getUsersApiSpecGetUsersRenewQueryOptions = <
   TData = Awaited<ReturnType<typeof usersApiSpecGetUsersRenew>>,
