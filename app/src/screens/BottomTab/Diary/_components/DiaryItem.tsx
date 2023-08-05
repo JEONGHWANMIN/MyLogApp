@@ -28,15 +28,15 @@ const DiaryItem = ({diaryItem}: DiaryItemProps) => {
           <Text style={styles.timeStyle}>{formattedDate}</Text>
         </View>
         <View style={styles.iconContainer}>
-          {mood && <IconButton icon={moodKey} size={24} iconColor={moodColor} />}
-          {weather && <IconButton icon={weatherKey} size={24} iconColor={weatherColor} />}
+          {mood && <IconButton icon={moodKey} size={22} iconColor={moodColor} />}
+          {weather && <IconButton icon={weatherKey} size={22} iconColor={weatherColor} />}
         </View>
       </View>
       <View style={styles.textContainer}>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleStyle}>
           {title}
         </Text>
-        <Text numberOfLines={3} ellipsizeMode="tail" style={styles.contentStyle}>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.contentStyle}>
           {content}
         </Text>
       </View>
