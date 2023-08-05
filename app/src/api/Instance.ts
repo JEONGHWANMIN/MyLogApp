@@ -52,8 +52,6 @@ customAxiosInstance.interceptors.request.use(
       } as AxiosRequestHeaders;
     }
 
-    console.log(copyConfig.headers);
-
     if (config.url?.includes('renew')) {
       const refreshToken = await localStorage.getData('refreshToken');
 
@@ -68,7 +66,7 @@ customAxiosInstance.interceptors.request.use(
     return copyConfig;
   },
   error => {
-    console.log(error);
+    // console.log(error);
     return Promise.reject(error);
   },
 );
