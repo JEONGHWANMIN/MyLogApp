@@ -6,8 +6,9 @@ import {theme} from '@/styles/theme';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import WithFloating from '@/components/hoc/WithFloating';
 
+export const queryClient = new QueryClient();
+
 const App = () => {
-  const queryClient = new QueryClient();
   return (
     <>
       <QueryClientProvider client={queryClient}>
