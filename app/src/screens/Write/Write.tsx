@@ -20,6 +20,7 @@ import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {INITIAL_OPTIONS_FORM, INITIAL_TEXT_FORM} from './_constants/_constants';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 import axios from 'axios';
+import {queryClient} from '../../../App';
 
 export interface Option {
   key: string;
@@ -65,6 +66,10 @@ const Write = () => {
     });
   };
 
+  const refetchDiaryList = async () => {
+    await queryClient.invalidateQueries(['diaryList']);
+  };
+
   useEffect(() => {
     setGlobalModalConfig({
       visible: true,
@@ -88,6 +93,7 @@ const Write = () => {
       },
       {
         onSuccess: () => {
+          refetchDiaryList();
           navigate.goBack();
           showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
         },
