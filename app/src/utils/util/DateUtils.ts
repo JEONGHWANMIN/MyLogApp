@@ -10,4 +10,10 @@ export class DateUtils {
 
     return `${year}.${month}.${day} (${dayOfWeek})`;
   }
+  static getYearMonthToKorea(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+
+    return `${year}년 ${month}월`;
+  }
 }
