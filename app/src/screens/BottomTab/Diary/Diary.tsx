@@ -21,7 +21,6 @@ import {DateUtils} from '@/utils/util/DateUtils';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
-// https://www.npmjs.com/package/react-native-month-year-picker
 const Diary = () => {
   const flatListRef = useRef(null);
   const [date, setDate] = useState(new Date());
