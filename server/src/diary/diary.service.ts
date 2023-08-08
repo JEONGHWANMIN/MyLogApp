@@ -12,23 +12,26 @@ import { Page } from 'src/common/utils/Page/Page';
 export class DiaryService {
   constructor(private prismaService: PrismaService) {}
 
-  async getAllDiaries(pageDto: SearchDiariesDto, userId: number) {
+  async getAllDiaries(searchQueryParam: SearchDiariesDto, userId: number) {
     const totalCount = await this.prismaService.diary.count();
 
     const diaries = await this.prismaService.diary.findMany({
       where: {
         userId,
+        content: {
+          contains: searchQueryParam.content,
+        },
       },
-      take: pageDto.getLimit(),
-      skip: pageDto.getOffset(),
+      take: searchQueryParam.getLimit(),
+      skip: searchQueryParam.getOffset(),
     });
 
     return {
       message: '다이어리 조회가 성공했습니다.',
       data: new Page({
         totalCount,
-        page: pageDto.page,
-        size: pageDto.size,
+        page: searchQueryParam.page,
+        size: searchQueryParam.size,
         items: diaries,
       }),
     };

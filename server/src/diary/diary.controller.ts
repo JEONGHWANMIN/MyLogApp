@@ -26,10 +26,10 @@ export class DiaryController {
   @UseGuards(AccessTokenGuard)
   @Get('/')
   async getAllDiaries(
-    @Query() pageDto: SearchDiariesDto,
+    @Query() searchQueryParam: SearchDiariesDto,
     @GetTokenUser() user: AccessTokenPayload,
   ) {
-    return await this.diaryService.getAllDiaries(pageDto, user.userId);
+    return await this.diaryService.getAllDiaries(searchQueryParam, user.userId);
   }
 
   @UseGuards(AccessTokenGuard)
