@@ -5,4 +5,12 @@ export class SearchDiariesDto extends PageRequest {
   @IsString()
   @IsOptional()
   content?: string;
+
+  @IsString()
+  @IsOptional()
+  year?: string;
+
+  @IsString()
+  @IsOptional()
+  month?: string;
 }
