@@ -14,16 +14,14 @@ export class DiaryService {
 
   async getAllDiaries(searchQueryParam: SearchDiariesDto, userId: number) {
     const { year, month } = searchQueryParam;
-    const numberYear = Number(year);
-    const numberMonth = Number(month);
-    const totalCount = await this.prismaService.diary.count();
+    const contentContains = searchQueryParam.content;
 
-    const diaries = await this.prismaService.diary.findMany({
-      where: {
-        userId,
-        content: {
-          contains: searchQueryParam.content,
-        },
+    let dateFilter = {};
+    if (year && month) {
+      const numberYear = Number(year);
+      const numberMonth = Number(month);
+
+      dateFilter = {
         createdAt: {
           gte: new Date(`${numberYear}-${numberMonth}-01`),
           lt: new Date(
@@ -32,6 +30,18 @@ export class DiaryService {
               : `${numberYear + 1}-01-01`,
           ),
         },
+      };
+    }
+
+    const totalCount = await this.prismaService.diary.count();
+
+    const diaries = await this.prismaService.diary.findMany({
+      where: {
+        userId,
+        content: {
+          contains: contentContains,
+        },
+        ...dateFilter, // Apply the date filter conditionally
       },
       take: searchQueryParam.getLimit(),
       skip: searchQueryParam.getOffset(),
