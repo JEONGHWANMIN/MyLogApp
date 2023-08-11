@@ -8,4 +8,7 @@
 export type DiaryApiSpecGetDiaryParams = {
   size: number;
   page: number;
+  content: string;
+  year: string;
+  month: string;
 };
