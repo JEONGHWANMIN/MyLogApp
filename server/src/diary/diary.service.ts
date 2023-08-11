@@ -43,6 +43,9 @@ export class DiaryService {
         },
         ...dateFilter, // Apply the date filter conditionally
       },
+      orderBy: {
+        createdAt: 'desc', // Order by createdAt in ascending order (earliest first)
+      },
       take: searchQueryParam.getLimit(),
       skip: searchQueryParam.getOffset(),
     });
