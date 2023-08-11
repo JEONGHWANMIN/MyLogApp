@@ -18,18 +18,19 @@ import {ActivityIndicator} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import RNMonthPicker, {EventTypes} from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
+import {useDateStore} from '@/utils/state/date.zustand';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 const Diary = () => {
   const flatListRef = useRef(null);
-  const [date, setDate] = useState(new Date());
+  const {date, setDate} = useDateStore();
   const [show, setShow] = useState(false);
 
   const showPicker = (value: boolean) => setShow(value);
 
   const onValueChange = useCallback(
-    (event: EventTypes, newDate: Date) => {
+    async (_: EventTypes, newDate: Date) => {
       const selectedDate = newDate || date;
       const convertedDateFormat = new Date(selectedDate);
 
@@ -39,8 +40,15 @@ const Diary = () => {
     [date, showPicker],
   );
 
-  const diaryListStatus = useInfiniteQuery(['diaryList'], {
-    queryFn: ({pageParam = 1}) => diaryApiSpecGetDiary({page: pageParam, size: 6}),
+  const diaryListStatus = useInfiniteQuery(['diaryList', date], {
+    queryFn: ({pageParam = 1}) =>
+      diaryApiSpecGetDiary({
+        page: pageParam,
+        size: 6,
+        year: String(date.getFullYear()),
+        month: String(date.getMonth() + 1),
+      }),
+
     getNextPageParam: lastPage => {
       return lastPage.data.hasNextPage ? lastPage.data.page + 1 : false;
     },
@@ -67,17 +75,21 @@ const Diary = () => {
   const prefetchNextPage = () => {
     if (diaryListStatus.hasNextPage && !diaryListStatus.isFetchingNextPage) {
       const nextPage = (diaryListStatus.data?.pages.at(-1)?.data.page ?? 0) + 1;
-      diaryListStatus.fetchNextPage({pageParam: nextPage + 1});
+      diaryListStatus.fetchNextPage({pageParam: nextPage});
     }
   };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
-    const paddingToBottom = 60;
+    const paddingToBottom = 222;
     if (contentOffset.y + layoutMeasurement.height >= contentSize.height - paddingToBottom) {
       prefetchNextPage();
     }
   };
+
+  if (diaryListStatus.isLoading) {
+    return <ActivityIndicator color={theme.colors.point.mintGreen} />;
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
@@ -93,9 +105,15 @@ const Diary = () => {
             ItemSeparatorComponent={ItemSeparator}
             onEndReached={handleLoadMore}
             onEndReachedThreshold={0.1}
-            ListFooterComponent={diaryListStatus.isFetchingNextPage ? <ActivityIndicator /> : null}
+            ListFooterComponent={
+              diaryListStatus.isFetchingNextPage ? (
+                <ActivityIndicator color={theme.colors.point.mintGreen} />
+              ) : null
+            }
             onScroll={handleScroll}
             scrollEventThrottle={400}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <DiaryWriteButton />
