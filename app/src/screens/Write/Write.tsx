@@ -20,7 +20,7 @@ import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {INITIAL_OPTIONS_FORM, INITIAL_TEXT_FORM} from './_constants/_constants';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 import axios from 'axios';
-import {queryClient} from '../../../App';
+import {useDateStore} from '@/utils/state/date.zustand';
 
 export interface Option {
   key: string;
@@ -38,6 +38,8 @@ const Write = () => {
   const [textAlineFormat, setTextAlineFormat] = useState<'left' | 'center'>('left');
   const [textForm, setTextForm] = useState(INITIAL_TEXT_FORM);
   const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
+  // const {refetchDiaryList} = useRefetchDiaryList();
+  const resetDate = useDateStore(state => state.resetDate);
 
   const handleChangeTextAlign = () => {
     setTextAlineFormat(textAlineFormat === 'left' ? 'center' : 'left');
@@ -66,10 +68,6 @@ const Write = () => {
     });
   };
 
-  const refetchDiaryList = async () => {
-    await queryClient.invalidateQueries(['diaryList']);
-  };
-
   useEffect(() => {
     setGlobalModalConfig({
       visible: true,
@@ -93,7 +91,7 @@ const Write = () => {
       },
       {
         onSuccess: () => {
-          refetchDiaryList();
+          resetDate();
           navigate.goBack();
           showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
         },
