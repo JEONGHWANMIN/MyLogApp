@@ -32,7 +32,7 @@
           {
             "name": "content",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -40,7 +40,7 @@
           {
             "name": "year",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -48,7 +48,7 @@
           {
             "name": "month",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
             }

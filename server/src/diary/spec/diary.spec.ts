@@ -11,9 +11,9 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
         query: {
           size: number;
           page: number;
-          content: string;
-          year: string;
-          month: string;
+          content?: string;
+          year?: string;
+          month?: string;
         };
         header: {
           Authorization: string;
