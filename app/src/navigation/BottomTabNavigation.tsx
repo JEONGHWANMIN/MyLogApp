@@ -5,7 +5,7 @@ import Setting from '@/screens/BottomTab/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
-import Diary from '@/screens/BottomTab/Diary/Diary';
+import DiaryStackNavigation from './DiaryStackNavigation';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -17,8 +17,8 @@ const BottomTabNavigation = () => {
         tabBarActiveTintColor: theme.colors.point.sageGreen,
       }}>
       <BottomTab.Screen
-        name="Diary"
-        component={Diary}
+        name="DiaryStack"
+        component={DiaryStackNavigation} // DiaryStackScreen을 사용하여 하위 depth 스크린 관리
         options={{
           headerShown: false,
           tabBarLabel: '일기',
