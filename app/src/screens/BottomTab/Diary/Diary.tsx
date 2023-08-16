@@ -94,7 +94,7 @@ const Diary = () => {
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
-        <Pressable onPress={() => setShow(prev => !prev)}>
+        <Pressable onPress={() => setShow(prev => !prev)} style={styles.headerPress}>
           <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
         </Pressable>
         <View style={styles.diaryListView}>
@@ -141,18 +141,23 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 12,
+    justifyContent: 'center',
     backgroundColor: 'white',
+  },
+  headerPress: {
+    alignItems: 'center',
+    borderBottomColor: theme.colors.gray[400],
+    borderBottomWidth: 1,
+  },
+  dateText: {
+    color: theme.colors.gray[800],
+    fontFamily: theme.typography.family.semiBold,
+    fontSize: theme.typography.size.body1,
+    paddingVertical: 10,
   },
   diaryListView: {
     flex: 1,
-    marginBottom: 20,
-  },
-  dateText: {
-    marginVertical: 12,
-    color: theme.colors.gray[800],
-    fontFamily: theme.typography.family.semiBold,
-    fontSize: theme.typography.size.H5,
+    paddingHorizontal: 12,
   },
   itemSeparator: {
     height: 10, // Set the desired spacing between items here

@@ -1,16 +1,24 @@
 import React from 'react';
 import {DiaryApiSpecGetDiary200DataItemsItem} from '@/orval/model';
 import {theme} from '@/styles/theme';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {MOODS_MAP, MoodsMapKey, WEATHER_MAP, WeatherMapKey} from '../_constant/_constant';
 import {DateUtils} from '@/utils/util/DateUtils';
+import {useNavigation} from '@react-navigation/native';
+import {DiaryStackParamListProps} from '@/navigation/types/types';
 
 interface DiaryItemProps {
   diaryItem: DiaryApiSpecGetDiary200DataItemsItem;
 }
 
 const DiaryItem = ({diaryItem}: DiaryItemProps) => {
+  const navigation = useNavigation<DiaryStackParamListProps>();
+
+  const handleGoDiaryDetail = () => {
+    navigation.navigate('DiaryDetail', {id: 1});
+  };
+
   const {title, content, weather, mood, createdAt} = diaryItem;
 
   const moodKey = mood && MOODS_MAP[mood as MoodsMapKey]?.key;
@@ -22,25 +30,27 @@ const DiaryItem = ({diaryItem}: DiaryItemProps) => {
   const formattedDate = DateUtils.getYearMonthDayDayOfWeek(new Date(createdAt));
 
   return (
-    <View style={styles.container}>
-      <View style={styles.timeIconContainer}>
-        <View>
-          <Text style={styles.timeStyle}>{formattedDate}</Text>
+    <TouchableOpacity onPress={handleGoDiaryDetail} activeOpacity={0.5}>
+      <View style={styles.container}>
+        <View style={styles.timeIconContainer}>
+          <View>
+            <Text style={styles.timeStyle}>{formattedDate}</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            {mood && <IconButton icon={moodKey} size={22} iconColor={moodColor} />}
+            {weather && <IconButton icon={weatherKey} size={22} iconColor={weatherColor} />}
+          </View>
         </View>
-        <View style={styles.iconContainer}>
-          {mood && <IconButton icon={moodKey} size={22} iconColor={moodColor} />}
-          {weather && <IconButton icon={weatherKey} size={22} iconColor={weatherColor} />}
+        <View style={styles.textContainer}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleStyle}>
+            {title}
+          </Text>
+          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.contentStyle}>
+            {content}
+          </Text>
         </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleStyle}>
-          {title}
-        </Text>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.contentStyle}>
-          {content}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
