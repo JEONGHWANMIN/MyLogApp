@@ -14,11 +14,12 @@ import {
 } from 'react-native';
 import {DiaryItem} from './_components/DiaryItem';
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import RNMonthPicker, {EventTypes} from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useDateStore} from '@/utils/state/date.zustand';
+import Icon from 'react-native-paper/src/components/Icon';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
@@ -95,7 +96,11 @@ const Diary = () => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
         <Pressable onPress={() => setShow(prev => !prev)} style={styles.headerPress}>
-          <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
+          <View style={styles.monthIcon}>
+            <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
+            <Icon source="menu-down" size={27} />
+          </View>
+          <IconButton icon="magnify" onPress={() => console.log('123')} />
         </Pressable>
         <View style={styles.diaryListView}>
           <FlatList
@@ -145,9 +150,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   headerPress: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: theme.colors.gray[400],
-    borderBottomWidth: 1,
+    paddingHorizontal: 12,
+    // borderBottomColor: theme.colors.gray[400],
+    // borderBottomWidth: 1,
+  },
+  monthIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   dateText: {
     color: theme.colors.gray[800],
@@ -158,6 +170,7 @@ const styles = StyleSheet.create({
   diaryListView: {
     flex: 1,
     paddingHorizontal: 12,
+    paddingTop: 10,
   },
   itemSeparator: {
     height: 10, // Set the desired spacing between items here
