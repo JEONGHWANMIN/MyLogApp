@@ -28,6 +28,7 @@ const DiaryStackNavigation = () => {
         component={DiaryDetail}
         options={{
           headerTitle: '일기 상세',
+          headerShown: false,
           headerLeft: () => (
             <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
           ),
