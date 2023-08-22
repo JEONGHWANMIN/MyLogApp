@@ -20,10 +20,13 @@ import RNMonthPicker, {EventTypes} from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useDateStore} from '@/utils/state/date.zustand';
 import Icon from 'react-native-paper/src/components/Icon';
+import {useNavigation} from '@react-navigation/native';
+import {DiaryStackParamListProps} from '@/navigation/types/types';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 const Diary = () => {
+  const navigation = useNavigation<DiaryStackParamListProps>();
   const flatListRef = useRef(null);
   const {date, setDate} = useDateStore();
   const [show, setShow] = useState(false);
@@ -40,6 +43,10 @@ const Diary = () => {
     },
     [date, showPicker],
   );
+
+  const handleGoSearch = () => {
+    navigation.push('DiarySearch');
+  };
 
   const diaryListStatus = useInfiniteQuery(['diaryList', date], {
     queryFn: ({pageParam = 1}) =>
@@ -100,7 +107,7 @@ const Diary = () => {
             <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
             <Icon source="menu-down" size={27} />
           </View>
-          <IconButton icon="magnify" onPress={() => console.log('123')} />
+          <IconButton icon="magnify" onPress={handleGoSearch} />
         </Pressable>
         <View style={styles.diaryListView}>
           <FlatList
