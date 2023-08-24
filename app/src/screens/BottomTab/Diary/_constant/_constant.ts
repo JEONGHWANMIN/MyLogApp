@@ -71,7 +71,7 @@ export const MOODS_MAP = {
     color: '#795548', // 갈색
     value: 'frown',
   },
-} as const;
+};
 
 export const WEATHER_MAP = {
   sunny: {
@@ -146,7 +146,7 @@ export const WEATHER_MAP = {
     color: '#311B92', // 진한 보라
     value: 'tornado',
   },
-} as const;
+};
 
 export type MoodsMapKey = keyof typeof MOODS_MAP;
 export type WeatherMapKey = keyof typeof WEATHER_MAP;
