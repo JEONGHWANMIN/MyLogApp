@@ -1,4 +1,4 @@
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 /**
@@ -31,6 +31,12 @@ interface DiaryStackParamsList extends ParamListBase {
   };
   DiarySearch: undefined;
 }
+
+/**
+ * RouteProps
+ */
+
+export type DiaryStackProps = RouteProp<DiaryStackParamsList, 'DiaryDetail'>;
 
 /**
  * useNavigate 부분에 넣는 부분
