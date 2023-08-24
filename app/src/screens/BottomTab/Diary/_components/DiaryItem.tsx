@@ -15,11 +15,11 @@ interface DiaryItemProps {
 const DiaryItem = ({diaryItem}: DiaryItemProps) => {
   const navigation = useNavigation<DiaryStackParamListProps>();
 
-  const handleGoDiaryDetail = () => {
-    navigation.navigate('DiaryDetail', {id: 1});
-  };
+  const {title, content, weather, mood, createdAt, id} = diaryItem;
 
-  const {title, content, weather, mood, createdAt} = diaryItem;
+  const handleGoDiaryDetail = () => {
+    navigation.navigate('DiaryDetail', {id});
+  };
 
   const moodKey = mood && MOODS_MAP[mood as MoodsMapKey]?.key;
   const moodColor = mood && MOODS_MAP[mood as MoodsMapKey]?.color;
