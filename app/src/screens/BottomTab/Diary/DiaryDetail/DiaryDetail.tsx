@@ -1,8 +1,7 @@
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {theme} from '@/styles/theme';
-import {useGlobalModalStore} from '@/utils/state/modal.zustand';
 import {DateUtils} from '@/utils/util/DateUtils';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -12,15 +11,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {ActivityIndicator, IconButton} from 'react-native-paper';
-import {useDiaryApiSpecPostDiary} from '@/orval/api/diary/diary';
-import {DiaryApiSpecPostDiaryBody} from '@/orval/model';
+import {IconButton} from 'react-native-paper';
+import {useDiaryApiSpecGetDiaryId} from '@/orval/api/diary/diary';
 import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
-import axios from 'axios';
-import {useDateStore} from '@/utils/state/date.zustand';
-import {ModalContent} from '@/screens/Write/_components/ModalContent';
 import {INITIAL_OPTIONS_FORM, INITIAL_TEXT_FORM} from '@/screens/Write/_constants/_constants';
+import {DiaryStackProps} from '@/navigation/types/types';
+import {MOODS_MAP, MoodsMapKey, WEATHER_MAP, WeatherMapKey} from '../_constant/_constant';
 
 export interface Option {
   key: string;
@@ -31,21 +28,41 @@ export interface Option {
 
 const Detail = () => {
   const navigate = useNavigation();
-  const {setGlobalModalConfig} = useGlobalModalStore();
   const {setGlobalDialogConfig} = useGlobalDialogStore();
   const {showSnackbarMessage} = useShowSnackbarMessage();
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [textForm, setTextForm] = useState(INITIAL_TEXT_FORM);
   const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
-  const resetDate = useDateStore(state => state.resetDate);
+  const route = useRoute<DiaryStackProps>();
+
+  const {id} = route.params;
+
+  const diaryStatus = useDiaryApiSpecGetDiaryId(id, {
+    query: {
+      enabled: !!id,
+      select: ({data}) => data,
+    },
+  });
+
+  useEffect(() => {
+    if (diaryStatus.status === 'success') {
+      const {title, content, mood, weather, createdAt} = diaryStatus.data;
+
+      console.log(createdAt);
+
+      const moodObj = MOODS_MAP[mood as MoodsMapKey];
+      const weatherObj = WEATHER_MAP[weather as WeatherMapKey];
+
+      setTextForm({title, content});
+      setOptions(prev => ({
+        mood: mood ? moodObj : prev.mood,
+        weather: weather ? weatherObj : prev.weather,
+      }));
+    }
+  }, [diaryStatus.status, diaryStatus.data]);
 
   const handleGoBack = () => {
-    setGlobalDialogConfig({
-      title: '일기작성을 취소하시겠어요?',
-      leftButtonText: '작성 유지',
-      rightButtonText: '작성 취소',
-      rightButtonEvent: () => navigate.goBack(),
-    });
+    navigate.goBack();
   };
 
   const handleChangeOptions = (name: string, option: Option) => {
@@ -62,67 +79,21 @@ const Detail = () => {
     });
   };
 
-  useEffect(() => {
-    setGlobalModalConfig({
-      visible: true,
-      children: <ModalContent handleChangeOptions={handleChangeOptions} defaultTab={'기분'} />,
-    });
-  }, [setGlobalModalConfig]);
+  const createDate = new Date(diaryStatus?.data?.createdAt ?? new Date());
 
-  const diaryWriteMutate = useDiaryApiSpecPostDiary();
-
-  const saveDiary = (requestData: DiaryApiSpecPostDiaryBody) => {
-    diaryWriteMutate.mutate(
-      {
-        data: requestData,
-      },
-      {
-        onSuccess: () => {
-          resetDate();
-          navigate.goBack();
-          showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
-        },
-        onError: error => {
-          if (axios.isAxiosError(error)) {
-            showSnackbarMessage('일기 작성이 실패했습니다 : (', 'error');
-          }
-        },
-      },
-    );
-  };
-
-  const handleDiarySubmit = () => {
-    const requestForm: DiaryApiSpecPostDiaryBody = {
-      title: textForm.title,
-      content: textForm.content,
-      mood: options.mood.value,
-      weather: options.weather.value,
-      tags: [],
-    };
-
-    setGlobalDialogConfig({
-      title: '일기를 등록하시겠어요?',
-      leftButtonText: '취소',
-      rightButtonText: '등록',
-      rightButtonEvent: () => saveDiary(requestForm),
-    });
-  };
+  const diaryCreateDate = DateUtils.getYearMonthDayDayOfWeek(createDate);
 
   return (
     <TouchableWithoutFeedback onPress={handleCloseKeyboard} style={styles.container}>
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.header}>
           <IconButton icon="keyboard-backspace" onPress={handleGoBack} />
-          <Text style={styles.headerTitle}>{DateUtils.getYearMonthDayDayOfWeek()}</Text>
-          {diaryWriteMutate.isLoading ? (
-            <ActivityIndicator
-              size={18}
-              style={styles.loading}
-              color={theme.colors.point.mintGreen}
-            />
-          ) : (
-            <IconButton icon="check" iconColor="green" size={24} onPress={handleDiarySubmit} />
-          )}
+          <Text style={styles.headerTitle}>{diaryCreateDate ?? ''}</Text>
+          <View
+            style={{
+              width: 50,
+            }}
+          />
         </View>
         <View style={styles.iconContainer}>
           {options.mood.key && (
@@ -143,6 +114,7 @@ const Detail = () => {
             onChangeText={text => handleChangeText('title', text)}
             textAlignVertical="top"
             placeholder="주제를 입력해주세요 : )"
+            editable={false}
           />
           <TextInput
             style={[styles.textContentInput]}
@@ -151,6 +123,7 @@ const Detail = () => {
             textAlignVertical="top"
             multiline={true}
             placeholder="오늘의 일기를 작성해주세요 !"
+            editable={false}
           />
         </View>
       </SafeAreaView>
@@ -200,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: theme.typography.family.bold,
     color: theme.colors.gray[800],
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   textContentInput: {
     flex: 1,
