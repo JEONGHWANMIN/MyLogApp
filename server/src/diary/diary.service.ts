@@ -100,6 +100,10 @@ export class DiaryService {
     };
   }
 
+  getDiarySummary = (userId: number) => {
+    return 's';
+  };
+
   async createDiary(userId: number, createDiaryDto: CreateDiaryDto) {
     const tagMaps = {
       create: createDiaryDto?.tags.map((tag) => ({

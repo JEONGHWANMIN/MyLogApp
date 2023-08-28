@@ -43,6 +43,13 @@ export class DiaryController {
   }
 
   @UseGuards(AccessTokenGuard)
+  @Get('/summary')
+  async getDiarySummary(@GetTokenUser() user: AccessTokenPayload) {
+    const userId = user.userId;
+    return await this.diaryService.getDiarySummary(userId);
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Post('/')
   async createDiary(
     @GetTokenUser() user: AccessTokenPayload,
