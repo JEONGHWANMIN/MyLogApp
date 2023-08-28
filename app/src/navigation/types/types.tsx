@@ -29,7 +29,6 @@ interface DiaryStackParamsList extends ParamListBase {
   DiaryDetail: {
     id: number;
   };
-  DiarySearch: undefined;
 }
 
 /**
@@ -66,7 +65,6 @@ type DiaryStackParamListProps = NativeStackNavigationProp<{
   DiaryDetail: {
     id: number;
   };
-  DiarySearch: undefined;
 }>;
 
 export type {
