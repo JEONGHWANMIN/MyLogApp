@@ -5,16 +5,20 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDiaryDto } from './dto/diary.dto';
-import { SearchDiariesDto } from './dto/searchDiary.dto';
+import {
+  SearchDiariesDto,
+  SearchDiaryYearMonthDto,
+} from './dto/searchDiary.dto';
 import { Page } from 'src/common/utils/Page/Page';
 
 @Injectable()
 export class DiaryService {
   constructor(private prismaService: PrismaService) {}
 
-  async getAllDiaries(searchQueryParam: SearchDiariesDto, userId: number) {
+  getDiaryDateFilter(
+    searchQueryParam: SearchDiariesDto | SearchDiaryYearMonthDto,
+  ) {
     const { year, month } = searchQueryParam;
-    const contentContains = searchQueryParam.content;
 
     let dateFilter = {};
     if (year && month) {
@@ -33,6 +37,14 @@ export class DiaryService {
       };
     }
 
+    return { dateFilter };
+  }
+
+  async getAllDiaries(searchQueryParam: SearchDiariesDto, userId: number) {
+    const contentContains = searchQueryParam.content;
+
+    const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
+
     const totalCount = await this.prismaService.diary.count();
 
     const diaries = await this.prismaService.diary.findMany({
@@ -41,10 +53,10 @@ export class DiaryService {
         content: {
           contains: contentContains,
         },
-        ...dateFilter, // Apply the date filter conditionally
+        ...dateFilter,
       },
       orderBy: {
-        createdAt: 'desc', // Order by createdAt in ascending order (earliest first)
+        createdAt: 'desc',
       },
       take: searchQueryParam.getLimit(),
       skip: searchQueryParam.getOffset(),
@@ -100,9 +112,32 @@ export class DiaryService {
     };
   }
 
-  getDiarySummary = (userId: number) => {
+  async getDiarySummary(
+    searchQueryParam: SearchDiaryYearMonthDto,
+    userId: number,
+  ) {
+    console.log(searchQueryParam);
+    const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
+
+    console.log(dateFilter);
+
+    const diaries = await this.prismaService.diary.findMany({
+      where: {
+        userId,
+      },
+      ...dateFilter,
+    });
+
+    const summarys = {
+      weather: {},
+      mood: {},
+      monthDiaryCount: diaries.length ?? 0,
+    };
+
+    diaries.forEach((diary) => {});
+
     return 's';
-  };
+  }
 
   async createDiary(userId: number, createDiaryDto: CreateDiaryDto) {
     const tagMaps = {

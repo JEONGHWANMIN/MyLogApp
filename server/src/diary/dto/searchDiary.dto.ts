@@ -14,3 +14,13 @@ export class SearchDiariesDto extends PageRequest {
   @IsOptional()
   month?: string;
 }
+
+export class SearchDiaryYearMonthDto {
+  @IsString()
+  @IsOptional()
+  year?: string;
+
+  @IsString()
+  @IsOptional()
+  month?: string;
+}

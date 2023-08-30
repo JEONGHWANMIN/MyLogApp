@@ -16,7 +16,10 @@ import { DiaryService } from './diary.service';
 import { GetTokenUser } from 'src/common/decorator/user.decorator';
 import { AccessTokenPayload } from 'src/users/types/tokenPayload';
 import { CreateDiaryDto } from './dto/diary.dto';
-import { SearchDiariesDto } from './dto/searchDiary.dto';
+import {
+  SearchDiariesDto,
+  SearchDiaryYearMonthDto,
+} from './dto/searchDiary.dto';
 
 @Injectable()
 @Controller('diary')
@@ -33,6 +36,16 @@ export class DiaryController {
   }
 
   @UseGuards(AccessTokenGuard)
+  @Get('/summary')
+  async test(
+    @Query() searchQueryParam: SearchDiaryYearMonthDto,
+    @GetTokenUser() user: AccessTokenPayload,
+  ) {
+    const userId = user.userId;
+    return this.diaryService.getDiarySummary(searchQueryParam, userId);
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Get('/:id')
   async getDiaryById(
     @GetTokenUser() user: AccessTokenPayload,
@@ -40,13 +53,6 @@ export class DiaryController {
   ) {
     const userId = user.userId;
     return await this.diaryService.getDiaryById(userId, diaryId);
-  }
-
-  @UseGuards(AccessTokenGuard)
-  @Get('/summary')
-  async getDiarySummary(@GetTokenUser() user: AccessTokenPayload) {
-    const userId = user.userId;
-    return await this.diaryService.getDiarySummary(userId);
   }
 
   @UseGuards(AccessTokenGuard)
