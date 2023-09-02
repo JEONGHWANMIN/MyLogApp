@@ -116,7 +116,6 @@ export class DiaryService {
     searchQueryParam: SearchDiaryYearMonthDto,
     userId: number,
   ) {
-    console.log(searchQueryParam);
     const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
 
     const diaries = await this.prismaService.diary.findMany({
@@ -126,8 +125,6 @@ export class DiaryService {
       },
     });
 
-    console.log(diaries);
-
     const moodCountMap = {};
     const weatherCountMap = {};
 
@@ -135,14 +132,17 @@ export class DiaryService {
       const mood = diary.mood;
       const weather = diary.weather;
 
-      if (moodCountMap[mood]) {
-        moodCountMap[mood] = moodCountMap[mood] + 1;
+      if (mood) {
+        moodCountMap[mood] = (moodCountMap[mood] || 0) + 1;
       }
 
-      // summaries.weather = {
-      //   [diary.weather]: (summaries.weather[diary.weather] ?? 0) + 1,
-      // };
+      if (weather) {
+        weatherCountMap[weather] = (weatherCountMap[weather] || 0) + 1;
+      }
     });
+
+    console.log(moodCountMap);
+    console.log(weatherCountMap);
 
     return 's';
   }
