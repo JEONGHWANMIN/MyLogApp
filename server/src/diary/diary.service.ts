@@ -144,7 +144,16 @@ export class DiaryService {
     console.log(moodCountMap);
     console.log(weatherCountMap);
 
-    return 's';
+    const response = {
+      moodCountMap,
+      weatherCountMap,
+      monthDiaryCount: diaries.length,
+    };
+
+    return {
+      message: '일기 요약 조회에 성공 했습니다.',
+      data: response,
+    };
   }
 
   async createDiary(userId: number, createDiaryDto: CreateDiaryDto) {

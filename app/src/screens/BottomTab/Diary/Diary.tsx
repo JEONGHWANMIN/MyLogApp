@@ -1,99 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {DiaryWriteButton} from '@/components/core/DiaryWriteButton';
-import {diaryApiSpecGetDiary} from '@/orval/api/diary/diary';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  FlatList,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {useRef} from 'react';
+import {FlatList, Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {DiaryItem} from './_components/DiaryItem';
-import {useInfiniteQuery} from '@tanstack/react-query';
 import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
-import RNMonthPicker, {EventTypes} from 'react-native-month-year-picker';
+import RNMonthPicker from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
-import {useDateStore} from '@/utils/state/date.zustand';
 import Icon from 'react-native-paper/src/components/Icon';
-import {useNavigation} from '@react-navigation/native';
-import {DiaryStackParamListProps} from '@/navigation/types/types';
+import {useFetchDiaryList} from './_hooks/useFetchDiaryList';
+import useDatePicker from './_hooks/useDatePicker';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 const Diary = () => {
-  const navigation = useNavigation<DiaryStackParamListProps>();
+  // const navigation = useNavigation<DiaryStackParamListProps>();
   const flatListRef = useRef(null);
-  const {date, setDate} = useDateStore();
-  const [show, setShow] = useState(false);
 
-  const showPicker = (value: boolean) => setShow(value);
+  const {date, onValueChange, show, setShow} = useDatePicker();
 
-  const onValueChange = useCallback(
-    async (_: EventTypes, newDate: Date) => {
-      const selectedDate = newDate || date;
-      const convertedDateFormat = new Date(selectedDate);
-
-      showPicker(false);
-      setDate(convertedDateFormat);
-    },
-    [date, showPicker],
-  );
-
-  const handleGoSearch = () => {
-    navigation.push('DiarySearch');
-  };
-
-  const diaryListStatus = useInfiniteQuery(['diaryList', date], {
-    queryFn: ({pageParam = 1}) =>
-      diaryApiSpecGetDiary({
-        page: pageParam,
-        size: 6,
-        year: String(date.getFullYear()),
-        month: String(date.getMonth() + 1),
-      }),
-
-    getNextPageParam: lastPage => {
-      return lastPage.data.hasNextPage ? lastPage.data.page + 1 : false;
-    },
-  });
-
-  useEffect(() => {
-    if (diaryListStatus.status === 'success') {
-      console.log(diaryListStatus.data.pages[0]);
-    }
-
-    if (diaryListStatus.status === 'error') {
-      console.log(diaryListStatus.error);
-    }
-  }, [diaryListStatus.status]);
-
-  const diaryList = diaryListStatus.data?.pages.flatMap(page => page.data.items) || [];
-
-  const handleLoadMore = () => {
-    if (diaryListStatus.hasNextPage) {
-      diaryListStatus.fetchNextPage();
-    }
-  };
-
-  const prefetchNextPage = () => {
-    if (diaryListStatus.hasNextPage && !diaryListStatus.isFetchingNextPage) {
-      const nextPage = (diaryListStatus.data?.pages.at(-1)?.data.page ?? 0) + 1;
-      diaryListStatus.fetchNextPage({pageParam: nextPage});
-    }
-  };
-
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
-    const paddingToBottom = 222;
-    if (contentOffset.y + layoutMeasurement.height >= contentSize.height - paddingToBottom) {
-      prefetchNextPage();
-    }
-  };
+  const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
 
   if (diaryListStatus.isLoading) {
     return <ActivityIndicator color={theme.colors.point.mintGreen} />;
@@ -107,7 +32,7 @@ const Diary = () => {
             <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
             <Icon source="menu-down" size={27} />
           </View>
-          <IconButton icon="magnify" onPress={handleGoSearch} />
+          <IconButton icon="magnify" />
         </Pressable>
         <View style={styles.diaryListView}>
           <FlatList
