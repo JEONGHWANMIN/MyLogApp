@@ -14,6 +14,8 @@ import type {
   QueryKey,
 } from '@tanstack/react-query';
 import type {
+  DiaryApiSpecGetDiarySummary200,
+  DiaryApiSpecGetDiarySummaryParams,
   DiaryApiSpecGetDiary200,
   DiaryApiSpecGetDiaryParams,
   DiaryApiSpecPostDiary201,
@@ -33,6 +35,73 @@ type SecondParameter<T extends (...args: any) => any> = T extends (
 ) => any
   ? P
   : never;
+
+/**
+ * @summary 일기 요약 데이터 조회
+ */
+export const diaryApiSpecGetDiarySummary = (
+  params: DiaryApiSpecGetDiarySummaryParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<DiaryApiSpecGetDiarySummary200>(
+    {url: `/diary/summary`, method: 'get', params, signal},
+    options,
+  );
+};
+
+export const getDiaryApiSpecGetDiarySummaryQueryKey = (params: DiaryApiSpecGetDiarySummaryParams) =>
+  [`/diary/summary`, ...(params ? [params] : [])] as const;
+
+export const getDiaryApiSpecGetDiarySummaryQueryOptions = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>,
+  TError = ErrorType<unknown>,
+>(
+  params: DiaryApiSpecGetDiarySummaryParams,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>, TError, TData> & {
+  queryKey: QueryKey;
+} => {
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getDiaryApiSpecGetDiarySummaryQueryKey(params);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>> = ({
+    signal,
+  }) => diaryApiSpecGetDiarySummary(params, requestOptions, signal);
+
+  return {queryKey, queryFn, ...queryOptions};
+};
+
+export type DiaryApiSpecGetDiarySummaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>
+>;
+export type DiaryApiSpecGetDiarySummaryQueryError = ErrorType<unknown>;
+
+/**
+ * @summary 일기 요약 데이터 조회
+ */
+export const useDiaryApiSpecGetDiarySummary = <
+  TData = Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>,
+  TError = ErrorType<unknown>,
+>(
+  params: DiaryApiSpecGetDiarySummaryParams,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof diaryApiSpecGetDiarySummary>>, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
+  const queryOptions = getDiaryApiSpecGetDiarySummaryQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+};
 
 /**
  * @summary 일기 리스트 조회
