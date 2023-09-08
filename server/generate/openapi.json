@@ -5,6 +5,93 @@
   },
   "openapi": "3.0.3",
   "paths": {
+    "/diary/summary": {
+      "get": {
+        "operationId": "DiaryApiSpec_get_/diary/summary",
+        "tags": [
+          "diary"
+        ],
+        "summary": "일기 요약 데이터 조회",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalDiariesCount": {
+                          "type": "number"
+                        },
+                        "monthDiariesCount": {
+                          "type": "number"
+                        },
+                        "moodCountList": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/KeyStringValueString"
+                          }
+                        },
+                        "weatherCountList": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/KeyStringValueString"
+                          }
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "monthDiariesCount",
+                        "moodCountList",
+                        "totalDiariesCount",
+                        "weatherCountList"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/diary": {
       "get": {
         "operationId": "DiaryApiSpec_get_/diary",
@@ -746,6 +833,12 @@
   },
   "components": {
     "schemas": {
+      "KeyStringValueString": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
       "CreateDiaryDto": {
         "type": "object",
         "properties": {

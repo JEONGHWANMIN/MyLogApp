@@ -1,10 +1,34 @@
 import { Diary } from '@prisma/client';
 import { Tspec } from 'tspec';
 import { CreateDiaryDto } from '../dto/diary.dto';
+import { KeyStringValueString } from '../type/diary.type';
 
 export type DiaryApiSpec = Tspec.DefineApiSpec<{
   tags: ['diary'];
   paths: {
+    '/diary/summary': {
+      get: {
+        summary: '일기 요약 데이터 조회';
+        query: {
+          year: number;
+          month: number;
+        };
+        header: {
+          Authorization: string;
+        };
+        responses: {
+          200: {
+            message: string;
+            data: {
+              totalDiariesCount: number;
+              monthDiariesCount: number;
+              moodCountList: KeyStringValueString[];
+              weatherCountList: KeyStringValueString[];
+            };
+          };
+        };
+      };
+    };
     '/diary': {
       get: {
         summary: '일기 리스트 조회';
