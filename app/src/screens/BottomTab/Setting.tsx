@@ -2,7 +2,7 @@ import {RootListParamsListProps} from '@/navigation/types/types';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {SafeAreaView, Text} from 'react-native';
 import {Button} from 'react-native-paper';
 
 const Setting = () => {
@@ -13,10 +13,10 @@ const Setting = () => {
     navigate.replace('AuthNavigation');
   };
   return (
-    <View>
+    <SafeAreaView>
       <Text>세팅</Text>
       <Button onPress={handleGoLogOut}>로그아웃</Button>
-    </View>
+    </SafeAreaView>
   );
 };
 
