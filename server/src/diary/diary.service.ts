@@ -131,6 +131,16 @@ export class DiaryService {
       },
     });
 
+    const userDiaryDateList = diaries.map((diary) => {
+      const date = new Date(diary.createdAt);
+
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      return `${year}-${month}-${day}`;
+    });
+
     const moodCountMap = {};
     const weatherCountMap = {};
 
@@ -160,6 +170,7 @@ export class DiaryService {
     const response = {
       totalDiariesCount,
       monthDiariesCount: diaries.length,
+      userDiaryDateList,
       moodCountList,
       weatherCountList,
     };
