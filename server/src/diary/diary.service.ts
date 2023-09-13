@@ -135,7 +135,7 @@ export class DiaryService {
       const date = new Date(diary.createdAt);
 
       const year = date.getFullYear();
-      const month = date.getMonth() + 1;
+      const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = date.getDate();
 
       return `${year}-${month}-${day}`;
