@@ -52,6 +52,12 @@
                     "data": {
                       "type": "object",
                       "properties": {
+                        "userDiaryDateList": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
                         "totalDiariesCount": {
                           "type": "number"
                         },
@@ -76,6 +82,7 @@
                         "monthDiariesCount",
                         "moodCountList",
                         "totalDiariesCount",
+                        "userDiaryDateList",
                         "weatherCountList"
                       ]
                     }
