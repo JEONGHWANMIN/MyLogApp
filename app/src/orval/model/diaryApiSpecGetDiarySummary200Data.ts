@@ -7,6 +7,7 @@
 import type {KeyStringValueString} from './keyStringValueString';
 
 export type DiaryApiSpecGetDiarySummary200Data = {
+  userDiaryDateList: string[];
   totalDiariesCount: number;
   monthDiariesCount: number;
   moodCountList: KeyStringValueString[];
