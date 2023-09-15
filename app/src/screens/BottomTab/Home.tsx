@@ -63,6 +63,7 @@ const Home = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Calendar
+          style={{borderRadius: 10}}
           onDayPress={day => {
             setSelected(day.dateString);
           }}
