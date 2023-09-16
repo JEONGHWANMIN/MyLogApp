@@ -52,17 +52,20 @@
                     "data": {
                       "type": "object",
                       "properties": {
+                        "totalDayCount": {
+                          "type": "number"
+                        },
+                        "monthDiariesCount": {
+                          "type": "number"
+                        },
+                        "diaryWritePercentage": {
+                          "type": "number"
+                        },
                         "userDiaryDateList": {
                           "type": "array",
                           "items": {
                             "type": "string"
                           }
-                        },
-                        "totalDiariesCount": {
-                          "type": "number"
-                        },
-                        "monthDiariesCount": {
-                          "type": "number"
                         },
                         "moodCountList": {
                           "type": "array",
@@ -79,9 +82,10 @@
                       },
                       "additionalProperties": false,
                       "required": [
+                        "diaryWritePercentage",
                         "monthDiariesCount",
                         "moodCountList",
-                        "totalDiariesCount",
+                        "totalDayCount",
                         "userDiaryDateList",
                         "weatherCountList"
                       ]
