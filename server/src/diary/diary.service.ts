@@ -10,6 +10,7 @@ import {
   SearchDiaryYearMonthDto,
 } from './dto/searchDiary.dto';
 import { Page } from 'src/common/utils/Page/Page';
+import { DateUtils } from 'src/common/utils/Page/DateUtils';
 
 @Injectable()
 export class DiaryService {
@@ -118,12 +119,6 @@ export class DiaryService {
   ) {
     const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
 
-    const totalDiariesCount = await this.prismaService.diary.count({
-      where: {
-        userId,
-      },
-    });
-
     const diaries = await this.prismaService.diary.findMany({
       where: {
         userId,
@@ -167,9 +162,19 @@ export class DiaryService {
       },
     );
 
+    const monthDiariesCount = diaries.length;
+
+    const totalDayCount = DateUtils.monthTotalDayCount(
+      searchQueryParam.year,
+      searchQueryParam.month,
+    );
+
+    const diaryWritePercentage = Math.round((27 / 28) * 100);
+
     const response = {
-      totalDiariesCount,
-      monthDiariesCount: diaries.length,
+      totalDayCount,
+      monthDiariesCount,
+      diaryWritePercentage,
       userDiaryDateList,
       moodCountList,
       weatherCountList,

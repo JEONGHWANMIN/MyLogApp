@@ -20,9 +20,10 @@ export type DiaryApiSpec = Tspec.DefineApiSpec<{
           200: {
             message: string;
             data: {
-              userDiaryDateList: string[];
-              totalDiariesCount: number;
+              totalDayCount: number;
               monthDiariesCount: number;
+              diaryWritePercentage: number;
+              userDiaryDateList: string[];
               moodCountList: KeyStringValueString[];
               weatherCountList: KeyStringValueString[];
             };
