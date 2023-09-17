@@ -10,7 +10,7 @@ import {
   SearchDiaryYearMonthDto,
 } from './dto/searchDiary.dto';
 import { Page } from 'src/common/utils/Page/Page';
-import { DateUtils } from 'src/common/utils/Page/DateUtils';
+import { DateUtils } from 'src/common/utils/DateUtils';
 
 @Injectable()
 export class DiaryService {
