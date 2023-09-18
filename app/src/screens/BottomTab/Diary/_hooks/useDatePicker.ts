@@ -19,7 +19,12 @@ const useDatePicker = () => {
     },
     [date, showPicker],
   );
-  return {show, date, onValueChange, setShow};
+
+  const handlePickerShow = () => {
+    setShow(prev => !prev);
+  };
+
+  return {show, date, onValueChange, handlePickerShow};
 };
 
 export default useDatePicker;
