@@ -46,8 +46,6 @@ export class DiaryService {
 
     const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
 
-    const totalCount = await this.prismaService.diary.count();
-
     const diaries = await this.prismaService.diary.findMany({
       where: {
         userId,
@@ -66,7 +64,7 @@ export class DiaryService {
     return {
       message: '다이어리 조회가 성공했습니다.',
       data: new Page({
-        totalCount,
+        totalCount: diaries.length,
         page: searchQueryParam.page,
         size: searchQueryParam.size,
         items: diaries,
@@ -126,15 +124,25 @@ export class DiaryService {
       },
     });
 
-    const userDiaryDateList = diaries.map((diary) => {
+    const uniqueDiaryDates = new Set();
+
+    diaries.forEach((diary) => {
       const date = new Date(diary.createdAt);
 
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = date.getDate();
+      const day = String(date.getDate()).padStart(2, '0');
 
-      return `${year}-${month}-${day}`;
+      const dateString = `${year}-${month}-${day}`;
+
+      if (!uniqueDiaryDates.has(dateString)) {
+        uniqueDiaryDates.add(dateString);
+      }
     });
+
+    const userDiaryDateList = [...uniqueDiaryDates];
+
+    console.log(userDiaryDateList);
 
     const moodCountMap = {};
     const weatherCountMap = {};
@@ -152,32 +160,24 @@ export class DiaryService {
       }
     });
 
-    const moodCountList = Object.entries(moodCountMap).map(([key, value]) => {
-      return { [key]: value };
-    });
-
-    const weatherCountList = Object.entries(weatherCountMap).map(
-      ([key, value]) => {
-        return { [key]: value };
-      },
-    );
-
-    const monthDiariesCount = diaries.length;
+    const monthDiariesCount = userDiaryDateList.length;
 
     const totalDayCount = DateUtils.monthTotalDayCount(
       searchQueryParam.year,
       searchQueryParam.month,
     );
 
-    const diaryWritePercentage = Math.round((27 / 28) * 100);
+    const diaryWritePercentage = Math.round(
+      (monthDiariesCount / totalDayCount) * 100,
+    );
 
     const response = {
       totalDayCount,
       monthDiariesCount,
       diaryWritePercentage,
       userDiaryDateList,
-      moodCountList,
-      weatherCountList,
+      moodCountMap,
+      weatherCountMap,
     };
 
     return {

@@ -8,7 +8,9 @@
     "/diary/summary": {
       "get": {
         "operationId": "DiaryApiSpec_get_/diary/summary",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 요약 데이터 조회",
         "parameters": [
           {
@@ -65,32 +67,29 @@
                             "type": "string"
                           }
                         },
-                        "moodCountList": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/KeyStringValueString"
-                          }
+                        "moodCountMap": {
+                          "$ref": "#/components/schemas/KeyStringValueString"
                         },
-                        "weatherCountList": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/KeyStringValueString"
-                          }
+                        "weatherCountMap": {
+                          "$ref": "#/components/schemas/KeyStringValueString"
                         }
                       },
                       "additionalProperties": false,
                       "required": [
                         "diaryWritePercentage",
                         "monthDiariesCount",
-                        "moodCountList",
+                        "moodCountMap",
                         "totalDayCount",
                         "userDiaryDateList",
-                        "weatherCountList"
+                        "weatherCountMap"
                       ]
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["data", "message"]
+                  "required": [
+                    "data",
+                    "message"
+                  ]
                 }
               }
             }
@@ -101,7 +100,9 @@
     "/diary": {
       "get": {
         "operationId": "DiaryApiSpec_get_/diary",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 리스트 조회",
         "parameters": [
           {
@@ -240,7 +241,10 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["data", "message"]
+                  "required": [
+                    "data",
+                    "message"
+                  ]
                 }
               }
             }
@@ -249,7 +253,9 @@
       },
       "post": {
         "operationId": "DiaryApiSpec_post_/diary",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 쓰기",
         "parameters": [
           {
@@ -288,7 +294,10 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["content", "title"]
+                "required": [
+                  "content",
+                  "title"
+                ]
               }
             }
           }
@@ -306,7 +315,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -317,7 +328,9 @@
     "/diary/{id}": {
       "delete": {
         "operationId": "DiaryApiSpec_delete_/diary/{id}",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 삭제",
         "parameters": [
           {
@@ -350,7 +363,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -359,7 +374,9 @@
       },
       "get": {
         "operationId": "DiaryApiSpec_get_/diary/{id}",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 조회",
         "parameters": [
           {
@@ -436,7 +453,10 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["data", "message"]
+                  "required": [
+                    "data",
+                    "message"
+                  ]
                 }
               }
             }
@@ -445,7 +465,9 @@
       },
       "patch": {
         "operationId": "DiaryApiSpec_patch_/diary/{id}",
-        "tags": ["diary"],
+        "tags": [
+          "diary"
+        ],
         "summary": "일기 수정",
         "parameters": [
           {
@@ -492,7 +514,10 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["content", "title"]
+                "required": [
+                  "content",
+                  "title"
+                ]
               }
             }
           }
@@ -510,7 +535,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -521,7 +548,9 @@
     "/users/signup": {
       "post": {
         "operationId": "UsersApiSpec_post_/users/signup",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "유저 회원가입",
         "parameters": [],
         "requestBody": {
@@ -542,7 +571,11 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["email", "nickname", "password"]
+                "required": [
+                  "email",
+                  "nickname",
+                  "password"
+                ]
               }
             }
           }
@@ -560,7 +593,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -571,7 +606,9 @@
     "/users/signin": {
       "post": {
         "operationId": "UsersApiSpec_post_/users/signin",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "유저 로그인",
         "parameters": [],
         "requestBody": {
@@ -589,7 +626,10 @@
                   }
                 },
                 "additionalProperties": false,
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -613,7 +653,11 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["accessToken", "message", "refreshToken"]
+                  "required": [
+                    "accessToken",
+                    "message",
+                    "refreshToken"
+                  ]
                 }
               }
             }
@@ -624,7 +668,9 @@
     "/users/check": {
       "get": {
         "operationId": "UsersApiSpec_get_/users/check",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "이메일 중복체크",
         "parameters": [
           {
@@ -652,7 +698,10 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["isDuplicate", "message"]
+                  "required": [
+                    "isDuplicate",
+                    "message"
+                  ]
                 }
               }
             }
@@ -663,7 +712,9 @@
     "/users": {
       "delete": {
         "operationId": "UsersApiSpec_delete_/users",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "유저 회원탈퇴",
         "parameters": [
           {
@@ -688,7 +739,9 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["message"]
+                  "required": [
+                    "message"
+                  ]
                 }
               }
             }
@@ -697,7 +750,9 @@
       },
       "get": {
         "operationId": "UsersApiSpec_get_/users",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "유저 로그아웃",
         "security": [
           {
@@ -721,7 +776,10 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["isDuplicate", "message"]
+                  "required": [
+                    "isDuplicate",
+                    "message"
+                  ]
                 }
               }
             }
@@ -732,7 +790,9 @@
     "/users/renew": {
       "get": {
         "operationId": "UsersApiSpec_get_/users/renew",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "토큰 갱신",
         "parameters": [
           {
@@ -763,7 +823,11 @@
                     }
                   },
                   "additionalProperties": false,
-                  "required": ["accessToken", "message", "refreshToken"]
+                  "required": [
+                    "accessToken",
+                    "message",
+                    "refreshToken"
+                  ]
                 }
               }
             }
@@ -803,7 +867,10 @@
           }
         },
         "additionalProperties": false,
-        "required": ["content", "title"]
+        "required": [
+          "content",
+          "title"
+        ]
       },
       "CreateUserDto": {
         "type": "object",
@@ -819,7 +886,11 @@
           }
         },
         "additionalProperties": false,
-        "required": ["email", "nickname", "password"]
+        "required": [
+          "email",
+          "nickname",
+          "password"
+        ]
       },
       "LoginUserDto": {
         "type": "object",
@@ -832,7 +903,10 @@
           }
         },
         "additionalProperties": false,
-        "required": ["email", "password"]
+        "required": [
+          "email",
+          "password"
+        ]
       }
     }
   }
