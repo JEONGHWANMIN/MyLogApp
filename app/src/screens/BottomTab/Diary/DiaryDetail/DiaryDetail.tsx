@@ -14,8 +14,8 @@ import {
 import {IconButton} from 'react-native-paper';
 import {useDiaryApiSpecGetDiaryId} from '@/orval/api/diary/diary';
 import {INITIAL_OPTIONS_FORM, INITIAL_TEXT_FORM} from '@/screens/Write/_constants/_constants';
-import {DiaryStackProps} from '@/navigation/types/types';
 import {MOODS_MAP, MoodsMapKey, WEATHER_MAP, WeatherMapKey} from '../_constant/_constant';
+import {DiaryDetailProps} from '@/navigation/types/types';
 
 export interface Option {
   key: string;
@@ -24,12 +24,12 @@ export interface Option {
   color: string;
 }
 
-const Detail = () => {
-  const navigate = useNavigation();
+const DiaryDetail = () => {
+  const navigation = useNavigation();
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [textForm, setTextForm] = useState(INITIAL_TEXT_FORM);
   const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
-  const route = useRoute<DiaryStackProps>();
+  const route = useRoute<DiaryDetailProps>();
 
   const {id} = route.params;
 
@@ -58,7 +58,7 @@ const Detail = () => {
   }, [diaryStatus.status, diaryStatus.data]);
 
   const handleGoBack = () => {
-    navigate.goBack();
+    navigation.goBack();
   };
 
   // const handleChangeOptions = (name: string, option: Option) => {
@@ -127,7 +127,7 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default DiaryDetail;
 
 const styles = StyleSheet.create({
   container: {

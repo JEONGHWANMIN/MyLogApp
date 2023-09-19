@@ -15,9 +15,7 @@ const ItemSeparator = () => <View style={styles.itemSeparator} />;
 const Diary = () => {
   // const navigation = useNavigation<DiaryStackParamListProps>();
   const flatListRef = useRef(null);
-
-  const {date, onValueChange, show, setShow} = useDatePicker();
-
+  const {date, onValueChange, show, handlePickerShow} = useDatePicker();
   const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
 
   if (diaryListStatus.isLoading) {
@@ -27,7 +25,7 @@ const Diary = () => {
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
-        <Pressable onPress={() => setShow(prev => !prev)} style={styles.headerPress}>
+        <Pressable onPress={handlePickerShow} style={styles.headerPress}>
           <View style={styles.monthIcon}>
             <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
             <Icon source="menu-down" size={27} />
@@ -79,15 +77,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
   headerPress: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 12,
-    // borderBottomColor: theme.colors.gray[400],
-    // borderBottomWidth: 1,
   },
   monthIcon: {
     flexDirection: 'row',
@@ -105,6 +101,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   itemSeparator: {
-    height: 10, // Set the desired spacing between items here
+    height: 10,
   },
 });

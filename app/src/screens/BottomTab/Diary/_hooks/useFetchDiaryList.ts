@@ -12,7 +12,7 @@ const useFetchDiaryList = () => {
     queryFn: ({pageParam = 1}) =>
       diaryApiSpecGetDiary({
         page: pageParam,
-        size: 6,
+        size: 10,
         year: String(date.getFullYear()),
         month: String(date.getMonth() + 1),
       }),
@@ -24,7 +24,7 @@ const useFetchDiaryList = () => {
 
   useEffect(() => {
     if (diaryListStatus.status === 'success') {
-      console.log(diaryListStatus.data.pages[0]);
+      // console.log(diaryListStatus.data.pages[0]);
     }
 
     if (diaryListStatus.status === 'error') {
@@ -49,11 +49,12 @@ const useFetchDiaryList = () => {
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
-    const paddingToBottom = 222;
+    const paddingToBottom = 150;
     if (contentOffset.y + layoutMeasurement.height >= contentSize.height - paddingToBottom) {
       prefetchNextPage();
     }
   };
+
   return {
     diaryListStatus,
     diaryList,
