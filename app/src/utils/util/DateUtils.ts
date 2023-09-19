@@ -18,7 +18,7 @@ export class DateUtils {
     return `${year}년 ${month}월`;
   }
 
-  static getYearMonthToHyphen(date = new Date()) {
+  static getCurrentYearMonth(date = new Date()) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
 
