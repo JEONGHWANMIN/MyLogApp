@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import Home from '@/screens/BottomTab/Home';
 import Setting from '@/screens/BottomTab/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
-import DiaryStackNavigation from './DiaryStackNavigation';
+import Home from '@/screens/BottomTab/Home/Home';
+import Diary from '@/screens/BottomTab/Diary/Diary';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -15,10 +15,12 @@ const BottomTabNavigation = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.point.sageGreen,
+        headerShadowVisible: false,
+        headerBackgroundContainerStyle: {backgroundColor: 'white'},
       }}>
       <BottomTab.Screen
-        name="DiaryStack"
-        component={DiaryStackNavigation} // DiaryStackScreen을 사용하여 하위 depth 스크린 관리
+        name="Diary"
+        component={Diary} // DiaryStackScreen을 사용하여 하위 depth 스크린 관리
         options={{
           headerShown: false,
           tabBarLabel: '일기',

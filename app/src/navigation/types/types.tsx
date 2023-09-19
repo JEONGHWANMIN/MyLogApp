@@ -5,10 +5,14 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
  * 실제 파라미터 받을 때 넣어주는 부분
  */
 
-interface RootListParamsList {
+interface RootListParamsList extends ParamListBase {
   BottomTabNavigation: undefined;
   AuthNavigation: undefined;
   SplashScreen: undefined;
+  Write: undefined;
+  DiaryDetail: {
+    id: number;
+  };
 }
 
 interface AuthListParamsList {
@@ -19,23 +23,15 @@ interface AuthListParamsList {
 
 interface BottomTabParamsList {
   Home: undefined;
-  DiaryStack: DiaryStackParamsList;
+  DiaryStack: undefined;
   Setting: undefined;
-  Write: undefined;
-}
-
-interface DiaryStackParamsList extends ParamListBase {
-  Diary: undefined;
-  DiaryDetail: {
-    id: number;
-  };
 }
 
 /**
  * RouteProps
  */
 
-export type DiaryStackProps = RouteProp<DiaryStackParamsList, 'DiaryDetail'>;
+export type DiaryDetailProps = RouteProp<RootListParamsList, 'DiaryDetail'>;
 
 /**
  * useNavigate 부분에 넣는 부분
@@ -45,13 +41,16 @@ type RootListParamsListProps = NativeStackNavigationProp<{
   BottomTabNavigation: undefined;
   AuthNavigation: undefined;
   SplashScreen: undefined;
+  Write: undefined;
+  DiaryDetail: {
+    id: number;
+  };
 }>;
 
 type BottomTabParamListProps = NativeStackNavigationProp<{
+  Diary: undefined;
   Home: undefined;
-  DiaryStack: DiaryStackParamsList;
   Setting: undefined;
-  Write: undefined;
 }>;
 
 type AuthParamListProps = NativeStackNavigationProp<{
@@ -60,20 +59,11 @@ type AuthParamListProps = NativeStackNavigationProp<{
   SignIn: undefined;
 }>;
 
-type DiaryStackParamListProps = NativeStackNavigationProp<{
-  Diary: undefined;
-  DiaryDetail: {
-    id: number;
-  };
-}>;
-
 export type {
   RootListParamsList,
   AuthListParamsList,
   BottomTabParamsList,
-  DiaryStackParamsList,
   RootListParamsListProps,
   BottomTabParamListProps,
   AuthParamListProps,
-  DiaryStackParamListProps,
 };

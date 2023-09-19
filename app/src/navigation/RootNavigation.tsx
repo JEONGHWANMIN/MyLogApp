@@ -4,6 +4,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import AuthNavigation from './AuthNavigation';
 import SplashScreen from '@/screens/SplashScreen/SplashScreen';
 import Write from '@/screens/Write/Write';
+import DiaryDetail from '@/screens/BottomTab/Diary/DiaryDetail/DiaryDetail';
 
 const RootStack = createNativeStackNavigator();
 
@@ -22,6 +23,13 @@ const RootNavigation = () => {
         component={Write}
         options={{
           animation: 'fade_from_bottom',
+        }}
+      />
+      <RootStack.Screen
+        name="DiaryDetail"
+        component={DiaryDetail}
+        options={{
+          animation: 'slide_from_right',
         }}
       />
     </RootStack.Navigator>
