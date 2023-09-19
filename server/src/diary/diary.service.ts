@@ -46,6 +46,13 @@ export class DiaryService {
 
     const { dateFilter } = this.getDiaryDateFilter(searchQueryParam);
 
+    const totalCount = await this.prismaService.diary.count({
+      where: {
+        userId,
+        ...dateFilter,
+      },
+    });
+
     const diaries = await this.prismaService.diary.findMany({
       where: {
         userId,
@@ -64,7 +71,7 @@ export class DiaryService {
     return {
       message: '다이어리 조회가 성공했습니다.',
       data: new Page({
-        totalCount: diaries.length,
+        totalCount,
         page: searchQueryParam.page,
         size: searchQueryParam.size,
         items: diaries,
