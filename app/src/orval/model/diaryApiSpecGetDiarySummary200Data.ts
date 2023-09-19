@@ -11,6 +11,6 @@ export type DiaryApiSpecGetDiarySummary200Data = {
   monthDiariesCount: number;
   diaryWritePercentage: number;
   userDiaryDateList: string[];
-  moodCountList: KeyStringValueString[];
-  weatherCountList: KeyStringValueString[];
+  moodCountMap: KeyStringValueString;
+  weatherCountMap: KeyStringValueString;
 };
