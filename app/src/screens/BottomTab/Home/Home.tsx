@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   monthCardTitle: {
     fontSize: theme.typography.size.body1,
     fontWeight: theme.typography.weight.bold,
+    color: theme.colors.gray[600],
   },
   monthSubTitle: {
     display: 'flex',
