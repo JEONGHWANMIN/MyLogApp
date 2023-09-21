@@ -149,8 +149,6 @@ export class DiaryService {
 
     const userDiaryDateList = [...uniqueDiaryDates];
 
-    console.log(userDiaryDateList);
-
     const moodCountMap = {};
     const weatherCountMap = {};
 
