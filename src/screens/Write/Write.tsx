@@ -92,10 +92,10 @@ const Write = () => {
       },
       {
         onSuccess: () => {
+          showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
+          navigate.goBack();
           resetDate();
           refetchDiarySummary();
-          navigate.goBack();
-          showSnackbarMessage('일기 작성이 완료되었습니다 : )', 'info');
         },
         onError: error => {
           if (axios.isAxiosError(error)) {
