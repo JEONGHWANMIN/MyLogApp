@@ -4,7 +4,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import AuthNavigation from './AuthNavigation';
 import SplashScreen from '@/screens/SplashScreen/SplashScreen';
 import Write from '@/screens/Write/Write';
-import DiaryDetail from '@/screens/BottomTab/Diary/DiaryDetail/DiaryDetail';
+import DiaryDetail from '@/screens/DiaryDetail/DiaryDetail';
 
 const RootStack = createNativeStackNavigator();
 

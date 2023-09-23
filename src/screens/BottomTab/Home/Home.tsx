@@ -6,7 +6,7 @@ import {Calendar, DateData} from 'react-native-calendars';
 import {ProgressBar} from 'react-native-paper';
 import {MOODS_MAP, MoodsMapKey, WEATHER_MAP, WeatherMapKey} from '../Diary/_constant/_constant';
 import {List} from 'react-native-paper';
-import {useFetchDiarySummary} from './_hooks/useFetchDiarySummary';
+import {useFetchDiarySummary} from './_query/useFetchDiarySummary';
 
 export interface HomeSearchDate {
   year: number;
