@@ -46,7 +46,7 @@ const useFetchDiarySummary = ({searchDate}: FetchDiarySummary) => {
     if (diarySummaryStatus.status === 'error') {
       console.log(diarySummaryStatus.error);
     }
-  }, [searchDate.year, searchDate.month, diarySummaryStatus.status]);
+  }, [diarySummaryStatus.status, diarySummaryStatus.isRefetching]);
 
   const totalDays = diarySummaryStatus.data?.totalDayCount ?? 0;
   const writeDays = diarySummaryStatus.data?.monthDiariesCount ?? 0;
