@@ -18,10 +18,10 @@ interface FetchDiaryById {
       content: string;
     }>,
   ) => void;
-  setOptions: (value: React.SetStateAction<Record<'mood' | 'weather', Option>>) => void;
+  setOriginOptions: (value: React.SetStateAction<Record<'mood' | 'weather', Option>>) => void;
 }
 
-const useFetchDiaryById = ({diaryId, setOptions, setTextForm}: FetchDiaryById) => {
+const useFetchDiaryById = ({diaryId, setOriginOptions, setTextForm}: FetchDiaryById) => {
   const diaryStatus = useDiaryApiSpecGetDiaryId(diaryId, {
     query: {
       enabled: !!diaryId,
@@ -37,7 +37,7 @@ const useFetchDiaryById = ({diaryId, setOptions, setTextForm}: FetchDiaryById) =
       const weatherObj = WEATHER_MAP[weather as WeatherMapKey];
 
       setTextForm({title, content});
-      setOptions(prev => ({
+      setOriginOptions(prev => ({
         mood: mood ? moodObj : prev.mood,
         weather: weather ? weatherObj : prev.weather,
       }));
@@ -56,7 +56,11 @@ const useFetchDiaryById = ({diaryId, setOptions, setTextForm}: FetchDiaryById) =
     content: originDiaryContent,
   };
 
-  return {diaryCreateDate, originForm};
+  const refetchDiaryById = () => {
+    diaryStatus.refetch();
+  };
+
+  return {diaryCreateDate, originForm, refetchDiaryById};
 };
 
 export {useFetchDiaryById};
