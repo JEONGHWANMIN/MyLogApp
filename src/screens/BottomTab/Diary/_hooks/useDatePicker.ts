@@ -20,11 +20,23 @@ const useDatePicker = () => {
     [date, showPicker],
   );
 
+  const setMonth = (num: number) => {
+    const copyMonthDate = new Date(date);
+    copyMonthDate.setMonth(copyMonthDate.getMonth() + num);
+
+    setDate(copyMonthDate);
+  };
+
+  const handleMonth = {
+    next: () => setMonth(1),
+    previous: () => setMonth(-1),
+  };
+
   const handlePickerShow = () => {
     setShow(prev => !prev);
   };
 
-  return {show, date, onValueChange, handlePickerShow};
+  return {show, date, onValueChange, handlePickerShow, handleMonth};
 };
 
-export default useDatePicker;
+export {useDatePicker};
