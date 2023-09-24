@@ -1,8 +1,8 @@
 import {DiaryWriteButton} from '@/components/core/DiaryWriteButton';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {FlatList, Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {DiaryItem} from './_components/DiaryItem';
-import {ActivityIndicator, IconButton} from 'react-native-paper';
+import {ActivityIndicator, IconButton, TextInput} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import RNMonthPicker from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
@@ -14,8 +14,14 @@ const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 const Diary = () => {
   const flatListRef = useRef(null);
+  const [searchText, setSearchText] = useState('');
+  const [isSearchBar, setIsSearchBar] = useState(false);
   const {date, onValueChange, show, handlePickerShow, handleMonth} = useDatePicker();
   const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
+
+  const clearText = () => {
+    setSearchText('');
+  };
 
   const isDiaryList = diaryList.length > 0;
 
@@ -30,11 +36,28 @@ const Diary = () => {
             </Pressable>
             <IconButton icon="chevron-right" onPress={handleMonth.next} size={24} />
           </View>
-          <IconButton icon="magnify" />
+          <View style={{flexDirection: 'row', flex: 1}}>
+            {isSearchBar ? (
+              <TextInput
+                placeholder="전체 일기를 검색"
+                value={searchText}
+                style={{
+                  flex: 1,
+                }}
+                right={<TextInput.Icon icon="close-circle" size={16} onPress={clearText} />}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                }}></View>
+            )}
+            <IconButton icon="magnify" onPress={() => setIsSearchBar(isSearch => !isSearch)} />
+          </View>
         </View>
         <View style={styles.diaryListView}>
           {diaryListStatus.isLoading ? (
-            <ActivityIndicator color={theme.colors.point.mintGreen} />
+            <ActivityIndicator color={theme.colors.point.mintGreen} size={28} />
           ) : (
             <>
               {isDiaryList ? (
