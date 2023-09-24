@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {IconButton} from 'react-native-paper';
+import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {INITIAL_TEXT_FORM} from '@/screens/Write/_constants/_constants';
 import {DiaryDetailProps} from '@/navigation/types/types';
 import Icon from 'react-native-paper/src/components/Icon';
@@ -37,7 +37,7 @@ const DiaryDetail = () => {
   const {setGlobalDialogConfig} = useGlobalDialogStore();
 
   const handleEditMode = () => {
-    setIdEditMode(isEditMode => !isEditMode);
+    setIdEditMode(prevEditMode => !prevEditMode);
   };
 
   const showConfirmEditModeCancel = () => {
@@ -60,17 +60,17 @@ const DiaryDetail = () => {
     navigation.goBack();
   };
 
-  const {showConfirmDeleteDiary} = useDeleteDiaryById();
+  const {showConfirmDeleteDiary, diaryDeleteMutate} = useDeleteDiaryById();
 
-  const {originOptions, setOriginOptions, options, handleOptionModal} = useOptionModalState();
+  const {options, setOptions, handleOptionModal} = useOptionModalState();
 
-  const {originForm, diaryCreateDate, refetchDiaryById} = useFetchDiaryById({
+  const {originForm, diaryCreateDate, refetchDiaryById, moodObj, weatherObj} = useFetchDiaryById({
     diaryId: id,
-    setOriginOptions,
+    setOptions,
     setTextForm,
   });
 
-  const {showConfirmPatchDiary} = usePatchDiaryById({
+  const {showConfirmPatchDiary, patchDiaryMutate} = usePatchDiaryById({
     handleEditMode,
     refetchDiaryById,
   });
@@ -94,8 +94,20 @@ const DiaryDetail = () => {
           <IconButton icon="keyboard-backspace" onPress={handleGoBack} />
           <Text style={styles.headerTitle}>{diaryCreateDate ?? ''}</Text>
           <View style={styles.headerIcons}>
-            {isEditMode && (
-              <IconButton icon="check" iconColor="skyblue" size={24} onPress={handleSubmit} />
+            {isEditMode ? (
+              <>
+                {patchDiaryMutate.isLoading ? (
+                  <ActivityIndicator
+                    size={18}
+                    style={styles.loading}
+                    color={theme.colors.point.mintGreen}
+                  />
+                ) : (
+                  <IconButton icon="check" iconColor="skyblue" size={24} onPress={handleSubmit} />
+                )}
+              </>
+            ) : (
+              <View style={styles.headerEmptyIcon} />
             )}
           </View>
         </View>
@@ -116,24 +128,16 @@ const DiaryDetail = () => {
           </View>
         ) : (
           <View style={styles.iconContainer}>
-            {originOptions.mood.key && (
+            {moodObj && (
               <View style={styles.iconPreviewContainer}>
-                <Icon source={originOptions.mood.key} size={26} color={originOptions.mood.color} />
-                <Text style={[{color: originOptions.mood.color}]}>
-                  {originOptions.mood.description}
-                </Text>
+                <Icon source={moodObj.key} size={26} color={moodObj.color} />
+                <Text style={[{color: moodObj.color}]}>{moodObj.description}</Text>
               </View>
             )}
-            {originOptions.weather.key && (
+            {weatherObj && (
               <View style={styles.iconPreviewContainer}>
-                <Icon
-                  source={originOptions.weather.key}
-                  size={26}
-                  color={originOptions.weather.color}
-                />
-                <Text style={[{color: originOptions.weather.color}]}>
-                  {originOptions.weather.description}
-                </Text>
+                <Icon source={weatherObj.key} size={26} color={weatherObj.color} />
+                <Text style={[{color: weatherObj.color}]}>{weatherObj.description}</Text>
               </View>
             )}
           </View>
@@ -177,7 +181,7 @@ const DiaryDetail = () => {
                 />
               </>
             ) : (
-              <View></View>
+              <View />
             )}
           </View>
           <View style={styles.actionIcons}>
@@ -187,12 +191,20 @@ const DiaryDetail = () => {
               iconColor={theme.colors.point.olive}
               onPress={isEditMode ? showConfirmEditModeCancel : handleEditMode}
             />
-            <IconButton
-              icon="delete"
-              size={25}
-              iconColor={theme.colors.point.error}
-              onPress={() => showConfirmDeleteDiary(id)}
-            />
+            {diaryDeleteMutate.isLoading ? (
+              <ActivityIndicator
+                size={18}
+                style={styles.loading}
+                color={theme.colors.point.error}
+              />
+            ) : (
+              <IconButton
+                icon="delete"
+                size={25}
+                iconColor={theme.colors.point.error}
+                onPress={() => showConfirmDeleteDiary(id)}
+              />
+            )}
           </View>
         </View>
       </SafeAreaView>
@@ -244,11 +256,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 10,
   },
+  headerEmptyIcon: {
+    width: 52,
+  },
   textTitleInput: {
     fontSize: 18,
     fontFamily: theme.typography.family.bold,
     color: theme.colors.gray[800],
-    // textAlign: 'center',
   },
   textContentInput: {
     flex: 1,

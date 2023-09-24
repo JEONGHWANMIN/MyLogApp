@@ -6,12 +6,7 @@ import {ModalContent, TAB_NAME} from '@/screens/Write/_components/ModalContent';
 
 const useOptionModalState = () => {
   const {setGlobalModalConfig} = useGlobalModalStore();
-  const [originOptions, setOriginOptions] =
-    useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
-  const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>({
-    mood: {...originOptions.mood},
-    weather: {...originOptions.weather},
-  });
+  const [options, setOptions] = useState<Record<'mood' | 'weather', Option>>(INITIAL_OPTIONS_FORM);
 
   useEffect(() => {
     setGlobalModalConfig({
@@ -34,7 +29,7 @@ const useOptionModalState = () => {
     });
   };
 
-  return {originOptions, setOriginOptions, options, handleOptionModal};
+  return {options, setOptions, handleOptionModal};
 };
 
 export {useOptionModalState};

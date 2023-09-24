@@ -22,9 +22,9 @@ const useDeleteDiaryById = () => {
       },
       {
         onSuccess: () => {
-          navigation.goBack();
           refetchDiaryList();
           refetchDiarySummary();
+          navigation.goBack();
           showSnackbarMessage('일기 삭제가 완료되었습니다.', 'info');
         },
         onError: () => {
@@ -43,7 +43,7 @@ const useDeleteDiaryById = () => {
     });
   };
 
-  return {showConfirmDeleteDiary};
+  return {showConfirmDeleteDiary, diaryDeleteMutate};
 };
 
 export {useDeleteDiaryById};

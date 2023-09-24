@@ -24,10 +24,10 @@ const usePatchDiaryById = ({refetchDiaryById, handleEditMode}: PatchDiaryById) =
       },
       {
         onSuccess: () => {
-          refetchDiaryList();
           refetchDiaryById();
           handleEditMode();
           showSnackbarMessage('일기 수정이 완료되었습니다.', 'info');
+          refetchDiaryList();
         },
         onError: () => {
           showSnackbarMessage('일기 수정이 실패했습니다.', 'error');
@@ -45,7 +45,7 @@ const usePatchDiaryById = ({refetchDiaryById, handleEditMode}: PatchDiaryById) =
     });
   };
 
-  return {showConfirmPatchDiary};
+  return {showConfirmPatchDiary, patchDiaryMutate};
 };
 
 export {usePatchDiaryById};

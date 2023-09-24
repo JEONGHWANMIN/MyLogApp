@@ -9,6 +9,7 @@ import {
 import {useEffect} from 'react';
 import {Option} from '../DiaryDetail';
 import {DateUtils} from '@/utils/util/DateUtils';
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 
 interface FetchDiaryById {
   diaryId: number;
@@ -18,10 +19,12 @@ interface FetchDiaryById {
       content: string;
     }>,
   ) => void;
-  setOriginOptions: (value: React.SetStateAction<Record<'mood' | 'weather', Option>>) => void;
+  setOptions: (value: React.SetStateAction<Record<'mood' | 'weather', Option>>) => void;
 }
 
-const useFetchDiaryById = ({diaryId, setOriginOptions, setTextForm}: FetchDiaryById) => {
+const useFetchDiaryById = ({diaryId, setOptions, setTextForm}: FetchDiaryById) => {
+  const {showSnackbarMessage} = useShowSnackbarMessage();
+
   const diaryStatus = useDiaryApiSpecGetDiaryId(diaryId, {
     query: {
       enabled: !!diaryId,
@@ -37,12 +40,16 @@ const useFetchDiaryById = ({diaryId, setOriginOptions, setTextForm}: FetchDiaryB
       const weatherObj = WEATHER_MAP[weather as WeatherMapKey];
 
       setTextForm({title, content});
-      setOriginOptions(prev => ({
+      setOptions(prev => ({
         mood: mood ? moodObj : prev.mood,
         weather: weather ? weatherObj : prev.weather,
       }));
     }
-  }, [diaryStatus.status, diaryStatus.data]);
+
+    if (diaryStatus.status === 'error') {
+      showSnackbarMessage('일기 데이터 조회에 실패했습니다.', 'error');
+    }
+  }, [diaryStatus.status]);
 
   const createDate = new Date(diaryStatus?.data?.createdAt ?? new Date());
 
@@ -50,6 +57,11 @@ const useFetchDiaryById = ({diaryId, setOriginOptions, setTextForm}: FetchDiaryB
 
   const originDiaryTitle = diaryStatus.data?.title;
   const originDiaryContent = diaryStatus.data?.content;
+  const originMood = diaryStatus.data?.mood;
+  const originWeather = diaryStatus.data?.weather;
+
+  const moodObj = MOODS_MAP[originMood as MoodsMapKey];
+  const weatherObj = WEATHER_MAP[originWeather as WeatherMapKey];
 
   const originForm = {
     title: originDiaryTitle,
@@ -60,7 +72,7 @@ const useFetchDiaryById = ({diaryId, setOriginOptions, setTextForm}: FetchDiaryB
     diaryStatus.refetch();
   };
 
-  return {diaryCreateDate, originForm, refetchDiaryById};
+  return {diaryCreateDate, originForm, refetchDiaryById, moodObj, weatherObj};
 };
 
 export {useFetchDiaryById};
