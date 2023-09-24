@@ -6,50 +6,60 @@ import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import RNMonthPicker from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
-import Icon from 'react-native-paper/src/components/Icon';
-import useDatePicker from './_hooks/useDatePicker';
+import {useDatePicker} from './_hooks/useDatePicker';
 import {useFetchDiaryList} from './_hooks/useFetchDiaryList';
+import {EmptyDiary} from './_components/EmptyDiary';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 const Diary = () => {
-  // const navigation = useNavigation<DiaryStackParamListProps>();
   const flatListRef = useRef(null);
-  const {date, onValueChange, show, handlePickerShow} = useDatePicker();
+  const {date, onValueChange, show, handlePickerShow, handleMonth} = useDatePicker();
   const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
 
-  if (diaryListStatus.isLoading) {
-    return <ActivityIndicator color={theme.colors.point.mintGreen} />;
-  }
+  const isDiaryList = diaryList.length > 0;
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
-        <Pressable onPress={handlePickerShow} style={styles.headerPress}>
-          <View style={styles.monthIcon}>
-            <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
-            <Icon source="menu-down" size={27} />
+        <View style={styles.headerActions}>
+          <View style={styles.flexDirectionRow}>
+            <IconButton icon="chevron-left" onPress={handleMonth.previous} size={24} />
+            <Pressable onPress={handlePickerShow} style={styles.headerPress}>
+              <Text style={styles.dateText}>{DateUtils.getYearMonthToKorea(date)}</Text>
+            </Pressable>
+            <IconButton icon="chevron-right" onPress={handleMonth.next} size={24} />
           </View>
           <IconButton icon="magnify" />
-        </Pressable>
+        </View>
         <View style={styles.diaryListView}>
-          <FlatList
-            ref={flatListRef}
-            data={diaryList}
-            renderItem={({item}) => <DiaryItem diaryItem={item} />}
-            ItemSeparatorComponent={ItemSeparator}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={
-              diaryListStatus.isFetchingNextPage ? (
-                <ActivityIndicator color={theme.colors.point.mintGreen} />
-              ) : null
-            }
-            onScroll={handleScroll}
-            scrollEventThrottle={400}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-          />
+          {diaryListStatus.isLoading ? (
+            <ActivityIndicator color={theme.colors.point.mintGreen} />
+          ) : (
+            <>
+              {isDiaryList ? (
+                <FlatList
+                  ref={flatListRef}
+                  data={diaryList}
+                  renderItem={({item}) => <DiaryItem diaryItem={item} />}
+                  ItemSeparatorComponent={ItemSeparator}
+                  onEndReached={handleLoadMore}
+                  onEndReachedThreshold={0.1}
+                  ListFooterComponent={
+                    diaryListStatus.isFetchingNextPage ? (
+                      <ActivityIndicator color={theme.colors.point.mintGreen} />
+                    ) : null
+                  }
+                  onScroll={handleScroll}
+                  scrollEventThrottle={400}
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                />
+              ) : (
+                <EmptyDiary />
+              )}
+            </>
+          )}
         </View>
         <DiaryWriteButton />
         {show && (
@@ -77,17 +87,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    // backgroundColor: 'white',
   },
   headerPress: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 12,
   },
-  monthIcon: {
+  headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   dateText: {
     color: theme.colors.gray[800],
@@ -99,8 +107,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 12,
     paddingTop: 10,
+    justifyContent: 'center',
   },
   itemSeparator: {
     height: 10,
+  },
+  flexDirectionRow: {
+    flexDirection: 'row',
   },
 });
