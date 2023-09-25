@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   contentStyle: {
-    // paddingVertical: 12,
     color: theme.colors.gray[600],
     fontSize: theme.typography.size.body3,
     fontFamily: theme.typography.family.regular,
