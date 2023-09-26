@@ -19,6 +19,10 @@ const Diary = () => {
   const {date, onValueChange, show, handlePickerShow, handleMonth} = useDatePicker();
   const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
 
+  const handleSearchTextChange = (text: string) => {
+    setSearchText(text);
+  };
+
   const clearText = () => {
     setSearchText('');
   };
@@ -39,12 +43,22 @@ const Diary = () => {
           <View style={{flexDirection: 'row', flex: 1}}>
             {isSearchBar ? (
               <TextInput
+                onChangeText={handleSearchTextChange}
                 placeholder="전체 일기를 검색"
                 value={searchText}
                 style={{
                   flex: 1,
                 }}
-                right={<TextInput.Icon icon="close-circle" size={16} onPress={clearText} />}
+                right={
+                  <TextInput.Icon
+                    icon="close-circle"
+                    size={16}
+                    onPress={() => {
+                      clearText();
+                      setIsSearchBar(prev => !prev);
+                    }}
+                  />
+                }
               />
             ) : (
               <View
@@ -52,7 +66,17 @@ const Diary = () => {
                   flex: 1,
                 }}></View>
             )}
-            <IconButton icon="magnify" onPress={() => setIsSearchBar(isSearch => !isSearch)} />
+            <IconButton
+              icon="magnify"
+              onPress={() => {
+                if (searchText) {
+                  console.log('123');
+                  return;
+                }
+                // clearText();
+                setIsSearchBar(prev => !prev);
+              }}
+            />
           </View>
         </View>
         <View style={styles.diaryListView}>
