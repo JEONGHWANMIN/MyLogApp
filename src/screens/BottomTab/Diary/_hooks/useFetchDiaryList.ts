@@ -1,20 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 import {diaryApiSpecGetDiary} from '@/orval/api/diary/diary';
 import {useDateStore} from '@/utils/state/date.zustand';
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {useEffect} from 'react';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
 import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 
 const useFetchDiaryList = () => {
   const {date} = useDateStore();
+  const {showSnackbarMessage} = useShowSnackbarMessage();
+  const [searchContent, setSearchContent] = useState('');
 
-  const diaryListStatus = useInfiniteQuery(['diaryList', date], {
+  const handleSearchContent = (text: string) => {
+    setSearchContent(text);
+  };
+
+  const diaryListStatus = useInfiniteQuery(['diaryList', date, searchContent], {
     queryFn: ({pageParam = 1}) =>
       diaryApiSpecGetDiary({
         page: pageParam,
         size: 10,
         year: String(date.getFullYear()),
         month: String(date.getMonth() + 1),
+        content: searchContent,
       }),
 
     getNextPageParam: lastPage => {
@@ -23,12 +32,10 @@ const useFetchDiaryList = () => {
   });
 
   useEffect(() => {
-    if (diaryListStatus.status === 'success') {
-      // console.log(diaryListStatus.data.pages[0]);
-    }
-
     if (diaryListStatus.status === 'error') {
-      console.log(diaryListStatus.error);
+      if (axios.isAxiosError(diaryListStatus.error)) {
+        showSnackbarMessage('일기 리스트 조회가 실패했습니다.', 'error');
+      }
     }
   }, [diaryListStatus.status]);
 
@@ -60,6 +67,7 @@ const useFetchDiaryList = () => {
     diaryList,
     handleLoadMore,
     handleScroll,
+    handleSearchContent,
   };
 };
 
