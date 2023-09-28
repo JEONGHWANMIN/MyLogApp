@@ -143,11 +143,13 @@ const Write = () => {
           {options.mood.key && (
             <View style={styles.iconPreviewContainer}>
               <IconButton icon={options.mood.key} size={30} iconColor={options.mood.color} />
+              <Text style={[{color: options.mood.color}]}>{options.mood.description}</Text>
             </View>
           )}
           {options.weather.key && (
             <View style={styles.iconPreviewContainer}>
               <IconButton icon={options.weather.key} size={30} iconColor={options.weather.color} />
+              <Text style={[{color: options.weather.color}]}>{options.weather.description}</Text>
             </View>
           )}
         </View>
@@ -218,7 +220,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     height: 40,
-    marginTop: 10,
+    marginTop: 30,
     marginHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 10,
+    marginTop: 40,
   },
   textTitleInput: {
     fontSize: 18,
