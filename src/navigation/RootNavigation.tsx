@@ -22,7 +22,7 @@ const RootNavigation = () => {
         name="Write"
         component={Write}
         options={{
-          animation: 'slide_from_left',
+          animation: 'slide_from_right',
         }}
       />
       <RootStack.Screen
