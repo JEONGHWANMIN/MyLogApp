@@ -3,6 +3,7 @@ import {useDiaryApiSpecGetDiarySummary} from '@/orval/api/diary/diary';
 import {useEffect, useState} from 'react';
 import {HomeSearchDate} from '../Home';
 import {DIARY_MARK_OPTION} from '../_constant/contant';
+import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 
 type DiaryCalendarMap = Record<
   string,
@@ -18,6 +19,7 @@ interface FetchDiarySummary {
 }
 
 const useFetchDiarySummary = ({searchDate}: FetchDiarySummary) => {
+  const {showSnackbarMessage} = useShowSnackbarMessage();
   const [userDiaryDateList, setUserDiaryDateList] = useState<DiaryCalendarMap>({});
 
   const diarySummaryStatus = useDiaryApiSpecGetDiarySummary(
@@ -44,7 +46,7 @@ const useFetchDiarySummary = ({searchDate}: FetchDiarySummary) => {
     }
 
     if (diarySummaryStatus.status === 'error') {
-      console.log(diarySummaryStatus.error);
+      showSnackbarMessage('일기 요약 조회에 실패했습니다.', 'error');
     }
   }, [diarySummaryStatus.status, diarySummaryStatus.isRefetching]);
 
@@ -54,7 +56,15 @@ const useFetchDiarySummary = ({searchDate}: FetchDiarySummary) => {
   const moodMap = diarySummaryStatus.data?.moodCountMap ?? {};
   const weatherMap = diarySummaryStatus.data?.weatherCountMap ?? {};
 
-  return {userDiaryDateList, totalDays, writeDays, writePercent, moodMap, weatherMap};
+  return {
+    diarySummaryStatus,
+    userDiaryDateList,
+    totalDays,
+    writeDays,
+    writePercent,
+    moodMap,
+    weatherMap,
+  };
 };
 
 export {useFetchDiarySummary};
