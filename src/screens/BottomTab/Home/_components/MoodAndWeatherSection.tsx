@@ -18,9 +18,10 @@ const MoodAndWeatherSection = ({moodMap, weatherMap}: MoodAndWeatherSectionProps
   const isMoodList = moodList.length > 0;
   return (
     <View style={styles.weatherAndMoodContainer}>
-      {isWeatherList && (
-        <View style={[styles.weatherAndMoodCard]}>
-          {weatherList.map(([weatherKey, value], index) => {
+      <View style={[styles.weatherAndMoodCard]}>
+        <Text style={styles.cardTitle}>날씨</Text>
+        {isWeatherList ? (
+          weatherList.map(([weatherKey, value], index) => {
             const {description, color, key} = WEATHER_MAP[weatherKey as WeatherMapKey];
             return (
               <View key={index} style={styles.weatherAndMoodTextView}>
@@ -31,25 +32,32 @@ const MoodAndWeatherSection = ({moodMap, weatherMap}: MoodAndWeatherSectionProps
                 <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
               </View>
             );
-          })}
-        </View>
-      )}
-      {isMoodList && (
-        <View style={[styles.weatherAndMoodCard]}>
-          {moodList.map(([moodKey, value], index) => {
+          })
+        ) : (
+          <Text style={styles.dataNone}>날씨 데이터가 없습니다.</Text>
+        )}
+      </View>
+      <View style={[styles.weatherAndMoodCard]}>
+        <Text style={styles.cardTitle}>기분</Text>
+        {isMoodList ? (
+          moodList.map(([moodKey, value], index) => {
             const {description, color, key} = MOODS_MAP[moodKey as MoodsMapKey];
             return (
-              <View key={index} style={styles.weatherAndMoodTextView}>
-                <View style={[styles.iconTag, {backgroundColor: color}]}>
-                  <Text style={[styles.weatherAndMoodText, styles.tagText]}>{description}</Text>
+              <>
+                <View key={index} style={styles.weatherAndMoodTextView}>
+                  <View style={[styles.iconTag, {backgroundColor: color}]}>
+                    <Text style={[styles.weatherAndMoodText, styles.tagText]}>{description}</Text>
+                  </View>
+                  <List.Icon icon={key} color={color} />
+                  <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
                 </View>
-                <List.Icon icon={key} color={color} />
-                <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
-              </View>
+              </>
             );
-          })}
-        </View>
-      )}
+          })
+        ) : (
+          <Text style={styles.dataNone}>기분 데이터가 없습니다.</Text>
+        )}
+      </View>
     </View>
   );
 };
@@ -62,15 +70,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+
   weatherAndMoodCard: {
-    flex: 1,
+    flex: 0.5,
     marginTop: 12,
     borderColor: theme.colors.gray[100],
     backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
-    padding: 20,
+    padding: 15,
     minHeight: 60,
+  },
+  cardTitle: {
+    textAlign: 'center',
+    fontSize: theme.typography.size.body3,
+    fontWeight: theme.typography.weight.medium,
+    color: theme.colors.gray[600],
+    marginBottom: 10,
   },
   weatherAndMoodTextView: {
     display: 'flex',
@@ -86,4 +102,9 @@ const styles = StyleSheet.create({
   },
   iconTag: {padding: 4, borderRadius: 10},
   tagText: {color: 'white', fontWeight: theme.typography.weight.bold},
+  dataNone: {
+    marginTop: 10,
+    textAlign: 'center',
+    color: theme.colors.gray[200],
+  },
 });
