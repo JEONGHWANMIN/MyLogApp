@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   headerTitle: {
-    fontSize: 15,
+    fontSize: theme.typography.size.body2,
     color: 'black',
     fontWeight: theme.typography.weight.bold,
   },
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   textTitleInput: {
-    fontSize: 18,
+    fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
     color: theme.colors.gray[800],
     textAlign: 'center',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   textContentInput: {
     flex: 1,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: theme.typography.size.body1,
     lineHeight: 25,
     fontFamily: theme.typography.family.medium,
     color: theme.colors.gray[800],

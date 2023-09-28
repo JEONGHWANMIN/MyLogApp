@@ -127,20 +127,24 @@ const DiaryDetail = () => {
             )}
           </View>
         ) : (
-          <View style={styles.iconContainer}>
-            {moodObj && (
-              <View style={styles.iconPreviewContainer}>
-                <Icon source={moodObj.key} size={26} color={moodObj.color} />
-                <Text style={[{color: moodObj.color}]}>{moodObj.description}</Text>
+          <>
+            {moodObj && weatherObj && (
+              <View style={styles.iconContainer}>
+                {moodObj && (
+                  <View style={styles.iconPreviewContainer}>
+                    <Icon source={moodObj.key} size={26} color={moodObj.color} />
+                    <Text style={[{color: moodObj.color}]}>{moodObj.description}</Text>
+                  </View>
+                )}
+                {weatherObj && (
+                  <View style={styles.iconPreviewContainer}>
+                    <Icon source={weatherObj.key} size={26} color={weatherObj.color} />
+                    <Text style={[{color: weatherObj.color}]}>{weatherObj.description}</Text>
+                  </View>
+                )}
               </View>
             )}
-            {weatherObj && (
-              <View style={styles.iconPreviewContainer}>
-                <Icon source={weatherObj.key} size={26} color={weatherObj.color} />
-                <Text style={[{color: weatherObj.color}]}>{weatherObj.description}</Text>
-              </View>
-            )}
-          </View>
+          </>
         )}
         <View style={styles.textContainer}>
           <TextInput
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   headerTitle: {
-    fontSize: 15,
+    fontSize: theme.typography.size.body2,
     color: 'black',
     fontWeight: theme.typography.weight.bold,
   },
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     height: 40,
-    marginTop: 10,
+    marginTop: 30,
     marginHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -254,20 +258,20 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 10,
+    marginTop: 40,
   },
   headerEmptyIcon: {
     width: 52,
   },
   textTitleInput: {
-    fontSize: 18,
+    fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
     color: theme.colors.gray[800],
   },
   textContentInput: {
     flex: 1,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: theme.typography.size.body1,
     lineHeight: 25,
     fontFamily: theme.typography.family.medium,
     color: theme.colors.gray[800],

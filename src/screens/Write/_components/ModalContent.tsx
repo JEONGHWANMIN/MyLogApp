@@ -32,7 +32,7 @@ const ModalContent = ({handleChangeOptions, defaultTab = '날씨'}: ModalContent
           <Text style={[styles.tabText, tab === '날씨' && styles.activeTabText]}>날씨</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.borderTob}>
+      <View>
         {tab === '기분' && <MoodSetting handleChangeOptions={handleChangeOptions} />}
         {tab === '날씨' && <WeatherSetting handleChangeOptions={handleChangeOptions} />}
       </View>
@@ -67,14 +67,10 @@ const styles = StyleSheet.create({
     zIndex: 2,
     color: theme.colors.gray[500],
     fontWeight: theme.typography.weight.bold,
-    fontSize: 14,
+    fontSize: theme.typography.size.body3,
   },
   activeTabText: {
     color: theme.colors.gray[800],
-  },
-  borderTob: {
-    // borderTopWidth: 1,
-    // borderTopColor: 'red',
   },
   iconContainer: {
     flex: 1,
