@@ -1,9 +1,9 @@
 import {theme} from '@/styles/theme';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {List} from 'react-native-paper';
 import {MOODS_MAP, MoodsMapKey, WEATHER_MAP, WeatherMapKey} from '../../Diary/_constant/_constant';
 import {KeyStringValueString} from '@/orval/model';
+import Icon from 'react-native-paper/src/components/Icon';
 
 interface MoodAndWeatherSectionProps {
   weatherMap: KeyStringValueString;
@@ -21,14 +21,14 @@ const MoodAndWeatherSection = ({moodMap, weatherMap}: MoodAndWeatherSectionProps
       <View style={[styles.weatherAndMoodCard]}>
         <Text style={styles.cardTitle}>날씨</Text>
         {isWeatherList ? (
-          weatherList.map(([weatherKey, value], index) => {
+          weatherList.map(([weatherKey, value]) => {
             const {description, color, key} = WEATHER_MAP[weatherKey as WeatherMapKey];
             return (
-              <View key={index} style={styles.weatherAndMoodTextView}>
+              <View key={key} style={styles.weatherAndMoodTextView}>
                 <View style={[styles.iconTag, {backgroundColor: color}]}>
                   <Text style={[styles.weatherAndMoodText, styles.tagText]}>{description}</Text>
                 </View>
-                <List.Icon icon={key} color={color} />
+                <Icon source={key} color={color} size={22} />
                 <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
               </View>
             );
@@ -40,18 +40,16 @@ const MoodAndWeatherSection = ({moodMap, weatherMap}: MoodAndWeatherSectionProps
       <View style={[styles.weatherAndMoodCard]}>
         <Text style={styles.cardTitle}>기분</Text>
         {isMoodList ? (
-          moodList.map(([moodKey, value], index) => {
+          moodList.map(([moodKey, value]) => {
             const {description, color, key} = MOODS_MAP[moodKey as MoodsMapKey];
             return (
-              <>
-                <View key={index} style={styles.weatherAndMoodTextView}>
-                  <View style={[styles.iconTag, {backgroundColor: color}]}>
-                    <Text style={[styles.weatherAndMoodText, styles.tagText]}>{description}</Text>
-                  </View>
-                  <List.Icon icon={key} color={color} />
-                  <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
+              <View key={key} style={styles.weatherAndMoodTextView}>
+                <View style={[styles.iconTag, {backgroundColor: color}]}>
+                  <Text style={[styles.weatherAndMoodText, styles.tagText]}>{description}</Text>
                 </View>
-              </>
+                <Icon source={key} color={color} size={22} />
+                <Text style={[styles.weatherAndMoodText, {color}]}>{value}</Text>
+              </View>
             );
           })
         ) : (
