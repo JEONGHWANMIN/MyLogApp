@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import Setting from '@/screens/BottomTab/Setting';
+import Setting from '@/screens/BottomTab/Setting/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
@@ -20,7 +20,7 @@ const BottomTabNavigation = () => {
       }}>
       <BottomTab.Screen
         name="Diary"
-        component={Diary} // DiaryStackScreen을 사용하여 하위 depth 스크린 관리
+        component={Diary}
         options={{
           headerShown: false,
           tabBarLabel: '일기',
