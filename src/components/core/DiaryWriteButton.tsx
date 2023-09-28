@@ -3,10 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
-import {BottomTabParamListProps} from '@/navigation/types/types';
+import {RootListParamsListProps} from '@/navigation/types/types';
 
 const DiaryWriteButton = () => {
-  const navigation = useNavigation<BottomTabParamListProps>();
+  const navigation = useNavigation<RootListParamsListProps>();
 
   const handleGoDiaryWrite = () => {
     navigation.navigate('Write');
