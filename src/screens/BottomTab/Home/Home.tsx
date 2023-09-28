@@ -54,9 +54,11 @@ const Home = () => {
             },
           }}
         />
-        <View style={styles.loadingContainer}>
+        <>
           {diarySummaryStatus.isLoading ? (
-            <ActivityIndicator color={theme.colors.point.mintGreen} size={28} />
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator color={theme.colors.point.mintGreen} size={28} />
+            </View>
           ) : (
             <View>
               <ProgressCard
@@ -67,7 +69,7 @@ const Home = () => {
               <MoodAndWeatherSection moodMap={moodMap} weatherMap={weatherMap} />
             </View>
           )}
-        </View>
+        </>
       </ScrollView>
     </SafeAreaView>
   );
@@ -88,6 +90,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   loadingContainer: {
-    justifyContent: 'center',
+    marginTop: 40,
   },
 });
