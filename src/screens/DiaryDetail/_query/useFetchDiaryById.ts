@@ -11,6 +11,13 @@ import {Option} from '../DiaryDetail';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 
+export type OptionType = {
+  key: string;
+  description: string;
+  color: string;
+  value: string;
+};
+
 interface FetchDiaryById {
   diaryId: number;
   setTextForm: (
@@ -64,15 +71,15 @@ const useFetchDiaryById = ({diaryId, setOptions, setTextForm}: FetchDiaryById) =
   const weatherObj = WEATHER_MAP[originWeather as WeatherMapKey];
 
   const originForm = {
-    title: originDiaryTitle,
-    content: originDiaryContent,
+    title: originDiaryTitle ?? '',
+    content: originDiaryContent ?? '',
   };
 
   const refetchDiaryById = () => {
     diaryStatus.refetch();
   };
 
-  return {diaryCreateDate, originForm, refetchDiaryById, moodObj, weatherObj};
+  return {diaryStatus, diaryCreateDate, originForm, refetchDiaryById, moodObj, weatherObj};
 };
 
 export {useFetchDiaryById};
