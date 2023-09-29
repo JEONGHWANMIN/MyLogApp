@@ -76,14 +76,14 @@ const DiaryDetail = () => {
         />
         <DiaryDetailBody
           handleChangeText={handleChangeText}
-          content={textForm.content}
           title={textForm.title}
+          originTitle={originForm.title}
+          content={textForm.content}
+          originContent={originForm.content}
           isEditMode={isEditMode}
           isLoading={diaryStatus.isLoading}
           moodObj={moodObj}
           weatherObj={weatherObj}
-          originTitle={originForm.title}
-          originContent={originForm.content}
           weather={options.weather}
           mood={options.mood}
         />
