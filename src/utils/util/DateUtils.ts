@@ -11,6 +11,7 @@ export class DateUtils {
     return `${year}.${month}.${day} (${dayOfWeek})`;
   }
 
+  // output : 2023년 08월
   static getYearMonthToKorea(date = new Date()) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
