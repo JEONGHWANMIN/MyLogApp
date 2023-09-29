@@ -3,7 +3,7 @@ import {useDiaryApiSpecDeleteDiaryId} from '@/orval/api/diary/diary';
 import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {useNavigation} from '@react-navigation/native';
 import {useRefetchDiaryList} from './useRefetchDiaryList';
-import {useRefetchDiarySummary} from '@/screens/Write/_hooks/useRefetchDiarySummary';
+import {useRefetchDiarySummary} from '@/screens/Write/_query/useRefetchDiarySummary';
 
 const useDeleteDiaryById = () => {
   const navigation = useNavigation();

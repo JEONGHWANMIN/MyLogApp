@@ -3,7 +3,7 @@ import {useDiaryApiSpecPatchDiaryId} from '@/orval/api/diary/diary';
 import {DiaryApiSpecPatchDiaryIdBody} from '@/orval/model';
 import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {useRefetchDiaryList} from './useRefetchDiaryList';
-import {useRefetchDiarySummary} from '@/screens/Write/_hooks/useRefetchDiarySummary';
+import {useRefetchDiarySummary} from '@/screens/Write/_query/useRefetchDiarySummary';
 
 interface PatchDiaryById {
   refetchDiaryById: () => void;
