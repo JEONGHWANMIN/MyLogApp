@@ -148,5 +148,8 @@ export const WEATHER_MAP = {
   },
 };
 
+export type MoodsType = typeof MOODS_MAP;
+export type WeatherType = typeof WEATHER_MAP;
+
 export type MoodsMapKey = keyof typeof MOODS_MAP;
 export type WeatherMapKey = keyof typeof WEATHER_MAP;
