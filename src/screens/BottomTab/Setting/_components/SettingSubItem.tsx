@@ -12,7 +12,7 @@ interface SettingSubItemProps {
 
 const SettingSubItem = ({onPress, text, icon}: SettingSubItemProps) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.5}>
       <Button icon={icon} style={styles.button}>
         <Text style={styles.buttonText}>{text}</Text>
       </Button>
