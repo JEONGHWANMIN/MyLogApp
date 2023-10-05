@@ -15,13 +15,14 @@ interface RootListParamsList extends ParamListBase {
   };
 }
 
-interface AuthListParamsList {
+interface AuthListParamsList extends ParamListBase {
   Auth: undefined;
-  SignUp: undefined;
+  SignUpPhone: undefined;
+  SignUpAccount: undefined;
   SignIn: undefined;
 }
 
-interface BottomTabParamsList {
+interface BottomTabParamsList extends ParamListBase {
   Home: undefined;
   DiaryStack: undefined;
   Setting: undefined;
@@ -37,27 +38,11 @@ export type DiaryDetailProps = RouteProp<RootListParamsList, 'DiaryDetail'>;
  * useNavigate 부분에 넣는 부분
  */
 
-type RootListParamsListProps = NativeStackNavigationProp<{
-  BottomTabNavigation: undefined;
-  AuthNavigation: undefined;
-  SplashScreen: undefined;
-  Write: undefined;
-  DiaryDetail: {
-    id: number;
-  };
-}>;
+type RootListParamsListProps = NativeStackNavigationProp<RootListParamsList>;
 
-type BottomTabParamListProps = NativeStackNavigationProp<{
-  Diary: undefined;
-  Home: undefined;
-  Setting: undefined;
-}>;
+type BottomTabParamListProps = NativeStackNavigationProp<BottomTabParamsList>;
 
-type AuthParamListProps = NativeStackNavigationProp<{
-  Auth: undefined;
-  SignUp: undefined;
-  SignIn: undefined;
-}>;
+type AuthParamListProps = NativeStackNavigationProp<AuthListParamsList>;
 
 export type {
   RootListParamsList,

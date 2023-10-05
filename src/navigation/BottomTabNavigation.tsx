@@ -2,10 +2,10 @@
 import React from 'react';
 import Setting from '@/screens/BottomTab/Setting/Setting';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {IconButton} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import Home from '@/screens/BottomTab/Home/Home';
 import Diary from '@/screens/BottomTab/Diary/Diary';
+import Icon from 'react-native-paper/src/components/Icon';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -24,7 +24,7 @@ const BottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: '일기',
-          tabBarIcon: ({color}) => <IconButton icon="book-account" size={27} iconColor={color} />,
+          tabBarIcon: ({color}) => <Icon source="book-account" size={27} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -33,7 +33,7 @@ const BottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: '홈',
-          tabBarIcon: ({color}) => <IconButton icon="home-variant" size={27} iconColor={color} />,
+          tabBarIcon: ({color}) => <Icon source="home-variant" size={27} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -42,7 +42,7 @@ const BottomTabNavigation = () => {
         options={{
           headerShown: false,
           tabBarLabel: '내정보',
-          tabBarIcon: ({color}) => <IconButton icon="account-circle" size={27} iconColor={color} />,
+          tabBarIcon: ({color}) => <Icon source="account-circle" size={27} color={color} />,
         }}
       />
     </BottomTab.Navigator>

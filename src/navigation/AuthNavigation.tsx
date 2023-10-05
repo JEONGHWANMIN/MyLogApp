@@ -3,10 +3,12 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignIn from '@/screens/Auth/SignIn';
-import SignUp from '@/screens/Auth/SignUp';
+import SignUpAccount from '@/screens/Auth/SignUpAccount';
 import Auth from '@/screens/Auth/Auth';
 import {IconButton} from 'react-native-paper';
 import {AuthParamListProps} from './types/types';
+import {View} from 'react-native';
+import SignUpPhone from '@/screens/Auth/SignUpPhone';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -31,17 +33,29 @@ const AuthNavigation = () => {
         options={{
           headerTitle: '',
           headerLeft: () => (
-            <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
+            <View>
+              <IconButton icon="chevron-left" size={22} onPress={() => navigation.goBack()} />
+            </View>
           ),
         }}
       />
       <AuthStack.Screen
-        name="SignUp"
-        component={SignUp}
+        name="SignUpPhone"
+        component={SignUpPhone}
         options={{
           headerTitle: '',
           headerLeft: () => (
-            <IconButton icon="keyboard-backspace" size={27} onPress={() => navigation.goBack()} />
+            <IconButton icon="chevron-left" size={22} onPress={() => navigation.goBack()} />
+          ),
+        }}
+      />
+      <AuthStack.Screen
+        name="SignUpAccount"
+        component={SignUpAccount}
+        options={{
+          headerTitle: '',
+          headerLeft: () => (
+            <IconButton icon="chevron-left" size={22} onPress={() => navigation.goBack()} />
           ),
         }}
       />
