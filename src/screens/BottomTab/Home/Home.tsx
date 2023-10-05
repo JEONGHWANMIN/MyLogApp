@@ -54,7 +54,7 @@ const Home = () => {
             },
           }}
         />
-        <>
+        <View>
           {diarySummaryStatus.isLoading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator color={theme.colors.point.mintGreen} size={28} />
@@ -69,7 +69,7 @@ const Home = () => {
               <MoodAndWeatherSection moodMap={moodMap} weatherMap={weatherMap} />
             </View>
           )}
-        </>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,7 +79,6 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     flex: 1,
   },
   scrollView: {
