@@ -1,6 +1,6 @@
 import {theme} from '@/styles/theme';
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Platform, StyleSheet, Text, TextInput, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {Option} from '../Write';
 
@@ -65,11 +65,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     marginTop: 30,
+    gap: Platform.OS === 'android' ? 8 : 0,
   },
   textTitleInput: {
     fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
-    color: theme.colors.gray[800],
+    color: Platform.OS === 'android' ? theme.colors.gray[600] : theme.colors.gray[900],
     padding: 0,
   },
   textContentInput: {
