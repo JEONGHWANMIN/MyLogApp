@@ -1,33 +1,29 @@
 import {DiaryWriteButton} from '@/components/core/DiaryWriteButton';
-import React, {useRef, useState} from 'react';
-import {FlatList, Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {DiaryItem} from './_components/DiaryItem';
-import {ActivityIndicator, IconButton, TextInput} from 'react-native-paper';
+import React, {useState} from 'react';
+import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {IconButton, TextInput} from 'react-native-paper';
 import {theme} from '@/styles/theme';
 import RNMonthPicker from 'react-native-month-year-picker';
 import {DateUtils} from '@/utils/util/DateUtils';
 import {useDatePicker} from './_hooks/useDatePicker';
 import {useFetchDiaryList} from './_hooks/useFetchDiaryList';
-import {EmptyDiary} from './_components/EmptyDiary';
-
-const ItemSeparator = () => <View style={styles.itemSeparator} />;
+import {DiaryList} from './_components/DiaryList';
 
 const Diary = () => {
-  const flatListRef = useRef(null);
   const [searchText, setSearchText] = useState('');
   const [isSearchBar, setIsSearchBar] = useState(false);
   const {date, onValueChange, show, handlePickerShow, handleMonth} = useDatePicker();
-  const {diaryList, diaryListStatus, handleLoadMore, handleScroll} = useFetchDiaryList();
+  const {diaryList, diaryListStatus, handleLoadMore, handleScroll, handleSearchContent} =
+    useFetchDiaryList();
 
   const handleSearchTextChange = (text: string) => {
     setSearchText(text);
   };
 
   const clearText = () => {
+    handleSearchContent('');
     setSearchText('');
   };
-
-  const isDiaryList = diaryList.length > 0;
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
@@ -40,15 +36,13 @@ const Diary = () => {
             </Pressable>
             <IconButton icon="chevron-right" onPress={handleMonth.next} size={24} />
           </View>
-          <View style={{flexDirection: 'row', flex: 1}}>
+          <View style={styles.searchContainer}>
             {isSearchBar ? (
               <TextInput
                 onChangeText={handleSearchTextChange}
-                placeholder="전체 일기를 검색"
+                placeholder="전체 검색"
                 value={searchText}
-                style={{
-                  flex: 1,
-                }}
+                style={styles.searchInput}
                 right={
                   <TextInput.Icon
                     icon="close-circle"
@@ -61,53 +55,27 @@ const Diary = () => {
                 }
               />
             ) : (
-              <View
-                style={{
-                  flex: 1,
-                }}></View>
+              <View style={styles.emptyInput} />
             )}
             <IconButton
               icon="magnify"
               onPress={() => {
                 if (searchText) {
-                  console.log('123');
+                  handleSearchContent(searchText);
                   return;
                 }
-                // clearText();
                 setIsSearchBar(prev => !prev);
               }}
             />
           </View>
         </View>
-        <View style={styles.diaryListView}>
-          {diaryListStatus.isLoading ? (
-            <ActivityIndicator color={theme.colors.point.mintGreen} size={28} />
-          ) : (
-            <>
-              {isDiaryList ? (
-                <FlatList
-                  ref={flatListRef}
-                  data={diaryList}
-                  renderItem={({item}) => <DiaryItem diaryItem={item} />}
-                  ItemSeparatorComponent={ItemSeparator}
-                  onEndReached={handleLoadMore}
-                  onEndReachedThreshold={0.1}
-                  ListFooterComponent={
-                    diaryListStatus.isFetchingNextPage ? (
-                      <ActivityIndicator color={theme.colors.point.mintGreen} />
-                    ) : null
-                  }
-                  onScroll={handleScroll}
-                  scrollEventThrottle={400}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                />
-              ) : (
-                <EmptyDiary />
-              )}
-            </>
-          )}
-        </View>
+        <DiaryList
+          diaryList={diaryList}
+          handleLoadMore={handleLoadMore}
+          handleScroll={handleScroll}
+          isFetchingNextPage={diaryListStatus.isFetchingNextPage}
+          isLoading={diaryListStatus.isLoading}
+        />
         <DiaryWriteButton />
         {show && (
           <RNMonthPicker
@@ -161,5 +129,17 @@ const styles = StyleSheet.create({
   },
   flexDirectionRow: {
     flexDirection: 'row',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  searchInput: {
+    flex: 1,
+    padding: 0,
+    margin: 0,
+  },
+  emptyInput: {
+    flex: 1,
   },
 });
