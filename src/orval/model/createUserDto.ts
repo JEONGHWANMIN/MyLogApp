@@ -9,4 +9,5 @@ export interface CreateUserDto {
   email: string;
   nickname: string;
   password: string;
+  phoneNumber: string;
 }

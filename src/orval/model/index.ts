@@ -28,6 +28,8 @@ export * from './usersApiSpecGetUsers200';
 export * from './usersApiSpecGetUsersCheck200';
 export * from './usersApiSpecGetUsersCheckParams';
 export * from './usersApiSpecGetUsersRenew200';
+export * from './usersApiSpecPostUsersCheck200';
+export * from './usersApiSpecPostUsersCheckBody';
 export * from './usersApiSpecPostUsersSignin201';
 export * from './usersApiSpecPostUsersSigninBody';
 export * from './usersApiSpecPostUsersSignup201';

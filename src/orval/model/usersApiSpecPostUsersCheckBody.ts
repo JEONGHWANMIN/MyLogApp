@@ -5,9 +5,6 @@
  * OpenAPI spec version: 0.0.1
  */
 
-export type UsersApiSpecPostUsersSignupBody = {
+export type UsersApiSpecPostUsersCheckBody = {
   email: string;
-  nickname: string;
-  password: string;
-  phoneNumber: string;
 };
