@@ -20,14 +20,10 @@ const Auth = () => {
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.buttonText}>{'먼저 로그인이 필요해요 : )'}</Text>
-        <CoreButton
-          mode="outlined"
-          onPress={() => navigation.navigate('SignIn')}>
+        <CoreButton mode="outlined" onPress={() => navigation.navigate('SignIn')}>
           로그인
         </CoreButton>
-        <CoreButton
-          mode="contained"
-          onPress={() => navigation.navigate('SignUp')}>
+        <CoreButton mode="contained" onPress={() => navigation.navigate('SignUpPhone')}>
           회원가입
         </CoreButton>
       </View>
@@ -45,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
+    fontFamily: theme.typography.family.semiBold,
     fontSize: theme.typography.size.H3,
     color: theme.colors.gray[900],
   },

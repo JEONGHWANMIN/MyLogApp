@@ -5,21 +5,21 @@ import CoreButton from '@/components/core/CoreButton';
 import CoreInput from '@/components/core/CoreInput';
 import {theme} from '@/styles/theme';
 import {AuthParamListProps, RootListParamsListProps} from '@/navigation/types/types';
-import {useUsersApiSpecPostUsersSignin} from '@/orval/api/users/users';
-import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
-import {LocalStorage} from '@/utils/localStorage/localStorage';
-import axios from 'axios';
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
+import {useSignIn} from './_query/useSignIn';
+import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
+
+const initialSignInForm = {
+  email: '',
+  password: '',
+};
 
 const SignIn = () => {
   const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
+  const [form, setForm] = useState(initialSignInForm);
   const {handleCloseKeyboard} = useKeyBoardClose();
   const {showSnackbarMessage} = useShowSnackbarMessage();
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
 
   const handleChange = (text: string, name: string) => {
     setForm(prev => ({
@@ -28,32 +28,7 @@ const SignIn = () => {
     }));
   };
 
-  const useUserSignInAPI = useUsersApiSpecPostUsersSignin();
-
-  const userSignInAPI = (form: UsersApiSpecPostUsersSigninBody) => {
-    useUserSignInAPI.mutate(
-      {
-        data: form,
-      },
-      {
-        onSuccess: async response => {
-          const {accessToken, refreshToken} = response;
-          const localStorage = LocalStorage.getInstance();
-
-          await localStorage.storeData('accessToken', accessToken);
-          await localStorage.storeData('refreshToken', refreshToken);
-
-          navigation.replace('BottomTabNavigation');
-          showSnackbarMessage('로그인이 완료되었습니다', 'info');
-        },
-        onError: error => {
-          if (axios.isAxiosError(error)) {
-            showSnackbarMessage('이메일, 비밀번호를 다시 확인해주세요.', 'error');
-          }
-        },
-      },
-    );
-  };
+  const {userSignIn, isSignInLoading} = useSignIn();
 
   const handleSubmit = () => {
     if (!form.email || !form.password) {
@@ -61,7 +36,12 @@ const SignIn = () => {
       return;
     }
 
-    userSignInAPI(form);
+    const signInForm: UsersApiSpecPostUsersSigninBody = {
+      email: form.email.trim(),
+      password: form.password,
+    };
+
+    userSignIn(signInForm);
   };
 
   return (
@@ -70,11 +50,7 @@ const SignIn = () => {
         <View>
           <Text style={styles.title}>PenPle</Text>
           <View style={styles.inputContainer}>
-            <CoreInput
-              placeholder="이메일"
-              onChangeText={text => handleChange(text, 'email')}
-              // right={<TextInput.Icon icon="eye" />}
-            />
+            <CoreInput placeholder="이메일" onChangeText={text => handleChange(text, 'email')} />
             <CoreInput
               placeholder="패스워드"
               onChangeText={text => handleChange(text, 'password')}
@@ -82,7 +58,7 @@ const SignIn = () => {
             />
             <View style={styles.registeredUserContainer}>
               <Text style={styles.registeredUserText}>회원이 아니신가요 ?</Text>
-              <Text style={styles.loginLink} onPress={() => navigation.push('SignUp')}>
+              <Text style={styles.loginLink} onPress={() => navigation.push('SignUpPhone')}>
                 회원가입
               </Text>
             </View>
@@ -91,7 +67,7 @@ const SignIn = () => {
         <CoreButton
           mode="contained"
           onPress={handleSubmit}
-          loading={useUserSignInAPI.isLoading}
+          loading={isSignInLoading}
           labelStyle={{
             color: theme.colors.point.mintGreen,
           }}>
@@ -113,6 +89,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 100,
+    fontFamily: theme.typography.family.semiBold,
     fontSize: theme.typography.size.H3,
     color: theme.colors.point.sageGreen,
     textAlign: 'center',
