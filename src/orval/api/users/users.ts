@@ -18,8 +18,8 @@ import type {
   UsersApiSpecPostUsersSignupBody,
   UsersApiSpecPostUsersSignin201,
   UsersApiSpecPostUsersSigninBody,
-  UsersApiSpecGetUsersCheck200,
-  UsersApiSpecGetUsersCheckParams,
+  UsersApiSpecPostUsersCheck200,
+  UsersApiSpecPostUsersCheckBody,
   UsersApiSpecDeleteUsers204,
   UsersApiSpecGetUsers200,
   UsersApiSpecGetUsersRenew200,
@@ -186,70 +186,77 @@ export const useUsersApiSpecPostUsersSignin = <
 /**
  * @summary 이메일 중복체크
  */
-export const usersApiSpecGetUsersCheck = (
-  params: UsersApiSpecGetUsersCheckParams,
+export const usersApiSpecPostUsersCheck = (
+  usersApiSpecPostUsersCheckBody: UsersApiSpecPostUsersCheckBody,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
-  return customInstance<UsersApiSpecGetUsersCheck200>(
-    {url: `/users/check`, method: 'get', params, signal},
+  return customInstance<UsersApiSpecPostUsersCheck200>(
+    {
+      url: `/users/check`,
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      data: usersApiSpecPostUsersCheckBody,
+    },
     options,
   );
 };
 
-export const getUsersApiSpecGetUsersCheckQueryKey = (params: UsersApiSpecGetUsersCheckParams) =>
-  [`/users/check`, ...(params ? [params] : [])] as const;
-
-export const getUsersApiSpecGetUsersCheckQueryOptions = <
-  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+export const getUsersApiSpecPostUsersCheckMutationOptions = <
   TError = ErrorType<unknown>,
->(
-  params: UsersApiSpecGetUsersCheckParams,
-  options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  },
-): UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData> & {
-  queryKey: QueryKey;
-} => {
-  const {query: queryOptions, request: requestOptions} = options ?? {};
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersCheck>>,
+    TError,
+    {data: UsersApiSpecPostUsersCheckBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersCheck>>,
+  TError,
+  {data: UsersApiSpecPostUsersCheckBody},
+  TContext
+> => {
+  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getUsersApiSpecGetUsersCheckQueryKey(params);
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersCheck>>,
+    {data: UsersApiSpecPostUsersCheckBody}
+  > = props => {
+    const {data} = props ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>> = ({
-    signal,
-  }) => usersApiSpecGetUsersCheck(params, requestOptions, signal);
+    return usersApiSpecPostUsersCheck(data, requestOptions);
+  };
 
-  return {queryKey, queryFn, ...queryOptions};
+  return {mutationFn, ...mutationOptions};
 };
 
-export type UsersApiSpecGetUsersCheckQueryResult = NonNullable<
-  Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>
+export type UsersApiSpecPostUsersCheckMutationResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersCheck>>
 >;
-export type UsersApiSpecGetUsersCheckQueryError = ErrorType<unknown>;
+export type UsersApiSpecPostUsersCheckMutationBody = UsersApiSpecPostUsersCheckBody;
+export type UsersApiSpecPostUsersCheckMutationError = ErrorType<unknown>;
 
 /**
  * @summary 이메일 중복체크
  */
-export const useUsersApiSpecGetUsersCheck = <
-  TData = Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>,
+export const useUsersApiSpecPostUsersCheck = <
   TError = ErrorType<unknown>,
->(
-  params: UsersApiSpecGetUsersCheckParams,
-  options?: {
-    query?: UseQueryOptions<Awaited<ReturnType<typeof usersApiSpecGetUsersCheck>>, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  },
-): UseQueryResult<TData, TError> & {queryKey: QueryKey} => {
-  const queryOptions = getUsersApiSpecGetUsersCheckQueryOptions(params, options);
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersCheck>>,
+    TError,
+    {data: UsersApiSpecPostUsersCheckBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const mutationOptions = getUsersApiSpecPostUsersCheckMutationOptions(options);
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {queryKey: QueryKey};
-
-  query.queryKey = queryOptions.queryKey;
-
-  return query;
+  return useMutation(mutationOptions);
 };
-
 /**
  * @summary 유저 회원탈퇴
  */
