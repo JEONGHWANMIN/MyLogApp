@@ -10,5 +10,4 @@ export interface CreateDiaryDto {
   content: string;
   weather?: string;
   mood?: string;
-  tags?: string[];
 }

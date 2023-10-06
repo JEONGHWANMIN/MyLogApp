@@ -10,5 +10,4 @@ export type DiaryApiSpecPatchDiaryIdBody = {
   content: string;
   weather?: string;
   mood?: string;
-  tags?: string[];
 };

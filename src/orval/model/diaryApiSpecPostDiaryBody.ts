@@ -10,5 +10,4 @@ export type DiaryApiSpecPostDiaryBody = {
   content: string;
   weather?: string;
   mood?: string;
-  tags?: string[];
 };

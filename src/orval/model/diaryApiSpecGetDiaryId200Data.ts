@@ -13,5 +13,4 @@ export type DiaryApiSpecGetDiaryId200Data = {
   weather: string;
   mood: string;
   userId: number;
-  tags: string[];
 };
