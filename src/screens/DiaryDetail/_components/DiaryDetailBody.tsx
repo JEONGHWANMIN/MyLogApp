@@ -1,6 +1,6 @@
 import {theme} from '@/styles/theme';
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Platform, StyleSheet, Text, TextInput, View} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 import Icon from 'react-native-paper/src/components/Icon';
 import {Option} from '../DiaryDetail';
@@ -84,6 +84,7 @@ const DiaryDetailBody = ({
               textAlignVertical="top"
               placeholder="주제를 입력해주세요 : )"
               editable={isEditMode}
+              placeholderTextColor={theme.colors.gray[400]}
             />
             <TextInput
               style={[styles.textContentInput]}
@@ -93,6 +94,7 @@ const DiaryDetailBody = ({
               multiline={true}
               placeholder="오늘의 일기를 작성해주세요 !"
               editable={isEditMode}
+              placeholderTextColor={theme.colors.gray[400]}
             />
           </View>
         </>
@@ -121,8 +123,9 @@ const styles = StyleSheet.create({
   textTitleInput: {
     fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
-    color: theme.colors.gray[800],
+    color: Platform.OS === 'android' ? theme.colors.gray[600] : theme.colors.gray[900],
     padding: 0,
+    height: 30,
   },
   textContentInput: {
     flex: 1,

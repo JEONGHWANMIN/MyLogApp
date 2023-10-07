@@ -6,7 +6,8 @@ import {Calendar, DateData} from 'react-native-calendars';
 import {useFetchDiarySummary} from './_query/useFetchDiarySummary';
 import {ProgressCard} from './_components/ProgressCard';
 import {MoodAndWeatherSection} from './_components/MoodAndWeatherSection';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, IconButton} from 'react-native-paper';
+import {CALENDER_DIRECTION_ICON} from './_constant/contant';
 
 export interface HomeSearchDate {
   year: number;
@@ -45,6 +46,9 @@ const Home = () => {
           onDayPress={handleDayChange}
           onMonthChange={handleMonthChange}
           monthFormat="yyyy년 MM월"
+          renderArrow={direction => {
+            return <IconButton icon={CALENDER_DIRECTION_ICON[direction]} size={22} />;
+          }}
           markedDates={{
             ...userDiaryDateList,
             [selected]: {

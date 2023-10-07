@@ -36,6 +36,7 @@ const DiaryWriteBody = ({handleChangeText, mood, weather, title, content}: Diary
           onChangeText={text => handleChangeText('title', text)}
           textAlignVertical="top"
           placeholder="주제를 입력해주세요 : )"
+          placeholderTextColor={theme.colors.gray[400]}
         />
         <TextInput
           style={styles.textContentInput}
@@ -44,6 +45,7 @@ const DiaryWriteBody = ({handleChangeText, mood, weather, title, content}: Diary
           textAlignVertical="top"
           multiline={true}
           placeholder="오늘의 일기를 작성해주세요 !"
+          placeholderTextColor={theme.colors.gray[400]}
         />
       </View>
     </View>
@@ -70,9 +72,10 @@ const styles = StyleSheet.create({
     fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
     color: Platform.OS === 'android' ? theme.colors.gray[600] : theme.colors.gray[900],
-    backgroundColor: 'red',
+    height: 30,
   },
   textContentInput: {
+    flex: 1,
     fontSize: theme.typography.size.body1,
     lineHeight: 25,
     fontFamily: theme.typography.family.medium,

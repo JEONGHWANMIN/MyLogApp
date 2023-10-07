@@ -1,4 +1,5 @@
 import {theme} from '@/styles/theme';
+import {useGlobalDialogStore} from '@/utils/state/dialog.zustand';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
@@ -17,9 +18,20 @@ const DiaryDetailHeader = ({
   isEditMode,
   isPatching,
 }: DiaryDetailHeaderProps) => {
+  const {setGlobalDialogConfig} = useGlobalDialogStore();
   const navigation = useNavigation();
 
   const handleGoBack = () => {
+    if (isEditMode) {
+      setGlobalDialogConfig({
+        title: '일기수정을 취소하시겠어요?',
+        leftButtonText: '수정 유지',
+        rightButtonText: '수정 취소',
+        rightButtonEvent: () => navigation.goBack(),
+      });
+      return;
+    }
+
     navigation.goBack();
   };
 
