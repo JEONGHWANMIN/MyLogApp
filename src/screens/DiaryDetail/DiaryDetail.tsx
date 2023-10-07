@@ -55,6 +55,10 @@ const DiaryDetail = () => {
   });
 
   const handleSubmit = () => {
+    if (patchDiaryMutate.isLoading) {
+      return;
+    }
+
     const requestForm: DiaryApiSpecPatchDiaryIdBody = {
       title: textForm.title,
       content: textForm.content,

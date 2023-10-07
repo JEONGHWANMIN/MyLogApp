@@ -56,6 +56,10 @@ const Write = () => {
   const {saveDiary, diaryWriteMutate} = usePostDiary();
 
   const handleDiarySubmit = () => {
+    if (diaryWriteMutate.isLoading) {
+      return;
+    }
+
     const requestForm: DiaryApiSpecPostDiaryBody = {
       title: textForm.title,
       content: textForm.content,
