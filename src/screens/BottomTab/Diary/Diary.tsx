@@ -1,5 +1,5 @@
-import {DiaryWriteButton} from '@/components/core/DiaryWriteButton';
 import React, {useState} from 'react';
+import {DiaryWriteButton} from '@/components/core/DiaryWriteButton';
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {IconButton, TextInput} from 'react-native-paper';
 import {theme} from '@/styles/theme';
@@ -60,6 +60,7 @@ const Diary = () => {
                 placeholder="전체 내용 검색"
                 value={searchText}
                 style={styles.searchInput}
+                placeholderTextColor={theme.colors.gray[400]}
                 right={
                   <TextInput.Icon
                     icon="close-circle"
@@ -106,7 +107,7 @@ export default Diary;
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
   container: {
     flex: 1,
