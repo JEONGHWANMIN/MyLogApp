@@ -18,7 +18,7 @@ const SignUpPhone = () => {
 
   const handleGoSignUpAccount = () => {
     if (phoneNumber.length < 10) {
-      showSnackbarMessage('번호를 확인해주세요 : (', 'error');
+      showSnackbarMessage('번호를 확인해주세요 : (', 'warning');
       return;
     }
 
@@ -34,13 +34,13 @@ const SignUpPhone = () => {
 
     const isInputText = !/^\d+$/.test(text);
     if (isInputText) {
-      showSnackbarMessage('숫자를 입력해주세요 : (', 'error');
+      showSnackbarMessage('숫자를 입력해주세요 : (', 'warning');
       return;
     }
 
     const isLongNumber = text.length > 11;
     if (isLongNumber) {
-      showSnackbarMessage('번호가 너무 길어요 : (', 'error');
+      showSnackbarMessage('번호가 너무 길어요 : (', 'warning');
       return;
     }
 
@@ -109,7 +109,5 @@ const styles = StyleSheet.create({
     color: theme.colors.gray[600],
     fontSize: theme.typography.size.body3,
   },
-  bottomContainer: {
-    marginBottom: 20,
-  },
+  bottomContainer: {},
 });

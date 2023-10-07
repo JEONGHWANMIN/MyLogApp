@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     gap: 5,
-    marginBottom: 20,
   },
   buttonText: {
     fontSize: theme.typography.size.H6,

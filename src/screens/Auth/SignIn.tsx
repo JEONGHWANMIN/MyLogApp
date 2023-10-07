@@ -105,9 +105,11 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   registeredUserText: {
+    color: theme.colors.gray[600],
     fontSize: theme.typography.size.body3,
   },
   loginLink: {
+    color: theme.colors.gray[800],
     fontSize: theme.typography.size.body3,
     fontWeight: theme.typography.weight.bold,
   },
