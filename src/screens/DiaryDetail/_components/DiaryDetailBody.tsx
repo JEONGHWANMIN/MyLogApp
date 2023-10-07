@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 30,
+    marginTop: 40,
   },
   textTitleInput: {
     fontSize: theme.typography.size.H6,

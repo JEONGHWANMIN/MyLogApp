@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 10,
+    marginTop: 30,
   },
   textTitleInput: {
     fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
     color: Platform.OS === 'android' ? theme.colors.gray[600] : theme.colors.gray[900],
-    height: 30,
+    height: 40,
   },
   textContentInput: {
     flex: 1,
