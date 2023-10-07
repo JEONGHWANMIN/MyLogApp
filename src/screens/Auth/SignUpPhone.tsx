@@ -54,7 +54,7 @@ const SignUpPhone = () => {
         <Text style={styles.phoneNumberText}>휴대폰 번호를 입력해주세요 : )</Text>
         <View style={styles.inputContainer}>
           <CoreInput
-            placeholder="번호 입력 ex) 01012345678"
+            placeholder="ex) 01012345678"
             onChangeText={handleChangePhoneNumber}
             value={phoneNumber}
             keyboardType="numeric"

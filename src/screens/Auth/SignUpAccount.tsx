@@ -60,6 +60,10 @@ const SignUpAccount = () => {
   };
 
   const handleSubmit = async () => {
+    if (isSignUpLoading) {
+      return;
+    }
+
     if (!passwordMatch) {
       showSnackbarMessage('비밀번호가 일치하지 않습니다.', 'error');
       return;

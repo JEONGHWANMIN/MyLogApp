@@ -11,23 +11,13 @@ interface CoreInputProps extends Props {
   onBlurEvent?: () => void;
 }
 
-const CoreInput = ({
-  error = false,
-  sx,
-  onFocusEvent,
-  onBlurEvent,
-  ...props
-}: CoreInputProps) => {
+const CoreInput = ({error = false, sx, onFocusEvent, onBlurEvent, ...props}: CoreInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <TextInput
       {...props}
-      style={[
-        styles.container,
-        isFocused && styles.focus,
-        error && styles.error,
-        sx,
-      ]}
+      placeholderTextColor={theme.colors.gray[400]}
+      style={[styles.container, isFocused && styles.focus, error && styles.error, sx]}
       onFocus={() => {
         setIsFocused(true);
         if (onFocusEvent) {

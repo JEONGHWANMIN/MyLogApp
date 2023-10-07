@@ -5,11 +5,13 @@ import {useUsersApiSpecPostUsersSignup} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
 import {usePhoneNumberStore} from '../_state/phoneNumber.zustand';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
+import {useUserEmailStore} from '../_state/email.zustand';
 
 const useSignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {showSnackbarMessage} = useShowSnackbarMessage();
   const resetPhoneNumber = usePhoneNumberStore(state => state.resetPhoneNumber);
+  const setEmail = useUserEmailStore(state => state.setEmail);
   const useUsersApiSpecPostUsersMutate = useUsersApiSpecPostUsersSignup();
 
   const handleGoSignIn = () => {
@@ -25,6 +27,7 @@ const useSignUp = () => {
         onSuccess: () => {
           handleGoSignIn();
           resetPhoneNumber();
+          setEmail(signUpForm.email);
           showSnackbarMessage('회원가입에 성공했습니다.', 'info');
         },
         onError: error => {

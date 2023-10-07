@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAvoidingView, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import CoreButton from '@/components/core/CoreButton';
@@ -9,17 +9,25 @@ import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 import {useSignIn} from './_query/useSignIn';
 import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
-
-const initialSignInForm = {
-  email: '',
-  password: '',
-};
+import {useUserEmailStore} from './_state/email.zustand';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
-  const [form, setForm] = useState(initialSignInForm);
+  const signupEmail = useUserEmailStore(state => state.signupEmail);
+  const [form, setForm] = useState({
+    email: signupEmail ?? '',
+    password: '',
+  });
+
   const {handleCloseKeyboard} = useKeyBoardClose();
   const {showSnackbarMessage} = useShowSnackbarMessage();
+
+  useEffect(() => {
+    setForm(prev => ({
+      ...prev,
+      email: signupEmail,
+    }));
+  }, [signupEmail]);
 
   const handleChange = (text: string, name: string) => {
     setForm(prev => ({
@@ -31,6 +39,10 @@ const SignIn = () => {
   const {userSignIn, isSignInLoading} = useSignIn();
 
   const handleSubmit = () => {
+    if (isSignInLoading) {
+      return;
+    }
+
     if (!form.email || !form.password) {
       showSnackbarMessage('이메일, 비밀번호를 입력해주세요.', 'error');
       return;
@@ -50,8 +62,13 @@ const SignIn = () => {
         <View>
           <Text style={styles.title}>PenPle</Text>
           <View style={styles.inputContainer}>
-            <CoreInput placeholder="이메일" onChangeText={text => handleChange(text, 'email')} />
             <CoreInput
+              placeholder="이메일"
+              value={form.email}
+              onChangeText={text => handleChange(text, 'email')}
+            />
+            <CoreInput
+              value={form.password}
               placeholder="패스워드"
               onChangeText={text => handleChange(text, 'password')}
               secureTextEntry
