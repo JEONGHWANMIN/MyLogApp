@@ -1,6 +1,6 @@
-import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
+import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {SafeAreaView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {INITIAL_TEXT_FORM} from '@/screens/Write/_constants/_constants';
 import {DiaryDetailProps} from '@/navigation/types/types';
@@ -11,6 +11,7 @@ import {usePatchDiaryById} from './_query/usePatchDiaryById';
 import {DiaryDetailBody} from './_components/DiaryDetailBody';
 import {DiaryDetailHeader} from './_components/DiaryDetailHeader';
 import {DiaryDetailFooter} from './_components/DiaryDetailFooter';
+import {DiaryApiSpecPatchDiaryIdBody} from '@/orval/model';
 
 export interface Option {
   key: string;
@@ -54,12 +55,11 @@ const DiaryDetail = () => {
   });
 
   const handleSubmit = () => {
-    const requestForm = {
+    const requestForm: DiaryApiSpecPatchDiaryIdBody = {
       title: textForm.title,
       content: textForm.content,
       mood: options.mood.value,
       weather: options.weather.value,
-      tags: [],
     };
 
     showConfirmPatchDiary(id, requestForm);

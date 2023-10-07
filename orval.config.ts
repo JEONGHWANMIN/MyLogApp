@@ -2,8 +2,8 @@ import {defineConfig} from 'orval';
 
 export default defineConfig({
   penple: {
-    // input: 'https://port-0-penple-kvmh2mljx068bu.sel4.cloudtype.app/api-docs',
-    input: 'http://localhost:8080/api-docs',
+    input: 'https://port-0-penple-server-kvmh2mljx068bu.sel4.cloudtype.app/api-docs',
+    // input: 'http://localhost:8080/api-docs',
     output: {
       mode: 'tags-split',
       target: 'src/orval/api',

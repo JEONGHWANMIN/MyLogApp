@@ -64,17 +64,15 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginTop: 30,
-    gap: Platform.OS === 'android' ? 8 : 0,
+    marginTop: 10,
   },
   textTitleInput: {
     fontSize: theme.typography.size.H6,
     fontFamily: theme.typography.family.bold,
     color: Platform.OS === 'android' ? theme.colors.gray[600] : theme.colors.gray[900],
-    padding: 0,
+    backgroundColor: 'red',
   },
   textContentInput: {
-    flex: 1,
     fontSize: theme.typography.size.body1,
     lineHeight: 25,
     fontFamily: theme.typography.family.medium,

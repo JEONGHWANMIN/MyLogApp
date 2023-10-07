@@ -1,6 +1,6 @@
+import React, {useEffect, useState} from 'react';
 import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {useGlobalModalStore} from '@/utils/state/modal.zustand';
-import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {ModalContent, TAB_NAME} from './_components/ModalContent';
 import {DiaryApiSpecPostDiaryBody} from '@/orval/model';
@@ -61,7 +61,6 @@ const Write = () => {
       content: textForm.content,
       mood: options.mood.value,
       weather: options.weather.value,
-      tags: [],
     };
 
     setGlobalDialogConfig({
