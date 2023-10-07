@@ -7,25 +7,7 @@ import {theme} from '@/styles/theme';
 import WithFloating from '@/components/hoc/WithFloating';
 import {LocaleConfig} from 'react-native-calendars';
 import {useSplashScreenClose} from '@/hooks/useSplashScreenClose';
-
-export const queryClient = new QueryClient();
-
-const KOR_MONTHS = [
-  '1월',
-  '2월',
-  '3월',
-  '4월',
-  '5월',
-  '6월',
-  '7월',
-  '8월',
-  '9월',
-  '10월',
-  '11월',
-  '12월',
-];
-
-const KOR_DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+import {KOR_DAYS, KOR_MONTHS} from '@/constants/constant';
 
 LocaleConfig.locales['kr'] = {
   monthNames: KOR_MONTHS,
@@ -36,6 +18,8 @@ LocaleConfig.locales['kr'] = {
 };
 
 LocaleConfig.defaultLocale = 'kr';
+
+export const queryClient = new QueryClient();
 
 const App = () => {
   useSplashScreenClose();
