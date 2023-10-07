@@ -56,11 +56,13 @@ const Diary = () => {
           <View style={styles.searchContainer}>
             {isSearchBar ? (
               <TextInput
+                autoFocus
                 onChangeText={handleSearchTextChange}
                 placeholder="전체 내용 검색"
                 value={searchText}
                 style={styles.searchInput}
                 placeholderTextColor={theme.colors.gray[400]}
+                onSubmitEditing={handleDiaryContentSearch}
                 right={
                   <TextInput.Icon
                     icon="close-circle"
