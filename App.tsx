@@ -1,11 +1,12 @@
 import React from 'react';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
+import {Provider as PaperProvider} from 'react-native-paper';
 import RootNavigation from '@/navigation/RootNavigation';
 import {theme} from '@/styles/theme';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import WithFloating from '@/components/hoc/WithFloating';
 import {LocaleConfig} from 'react-native-calendars';
+import {useSplashScreenClose} from '@/hooks/useSplashScreenClose';
 
 export const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ LocaleConfig.locales['kr'] = {
 LocaleConfig.defaultLocale = 'kr';
 
 const App = () => {
+  useSplashScreenClose();
   return (
     <>
       <QueryClientProvider client={queryClient}>
