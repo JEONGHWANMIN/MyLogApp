@@ -1,5 +1,10 @@
 
-<div align="center"><img width="90%" height="400px" alt="2023-08-06_02 24 24" src="https://github.com/JEONGHWANMIN/PenPle/assets/124568804/2845270c-a689-4b53-9b3e-a52325cbb162" align="center"></div>
+<div align="center"><img width="100%" height="400px" alt="2023-08-06_02 24 24" src="https://github.com/JEONGHWANMIN/PenPle/assets/124568804/2845270c-a689-4b53-9b3e-a52325cbb162" align="center"></div>
+
+<br/>
+  
+<p>penple은 누구자 작성할 수 있는 일기 어플리케이션 입니다.</p>
+<p>펜플을 통해서 당신의 하루를 기록하여, 의미있는 하루를 보내는 방법을 찾아보세요.</p>
 
 펜플|펜플|펜플
 :-:|:-:|:-:|
