@@ -1,4 +1,4 @@
-# 📙 다이어리 관리 어플 `Penple` 
+# 📙 쉽게 작성하고 쉽게 찾을 수 있는 다이어리 관리 어플 `Penple` 
 <div align="center"><img width="100%" height="350px" alt="2023-08-06_02 24 24" src="https://github.com/JEONGHWANMIN/PenPle/assets/124568804/2845270c-a689-4b53-9b3e-a52325cbb162" align="center"></div>
 <br/>
 
