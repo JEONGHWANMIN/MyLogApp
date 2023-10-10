@@ -5,6 +5,13 @@
 ## 🌟 프로젝트 소개
 #### penple은 누구자 작성할 수 있는 일기 어플리케이션 입니다.
 #### 펜플을 통해서 당신의 하루를 기록하여, 의미있는 하루를 보내는 방법을 찾아보세요.
+
+## 🌟 FE 기술 스택
+- react-native
+- react-native-paper
+- react-query
+- zustand
+- orval(codegen)
   
 펜플|펜플|펜플
 :-:|:-:|:-:|
