@@ -2,7 +2,7 @@
 <div align="left"><img width="50%" height="150px" alt="2023-08-06_02 24 24" src="https://github.com/JEONGHWANMIN/PenPle/assets/124568804/2845270c-a689-4b53-9b3e-a52325cbb162" align="center"></div>
 <br/>
 
-## 🌈 배포링크
+## 🚀 배포링크
 https://play.google.com/store/apps/details?id=com.penple
 
 ## 🌈 프로젝트 후기 
