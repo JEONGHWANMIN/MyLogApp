@@ -9,15 +9,29 @@ interface CoreInputProps extends Props {
   sx?: StyleProp<TextStyle>;
   onFocusEvent?: () => void;
   onBlurEvent?: () => void;
+  isResponsible?: boolean;
 }
 
-const CoreInput = ({error = false, sx, onFocusEvent, onBlurEvent, ...props}: CoreInputProps) => {
+const CoreInput = ({
+  error = false,
+  sx,
+  onFocusEvent,
+  onBlurEvent,
+  isResponsible = false,
+  ...props
+}: CoreInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <TextInput
       {...props}
       placeholderTextColor={theme.colors.gray[400]}
-      style={[styles.container, isFocused && styles.focus, error && styles.error, sx]}
+      style={[
+        styles.container,
+        isResponsible && styles.responsible,
+        isFocused && styles.focus,
+        error && styles.error,
+        sx,
+      ]}
       onFocus={() => {
         setIsFocused(true);
         if (onFocusEvent) {
@@ -37,6 +51,9 @@ const CoreInput = ({error = false, sx, onFocusEvent, onBlurEvent, ...props}: Cor
 export default CoreInput;
 
 const styles = StyleSheet.create({
+  responsible: {
+    flex: 1,
+  },
   container: {
     borderColor: theme.colors.gray[200],
     borderWidth: 1,
