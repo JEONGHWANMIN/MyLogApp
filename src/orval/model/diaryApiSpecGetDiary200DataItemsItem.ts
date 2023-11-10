@@ -5,15 +5,12 @@
  * OpenAPI spec version: 0.0.1
  */
 
-/**
- * Model Diary
- */
 export type DiaryApiSpecGetDiary200DataItemsItem = {
   id: number;
   title: string;
   content: string;
   createdAt: string;
-  weather: string;
-  mood: string;
+  weather: string | null;
+  mood: string | null;
   userId: number;
 };

@@ -14,6 +14,14 @@ import type {
   QueryKey,
 } from '@tanstack/react-query';
 import type {
+  UsersApiSpecPostUsersSendAuth201,
+  UsersApiSpecPostUsersSendAuthBody,
+  UsersApiSpecPostUsersVerifyAuth201,
+  UsersApiSpecPostUsersVerifyAuthBody,
+  UsersApiSpecPutUserForgotPassword200,
+  UsersApiSpecPutUserForgotPasswordBody,
+  UsersApiSpecPutUserChangePassword200,
+  UsersApiSpecPutUserChangePasswordBody,
   UsersApiSpecPostUsersSignup201,
   UsersApiSpecPostUsersSignupBody,
   UsersApiSpecPostUsersSignin201,
@@ -35,6 +43,302 @@ type SecondParameter<T extends (...args: any) => any> = T extends (
   ? P
   : never;
 
+/**
+ * @summary 유저 핸드폰 인증 메세지 전송
+ */
+export const usersApiSpecPostUsersSendAuth = (
+  usersApiSpecPostUsersSendAuthBody: UsersApiSpecPostUsersSendAuthBody,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UsersApiSpecPostUsersSendAuth201>(
+    {
+      url: `/users/send-auth`,
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      data: usersApiSpecPostUsersSendAuthBody,
+    },
+    options,
+  );
+};
+
+export const getUsersApiSpecPostUsersSendAuthMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersSendAuth>>,
+    TError,
+    {data: UsersApiSpecPostUsersSendAuthBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersSendAuth>>,
+  TError,
+  {data: UsersApiSpecPostUsersSendAuthBody},
+  TContext
+> => {
+  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersSendAuth>>,
+    {data: UsersApiSpecPostUsersSendAuthBody}
+  > = props => {
+    const {data} = props ?? {};
+
+    return usersApiSpecPostUsersSendAuth(data, requestOptions);
+  };
+
+  return {mutationFn, ...mutationOptions};
+};
+
+export type UsersApiSpecPostUsersSendAuthMutationResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersSendAuth>>
+>;
+export type UsersApiSpecPostUsersSendAuthMutationBody = UsersApiSpecPostUsersSendAuthBody;
+export type UsersApiSpecPostUsersSendAuthMutationError = ErrorType<unknown>;
+
+/**
+ * @summary 유저 핸드폰 인증 메세지 전송
+ */
+export const useUsersApiSpecPostUsersSendAuth = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersSendAuth>>,
+    TError,
+    {data: UsersApiSpecPostUsersSendAuthBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const mutationOptions = getUsersApiSpecPostUsersSendAuthMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * @summary 유저 핸드폰 인증 메세지 확인
+ */
+export const usersApiSpecPostUsersVerifyAuth = (
+  usersApiSpecPostUsersVerifyAuthBody: UsersApiSpecPostUsersVerifyAuthBody,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UsersApiSpecPostUsersVerifyAuth201>(
+    {
+      url: `/users/verify-auth`,
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      data: usersApiSpecPostUsersVerifyAuthBody,
+    },
+    options,
+  );
+};
+
+export const getUsersApiSpecPostUsersVerifyAuthMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersVerifyAuth>>,
+    TError,
+    {data: UsersApiSpecPostUsersVerifyAuthBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersVerifyAuth>>,
+  TError,
+  {data: UsersApiSpecPostUsersVerifyAuthBody},
+  TContext
+> => {
+  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersVerifyAuth>>,
+    {data: UsersApiSpecPostUsersVerifyAuthBody}
+  > = props => {
+    const {data} = props ?? {};
+
+    return usersApiSpecPostUsersVerifyAuth(data, requestOptions);
+  };
+
+  return {mutationFn, ...mutationOptions};
+};
+
+export type UsersApiSpecPostUsersVerifyAuthMutationResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecPostUsersVerifyAuth>>
+>;
+export type UsersApiSpecPostUsersVerifyAuthMutationBody = UsersApiSpecPostUsersVerifyAuthBody;
+export type UsersApiSpecPostUsersVerifyAuthMutationError = ErrorType<unknown>;
+
+/**
+ * @summary 유저 핸드폰 인증 메세지 확인
+ */
+export const useUsersApiSpecPostUsersVerifyAuth = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPostUsersVerifyAuth>>,
+    TError,
+    {data: UsersApiSpecPostUsersVerifyAuthBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const mutationOptions = getUsersApiSpecPostUsersVerifyAuthMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * @summary 유저 비밀번호 잊어버릴 시 비밀번호 재설정
+ */
+export const usersApiSpecPutUserForgotPassword = (
+  usersApiSpecPutUserForgotPasswordBody: UsersApiSpecPutUserForgotPasswordBody,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UsersApiSpecPutUserForgotPassword200>(
+    {
+      url: `/user/forgot-password`,
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      data: usersApiSpecPutUserForgotPasswordBody,
+    },
+    options,
+  );
+};
+
+export const getUsersApiSpecPutUserForgotPasswordMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPutUserForgotPassword>>,
+    TError,
+    {data: UsersApiSpecPutUserForgotPasswordBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof usersApiSpecPutUserForgotPassword>>,
+  TError,
+  {data: UsersApiSpecPutUserForgotPasswordBody},
+  TContext
+> => {
+  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof usersApiSpecPutUserForgotPassword>>,
+    {data: UsersApiSpecPutUserForgotPasswordBody}
+  > = props => {
+    const {data} = props ?? {};
+
+    return usersApiSpecPutUserForgotPassword(data, requestOptions);
+  };
+
+  return {mutationFn, ...mutationOptions};
+};
+
+export type UsersApiSpecPutUserForgotPasswordMutationResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecPutUserForgotPassword>>
+>;
+export type UsersApiSpecPutUserForgotPasswordMutationBody = UsersApiSpecPutUserForgotPasswordBody;
+export type UsersApiSpecPutUserForgotPasswordMutationError = ErrorType<unknown>;
+
+/**
+ * @summary 유저 비밀번호 잊어버릴 시 비밀번호 재설정
+ */
+export const useUsersApiSpecPutUserForgotPassword = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPutUserForgotPassword>>,
+    TError,
+    {data: UsersApiSpecPutUserForgotPasswordBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const mutationOptions = getUsersApiSpecPutUserForgotPasswordMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+/**
+ * @summary 유저 비밀번호 변경하기
+ */
+export const usersApiSpecPutUserChangePassword = (
+  usersApiSpecPutUserChangePasswordBody: UsersApiSpecPutUserChangePasswordBody,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UsersApiSpecPutUserChangePassword200>(
+    {
+      url: `/user/change-password`,
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      data: usersApiSpecPutUserChangePasswordBody,
+    },
+    options,
+  );
+};
+
+export const getUsersApiSpecPutUserChangePasswordMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPutUserChangePassword>>,
+    TError,
+    {data: UsersApiSpecPutUserChangePasswordBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof usersApiSpecPutUserChangePassword>>,
+  TError,
+  {data: UsersApiSpecPutUserChangePasswordBody},
+  TContext
+> => {
+  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof usersApiSpecPutUserChangePassword>>,
+    {data: UsersApiSpecPutUserChangePasswordBody}
+  > = props => {
+    const {data} = props ?? {};
+
+    return usersApiSpecPutUserChangePassword(data, requestOptions);
+  };
+
+  return {mutationFn, ...mutationOptions};
+};
+
+export type UsersApiSpecPutUserChangePasswordMutationResult = NonNullable<
+  Awaited<ReturnType<typeof usersApiSpecPutUserChangePassword>>
+>;
+export type UsersApiSpecPutUserChangePasswordMutationBody = UsersApiSpecPutUserChangePasswordBody;
+export type UsersApiSpecPutUserChangePasswordMutationError = ErrorType<unknown>;
+
+/**
+ * @summary 유저 비밀번호 변경하기
+ */
+export const useUsersApiSpecPutUserChangePassword = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof usersApiSpecPutUserChangePassword>>,
+    TError,
+    {data: UsersApiSpecPutUserChangePasswordBody},
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const mutationOptions = getUsersApiSpecPutUserChangePasswordMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
 /**
  * @summary 유저 회원가입
  */
