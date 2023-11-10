@@ -5,12 +5,12 @@ import {AuthParamListProps} from '@/navigation/types/types';
 import {useUsersApiSpecPostUsersSignin} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
 import {LocalStorage} from '@/utils/localStorage/localStorage';
-import {useUserEmailStore} from '../_state/email.zustand';
+import {useAuthEmailStore} from '../_state/authMail.zustand';
 
 const useSignIn = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {showSnackbarMessage} = useShowSnackbarMessage();
-  const resetEmail = useUserEmailStore(state => state.resetEmail);
+  const resetEmail = useAuthEmailStore(state => state.resetEmail);
 
   const useUserSignInMutate = useUsersApiSpecPostUsersSignin();
 

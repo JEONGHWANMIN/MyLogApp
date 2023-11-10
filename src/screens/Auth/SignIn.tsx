@@ -9,11 +9,11 @@ import {useKeyBoardClose} from '@/hooks/useKeyBoardClose';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
 import {useSignIn} from './_query/useSignIn';
 import {UsersApiSpecPostUsersSigninBody} from '@/orval/model';
-import {useUserEmailStore} from './_state/email.zustand';
+import {useAuthEmailStore} from './_state/authMail.zustand';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthParamListProps & RootListParamsListProps>();
-  const signupEmail = useUserEmailStore(state => state.signupEmail);
+  const signupEmail = useAuthEmailStore(state => state.email);
   const [form, setForm] = useState({
     email: signupEmail ?? '',
     password: '',

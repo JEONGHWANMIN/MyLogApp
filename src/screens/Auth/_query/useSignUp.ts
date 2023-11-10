@@ -3,15 +3,11 @@ import {useNavigation} from '@react-navigation/native';
 import {AuthParamListProps} from '@/navigation/types/types';
 import {useUsersApiSpecPostUsersSignup} from '@/orval/api/users/users';
 import {UsersApiSpecPostUsersSignupBody} from '@/orval/model';
-import {usePhoneNumberStore} from '../_state/phoneNumber.zustand';
 import {useShowSnackbarMessage} from '@/hooks/useShowSnacbarMessage';
-import {useUserEmailStore} from '../_state/email.zustand';
 
 const useSignUp = () => {
   const navigation = useNavigation<AuthParamListProps>();
   const {showSnackbarMessage} = useShowSnackbarMessage();
-  const resetPhoneNumber = usePhoneNumberStore(state => state.resetPhoneNumber);
-  const setEmail = useUserEmailStore(state => state.setEmail);
   const useUsersApiSpecPostUsersMutate = useUsersApiSpecPostUsersSignup();
 
   const handleGoSignIn = () => {
@@ -26,13 +22,15 @@ const useSignUp = () => {
       {
         onSuccess: () => {
           handleGoSignIn();
-          resetPhoneNumber();
-          setEmail(signUpForm.email);
           showSnackbarMessage('회원가입에 성공했습니다.', 'info');
         },
         onError: error => {
           if (axios.isAxiosError(error)) {
-            showSnackbarMessage('회원가입에 실패했습니다.', 'error');
+            if (error.response?.status === 409) {
+              showSnackbarMessage('중복된 이메일 입니다.', 'error');
+              return;
+            }
+            showSnackbarMessage('회원가입이 실패했습니다.', 'error');
           }
         },
       },
