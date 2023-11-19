@@ -8,7 +8,7 @@ import Auth from '@/screens/Auth/Auth';
 import {IconButton} from 'react-native-paper';
 import {AuthParamListProps} from './types/types';
 import {View} from 'react-native';
-import SignUpPhone from '@/screens/Auth/SignUpPhone';
+import SignUpAuth from '@/screens/Auth/SignUpAuth';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -40,8 +40,8 @@ const AuthNavigation = () => {
         }}
       />
       <AuthStack.Screen
-        name="SignUpPhone"
-        component={SignUpPhone}
+        name="SignUpAuth"
+        component={SignUpAuth}
         options={{
           headerTitle: '',
           headerLeft: () => (

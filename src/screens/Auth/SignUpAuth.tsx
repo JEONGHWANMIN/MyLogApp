@@ -7,7 +7,7 @@ import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import Icon from 'react-native-paper/src/components/Icon';
 import {useAuthMessage} from './_query/useAuthMessage';
 
-const SignUpPhone = () => {
+const SignUpAuth = () => {
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [auth, setAuth] = useState({
     email: '',
@@ -84,7 +84,7 @@ const SignUpPhone = () => {
   );
 };
 
-export default SignUpPhone;
+export default SignUpAuth;
 
 const styles = StyleSheet.create({
   container: {padding: 28, flex: 1, backgroundColor: 'white', gap: 10},
