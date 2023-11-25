@@ -23,7 +23,7 @@ const Auth = () => {
         <CoreButton mode="outlined" onPress={() => navigation.navigate('SignIn')}>
           로그인
         </CoreButton>
-        <CoreButton mode="contained" onPress={() => navigation.navigate('SignUpPhone')}>
+        <CoreButton mode="contained" onPress={() => navigation.navigate('SignUpAuth')}>
           회원가입
         </CoreButton>
       </View>

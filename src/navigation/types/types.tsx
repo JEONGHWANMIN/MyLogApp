@@ -17,7 +17,7 @@ interface RootListParamsList extends ParamListBase {
 
 interface AuthListParamsList extends ParamListBase {
   Auth: undefined;
-  SignUpPhone: undefined;
+  SignUpAuth: undefined;
   SignUpAccount: undefined;
   SignIn: undefined;
 }
