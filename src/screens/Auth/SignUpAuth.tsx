@@ -9,6 +9,7 @@ import {useAuthMessage} from './_query/useAuthMessage';
 
 const SignUpAuth = () => {
   const {handleCloseKeyboard} = useKeyBoardClose();
+  const [isValidEmail, setIsValidEmail] = useState(false);
   const [auth, setAuth] = useState({
     email: '',
     authNumber: '',
@@ -23,6 +24,12 @@ const SignUpAuth = () => {
   };
 
   const handleChange = (name: string, text: string) => {
+    if (name === 'email') {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValid = emailPattern.test(text);
+      setIsValidEmail(isValid);
+    }
+
     setAuth(prevAuth => ({
       ...prevAuth,
       [name]: text,
@@ -47,6 +54,7 @@ const SignUpAuth = () => {
               value={auth.email}
             />
             <CoreButton
+              disabled={!isValidEmail}
               onPress={sendEmailAuthMessage}
               loading={isSendLoading}
               labelStyle={{
@@ -70,6 +78,7 @@ const SignUpAuth = () => {
         </View>
         <View>
           <CoreButton
+            disabled={!isSend}
             mode="contained"
             onPress={handleGoSignUpAccount}
             loading={isVerifyLoading}
