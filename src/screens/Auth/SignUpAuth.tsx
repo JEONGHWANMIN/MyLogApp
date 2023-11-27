@@ -7,13 +7,15 @@ import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import Icon from 'react-native-paper/src/components/Icon';
 import {useAuthMessage} from './_query/useAuthMessage';
 
+const initialAuthForm = {
+  email: '',
+  authNumber: '',
+};
+
 const SignUpAuth = () => {
   const {handleCloseKeyboard} = useKeyBoardClose();
   const [isValidEmail, setIsValidEmail] = useState(false);
-  const [auth, setAuth] = useState({
-    email: '',
-    authNumber: '',
-  });
+  const [auth, setAuth] = useState(initialAuthForm);
 
   const {isSend, isVerifyLoading, isSendLoading, sendAuthMessage, verifyAuthMessage} =
     useAuthMessage();
